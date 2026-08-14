@@ -97,9 +97,9 @@ def run_accuracy_tasks(
         if entry.outcome=="ok":
             given_letter=_extract_answer_letter(entry.response_text)
             correct_letter=ANSWER_LETTERS[task["correct_index"]]
-            entry.eval.score=1.0 if given_letter==correct_letter else 0.0
+            entry.eval_score=1.0 if given_letter==correct_letter else 0.0
         else:
-            entry.eval.score=None
+            entry.eval_score=None
         entries.append(entry)
     return entries
 

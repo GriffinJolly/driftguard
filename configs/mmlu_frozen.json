@@ -1,0 +1,242 @@
+[
+  {
+    "task_id": "mmlu_high_school_mathematics_138",
+    "subject": "high_school_mathematics",
+    "question": "Planets X, Y and Z take 360, 450 and 540 days, respectively, to rotate around the same sun. If the three planets are lined up in a ray having the sun as its endpoint, what is the minimum positive number of days before they are all in the exact same locations again?",
+    "choices": [
+      "360",
+      "5400",
+      "900",
+      "1200"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_48",
+    "subject": "high_school_mathematics",
+    "question": "John divided his souvenir hat pins into two piles. The two piles had an equal number of pins. He gave his brother one-half of one-third of one pile. John had 66 pins left. How many pins did John originally have?",
+    "choices": [
+      "792",
+      "66",
+      "396",
+      "72"
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_66",
+    "subject": "high_school_mathematics",
+    "question": "If 3^(x – 3) + 10 = 19, then x =",
+    "choices": [
+      "3",
+      "4",
+      "5",
+      "6"
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_225",
+    "subject": "high_school_mathematics",
+    "question": "If f(x) = 3x, g(x) = 5x + 3, and h(x) = 1 – x^2, then f(g(h(x)))=",
+    "choices": [
+      "15x^2 + 15",
+      "–15x^2 + 18",
+      "–15x^2 + 24",
+      "–225x^2 + 90x – 8"
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_181",
+    "subject": "high_school_mathematics",
+    "question": "A curve is given parametrically by the equations",
+    "choices": [
+      "π/2",
+      "π",
+      "2 + π",
+      "2π"
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_college_computer_science_44",
+    "subject": "college_computer_science",
+    "question": "For a connected, undirected graph G = (V, E), which of the following must be true?\nI. Σ_{v∈V} degree(v) is even.\nII. |E| ≥ |V| − 1\nIII. G has at least one vertex with degree 1.",
+    "choices": [
+      "I only",
+      "II only",
+      "III only",
+      "I and II"
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_college_computer_science_47",
+    "subject": "college_computer_science",
+    "question": "Function signatures describe the types of the arguments to a function as well as the return value of the function. For instance, the addition function on reals has a signature of\nadd : real x real -> real\nsince it takes two real numbers and returns a real number. But, for a language that allows functions as return values, addition could be considered to have the signature\nadd : real -> (real -> real)\nwhich means that add takes a single real (the first operand) and returns a new function that itself takes a single real (the second operand) and returns a real (the result). This process of reducing a function with multiple arguments to a function with fewer arguments is called currying. Which of the following is correct?",
+    "choices": [
+      "Currying can be applied to any function to the point where it has exactly one input argument.",
+      "Currying cannot be applied to functions of more than two arguments.",
+      "Currying cannot be applied to functions that return functions as arguments.",
+      "Currying cannot be applied w functions that haw arguments that are functions."
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_college_computer_science_72",
+    "subject": "college_computer_science",
+    "question": "Which of the following pairs of 8-bit, two's-complement numbers will result in overflow when the members of the pairs are added?",
+    "choices": [
+      "11111111, 00000001",
+      "00000001, 10000000",
+      "11111111, 10000001",
+      "10000001, 10101010"
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_college_computer_science_28",
+    "subject": "college_computer_science",
+    "question": "Languages with a structure that implements abstract data types (e.g., a C++ class) can prevent access to components of this structure by all operations except those that are part of this structure. However, definitions of such a structure often contain declarations of components of the structure (e.g., the header file for a C++ class may contain declarations of its private components). For such a language, an object's name could be bound at run time to stack storage for its component values (direct representation) or to a stack pointer referencing heap storage for its component values (indirect representation). Which of the following statements about comparisons between direct and indirect representations is (are) true?\nI. Indirect representation noticeably increases compilation time.\nII. Direct representation decreases the time needed to access components of a variable.\nIII. When the storage size of some private component of a variable changes, indirect representation minimizes the number of recompilations of source modules that must be performed.",
+    "choices": [
+      "I only",
+      "III only",
+      "I and II only",
+      "II and III only"
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_college_computer_science_90",
+    "subject": "college_computer_science",
+    "question": "Array A contains 256 elements of 4 bytes each. Its first element is stored at physical address 4,096.\nArray B contains 512 elements of 4 bytes each. Its first element is stored at physical address 8,192.\nAssume that only arrays A and B can be cached in an initially empty, physically addressed, physically tagged, direct-mapped, 2K-byte cache with an 8-byte block size. The following loop is then executed.\nfor (i = 0; i < 256; i++)\n        A[i] = A[i] + B[2*i];\nDuring the execution of the loop, how many bytes will be written to memory if the cache has a write-through policy?",
+    "choices": [
+      "0",
+      "256",
+      "1024",
+      "2048"
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_1",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\nBECAUSE no People can be truly happy, though under the greatest Enjoyment of Civil Liberties, if abridged of the Freedom of their Consciences, as to their Religious Profession and Worship: And Almighty God being the only Lord of Conscience, Father of Lights and Spirits; and the Author as well as Object of all divine Knowledge, Faith and Worship, who only doth enlighten the Minds, and persuade and convince the Understanding of People, I do hereby grant and declare, That no Person or Persons, inhabiting in this Province or Territories, who shall confess and acknowledge One almighty God, the Creator, Upholder and Ruler of the World; and profess him or themselves obliged to live quietly under the Civil Government, shall be in any Case molested or prejudiced, in his or their Person or Estate, because of his or their conscientious Persuasion or Practice, nor be compelled to frequent or maintain any religious Worship, Place or Ministry, contrary to his or their Mind.…\n—William Penn, Charter of Privileges Granted by William Penn,\nesq. to the Inhabitants of Pennsylvania and Territories, October 28, 1701\nBecause of Penn's Charter of Privileges, Pennsylvania became",
+    "choices": [
+      "one of the most religiously diverse colonies in British America.",
+      "one of the least religiously diverse colonies in America.",
+      "notorious for witch hunting and popular superstition.",
+      "known for its hostility to traditional religious practices."
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_62",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\nThe man who mounted the steps of the Capitol, March 4, 1801, to claim the place of an equal between Pitt and Bonaparte, possessed a character which showed itself in acts; but person and manner can be known only by contemporaries, and the liveliest description was worth less than a moment of personal contact. Jefferson was very tall, six feet two-and-a-half inches in height; sandy-complexioned; shy in manner, seeming cold; awkward in attitude, and with little in his bearing that suggested command.… His skin was thin, peeling from his face on exposure to the sun, giving it a tettered appearance. This sandy face, with hazel eyes and sunny aspect; this loose, shackling person; this rambling and often brilliant conversation, belonged to the controlling influences of American history, more necessary to the story than three-fourths of the official papers, which only hid the truth. Jefferson's personality during these eight years appeared to be the government, and impressed itself, like that of Bonaparte, although by a different process, on the mind of the nation. In the village simplicity of Washington, he was more than a king, for he was alone in social as well as in political pre-eminence. Except the British Legation, no house in Washington was open to general society; the whole mass of politicians, even the Federalists, were dependent on Jefferson and \"The Palace\" for amusement; and if they refused to go there, they \"lived like bears, brutalized and stupefied.\"\n—Henry Adams, History of the United States During the Administration of Thomas Jefferson, 1889\nThomas Jefferson's victory in the election of 1800 was important because",
+    "choices": [
+      "he was the first southerner to become president.",
+      "it was the first time the presidency shifted from one political party to another.",
+      "he believed it was necessary to go to war with Great Britain.",
+      "he encouraged the rapid industrialization of the United States."
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_145",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\n\"The far-reaching, the boundless future will be the era of American greatness. In its magnificent domain of space and time, the nation of many nations is destined to manifest to mankind the excellence of divine principles; to establish on earth the noblest temple ever dedicated to the worship of the Most High—the Sacred and the True. Its floor shall be a hemisphere—its roof the firmament of the star-studded heavens, and its congregation a Union of many Republics, comprising hundreds of happy millions, calling, owning no man master, but governed by God's natural and moral law of equality, the law of brotherhood—of 'peace and good will amongst men.'\"\nJohn L. O'Sullivan, \"The Great Nation of Futurity,\" 1839\nWhich of the following best describes the effect of the American rail system in the nineteenth century?",
+    "choices": [
+      "Government subsidy of the railroads enabled markets to expand and for production to become more efficient.",
+      "The entire national system was planned before the first railway was constructed.",
+      "The development of the rails had little effect on the development of American industry.",
+      "A more highly developed rail system gave the Confederacy a decided advantage in the Civil War."
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_31",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\nIt is natural, it is a privilege, I will go farther, it is a right, which all free men claim, that they are entitled to complain when they are hurt. They have a right publicly to remonstrate against the abuses of power in the strongest terms, to put their neighbors upon their guard against the craft or open violence of men in authority, and to assert with courage the sense they have of the blessings of liberty, the value they put upon it, and their resolution at all hazards to preserve it as one of the greatest blessings heaven can bestow.… But to conclude: The question before the Court and you, Gentlemen of the jury, is not of small or private concern. It is not the cause of one poor printer, nor of New York alone, which you are now trying. No! It may in its consequence affect every free man that lives under a British government on the main of America. It is the best cause. It is the cause of liberty. And I make no doubt but your upright conduct this day will not only entitle you to the love and esteem of your fellow citizens, but every man who prefers freedom to a life of slavery will bless and honor you as men who have baffled the attempt of tyranny, and by an impartial and uncorrupt verdict have laid a noble foundation for securing to ourselves, our posterity, and our neighbors, that to which nature and the laws of our country have given us a right to liberty of both exposing and opposing arbitrary power (in these parts of the world at least) by speaking and writing truth.\n—Andrew Hamilton, concluding argument, libel trial of newspaper editor\nJohn Peter Zenger, August 4, 1735\nHamilton's success in the Zenger case most directly reflects which of the following?",
+    "choices": [
+      "American desires for independence from Great Britain",
+      "American rejection of Enlightenment ideals",
+      "A long tradition of self-rule in the American colonies",
+      "The weakening of economic ties between America and Great Britain"
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_50",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\n\"In one view the slaveholders have a decided advantage over all opposition. It is well to notice this advantage—the advantage of complete organization. They are organized; and yet were not at the pains of creating their organizations. The State governments, where the system of slavery exists, are complete slavery organizations. The church organizations in those States are equally at the service of slavery; while the Federal Government, with its army and navy, from the chief magistracy in Washington, to the Supreme Court, and thence to the chief marshalship at New York, is pledged to support, defend, and propagate the crying curse of human bondage. The pen, the purse, and the sword, are united against the simple truth, preached by humble men in obscure places.\"\nFrederick Douglass, 1857\nIn what way did the actions of Abraham Lincoln in 1860 contradict Douglass's sentiments in the excerpt above?",
+    "choices": [
+      "Lincoln promoted the freedom of settlers within territories to determine the slave status of their new state.",
+      "Lincoln passed the Homestead Act to give free land to all western settlers.",
+      "Lincoln favored the exclusion of slavery from any of the new territories.",
+      "Lincoln enacted the policy of giving newly freed slaves \"forty acres and a mule.\""
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_philosophy_28",
+    "subject": "philosophy",
+    "question": "\"There is no rationale for myth because it is through myth that reason itself is defined.\"  This means that:",
+    "choices": [
+      "mythos is ultimately based on logos, just as myth is ultimately based on reasoning or thinking.",
+      "myth does not \"explain\" how things are related as much as it simply reveals them as related.",
+      "metaphysicians are justified in reasoning as they do because there is only one true answer about being.",
+      "myth and reason are the same: \"myth\" defines \"reason,\" and \"reason\" defines \"myth.\""
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_philosophy_113",
+    "subject": "philosophy",
+    "question": "Augustine identifies evil with:",
+    "choices": [
+      "the influence of the devil.",
+      "the absence of good.",
+      "a unique force, opposed to goodness.",
+      "pain."
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_philosophy_297",
+    "subject": "philosophy",
+    "question": "One example of bad constitutive moral luck would be:",
+    "choices": [
+      "a person who is by nature envious and ungenerous.",
+      "a person who lived in Nazi Germany in 1940.",
+      "a person who drives drunk and hits a child.",
+      "all of the above."
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_philosophy_123",
+    "subject": "philosophy",
+    "question": "Plato distinguishes knowledge from mere belief or opinion by saying that knowledge must be a true belief for which one can give a justification, a rationale, or \"logos.\"  In terms of his image of the Divided Line, for Plato, knowledge is attained only when our sensible experience is:",
+    "choices": [
+      "grounded ultimately in what our senses reveal to us about the world of becoming.",
+      "based on images of the good, beauty, and truth obtained from particular objects and on which the concepts and Forms depend.",
+      "replaced by what we sincerely believe is true or have come to believe based on our upbringing.",
+      "understood in terms of concepts or innate ideas (Forms) that are perceived as rationally ordered."
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_philosophy_73",
+    "subject": "philosophy",
+    "question": "According to Parfit, both Taurek and Lewis assume that for there to be a “sum of pain,” it must be:",
+    "choices": [
+      "all felt at a single time.",
+      "all felt by a single person.",
+      "all be caused by a single source.",
+      "all of the above."
+    ],
+    "correct_index": 1
+  }
+]
