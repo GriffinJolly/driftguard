@@ -1,0 +1,6 @@
+pydantic>=2.0
+sqlmodel
+httpx
+python-dotenv
+jsonschema
+datasets
