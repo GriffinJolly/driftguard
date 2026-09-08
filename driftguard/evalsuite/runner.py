@@ -10,10 +10,10 @@ classification) consumes.
 
 Usage as a one-off:
     from driftguard.evalsuite.runner import run_once
-    point = run_once("groq", "llama-3.3-70b-versatile")
+    point = run_once("groq", "openai/gpt-oss-120b")
 
 Usage as a continuous scheduled job (what actually runs on the VM):
-    python -m driftguard.evalsuite.runner --provider groq --model llama-3.3-70b-versatile --interval-seconds 3600
+    python -m driftguard.evalsuite.runner --provider groq --model openai/gpt-oss-120b --interval-seconds 3600
 
 Design notes:
 - One run = one call to run_once(). It runs accuracy, then format, then

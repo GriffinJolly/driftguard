@@ -41,7 +41,7 @@ class FakeStore:
         self.saved.append(entry)
 
 
-def _chat_completion_response(model="llama-3.3-70b-versatile", content="hello back"):
+def _chat_completion_response(model="openai/gpt-oss-120b", content="hello back"):
     return httpx.Response(
         200,
         json={
@@ -63,7 +63,7 @@ def test_captures_request_to_allowlisted_provider():
     client = httpx.Client(transport=capture_transport)
 
     payload = {
-        "model": "llama-3.3-70b-versatile",
+        "model": "openai/gpt-oss-120b",
         "messages": [{"role": "user", "content": "hi"}],
         "temperature": 0.7,
     }
@@ -76,7 +76,7 @@ def test_captures_request_to_allowlisted_provider():
     entry = store.saved[0]
     assert entry.integration_path == IntegrationPath.WRAPPER.value
     assert entry.provider == "groq"
-    assert entry.model_id == "llama-3.3-70b-versatile"
+    assert entry.model_id == "openai/gpt-oss-120b"
     assert entry.outcome == CallOutcome.OK.value
     assert entry.error_message is None
     assert entry.latency_ms is not None and entry.latency_ms >= 0
@@ -120,7 +120,7 @@ def test_capture_failure_does_not_break_real_response():
     )
     client = httpx.Client(transport=capture_transport)
 
-    payload = {"model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": "hi"}]}
+    payload = {"model": "openai/gpt-oss-120b", "messages": [{"role": "user", "content": "hi"}]}
     resp = client.post("https://api.groq.com/openai/v1/chat/completions", json=payload)
 
     assert resp.status_code == 200
@@ -140,7 +140,7 @@ def test_error_response_from_provider_is_logged_as_error_outcome():
     capture_transport = DriftCaptureTransport(store=store, wrapped=mock_transport)
     client = httpx.Client(transport=capture_transport)
 
-    payload = {"model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": "hi"}]}
+    payload = {"model": "openai/gpt-oss-120b", "messages": [{"role": "user", "content": "hi"}]}
     resp = client.post("https://api.groq.com/openai/v1/chat/completions", json=payload)
 
     assert resp.status_code == 500
@@ -160,7 +160,7 @@ def test_rate_limited_response_maps_to_rate_limited_outcome():
     capture_transport = DriftCaptureTransport(store=store, wrapped=mock_transport)
     client = httpx.Client(transport=capture_transport)
 
-    payload = {"model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": "hi"}]}
+    payload = {"model": "openai/gpt-oss-120b", "messages": [{"role": "user", "content": "hi"}]}
     resp = client.post("https://api.groq.com/openai/v1/chat/completions", json=payload)
 
     assert resp.status_code == 429
@@ -178,7 +178,7 @@ def test_timeout_is_logged_and_reraised():
     capture_transport = DriftCaptureTransport(store=store, wrapped=mock_transport)
     client = httpx.Client(transport=capture_transport)
 
-    payload = {"model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": "hi"}]}
+    payload = {"model": "openai/gpt-oss-120b", "messages": [{"role": "user", "content": "hi"}]}
     with pytest.raises(httpx.ReadTimeout):
         client.post("https://api.groq.com/openai/v1/chat/completions", json=payload)
 
@@ -200,7 +200,7 @@ def test_custom_integration_path_is_respected():
     )
     client = httpx.Client(transport=capture_transport)
 
-    payload = {"model": "llama-3.3-70b-versatile", "messages": [{"role": "user", "content": "hi"}]}
+    payload = {"model": "openai/gpt-oss-120b", "messages": [{"role": "user", "content": "hi"}]}
     client.post("https://api.groq.com/openai/v1/chat/completions", json=payload)
 
     assert store.saved[0].integration_path == IntegrationPath.PROXY.value
