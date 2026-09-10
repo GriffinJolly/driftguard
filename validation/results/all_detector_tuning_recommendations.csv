@@ -1,0 +1,8 @@
+detector,value,status,param,false_alarm_rate,detection_rate_medium_drift,median_delay,is_library_default
+DDM,"(4.0, 150)",reliable_and_fast,"(drift_level, min_num_instances)",0.04,0.9733333333333334,62.0,False
+EDDM,0.56,reliable_and_fast,beta,0.03333333333333333,0.98,149.0,False
+ADWIN,0.1,reliable_and_fast,delta,0.0,1.0,111.0,False
+HDDM_A,0.005,reliable_and_fast,alpha_d,0.04,0.9666666666666667,68.0,False
+HDDM_W,0.15,reliable_and_fast,alpha_d,0.04666666666666667,0.9733333333333334,26.0,False
+RDDM,4.5,reliable_and_fast,drift_level,0.013333333333333334,0.98,79.0,False
+ECDD,"(400, 0.02)",reliable_and_fast,"(average_run_length, lambda_)",0.04666666666666667,1.0,32.0,False

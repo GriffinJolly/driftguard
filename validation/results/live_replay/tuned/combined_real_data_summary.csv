@@ -1,0 +1,25 @@
+detector,dataset,n_samples,n_alerts,first_alert_index,alerts_per_1000_samples
+Page-Hinkley (tuned),phishing,1250,0,,0.0
+DDM (tuned),phishing,1250,0,,0.0
+EDDM (tuned),phishing,1250,0,,0.0
+ADWIN (tuned),phishing,1250,0,,0.0
+HDDM_A (tuned),phishing,1250,0,,0.0
+HDDM_W (tuned),phishing,1250,0,,0.0
+RDDM (tuned),phishing,1250,0,,0.0
+ECDD (tuned),phishing,1250,0,,0.0
+RDDM (tuned),elec2,45312,17,6748.0,0.3751765536723164
+HDDM_W (tuned),elec2,45312,254,193.0,5.605579096045198
+HDDM_A (tuned),elec2,45312,324,193.0,7.15042372881356
+EDDM (tuned),elec2,45312,5672,20428.0,125.1765536723164
+ECDD (tuned),elec2,45312,9487,251.0,209.37058615819208
+Page-Hinkley (tuned),elec2,45312,33648,5809.0,742.5847457627118
+DDM (tuned),elec2,45312,39874,250.0,879.9876412429378
+ADWIN (tuned),elec2,45312,44993,319.0,992.9599223163842
+EDDM (tuned),insects,52848,0,,0.0
+RDDM (tuned),insects,52848,5,14725.0,0.0946109597335755
+HDDM_A (tuned),insects,52848,8,1629.0,0.1513775355737208
+HDDM_W (tuned),insects,52848,287,261.0,5.430669088707236
+ECDD (tuned),insects,52848,7090,1530.0,134.15834090221009
+Page-Hinkley (tuned),insects,52848,31850,14847.0,602.6718135028761
+DDM (tuned),insects,52848,38181,14667.0,722.4682107175296
+ADWIN (tuned),insects,52848,52721,127.0,997.5968816227672

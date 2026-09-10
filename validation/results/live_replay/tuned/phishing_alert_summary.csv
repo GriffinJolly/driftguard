@@ -1,0 +1,9 @@
+detector,dataset,n_samples,n_alerts,first_alert_index,alerts_per_1000_samples
+Page-Hinkley (tuned),phishing,1250,0,,0.0
+DDM (tuned),phishing,1250,0,,0.0
+EDDM (tuned),phishing,1250,0,,0.0
+ADWIN (tuned),phishing,1250,0,,0.0
+HDDM_A (tuned),phishing,1250,0,,0.0
+HDDM_W (tuned),phishing,1250,0,,0.0
+RDDM (tuned),phishing,1250,0,,0.0
+ECDD (tuned),phishing,1250,0,,0.0
