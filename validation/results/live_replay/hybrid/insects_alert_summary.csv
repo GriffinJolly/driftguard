@@ -1,0 +1,4 @@
+detector,dataset,n_samples,n_alerts,first_alert_index,alerts_per_1000_samples
+Page-Hinkley (tuned),insects,52848,31850,14847,602.6718135028761
+DDM (tuned),insects,52848,38181,14667,722.4682107175296
+Page-Hinkley+DDM (OR hybrid),insects,52848,38181,14667,722.4682107175296

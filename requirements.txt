@@ -4,3 +4,11 @@ httpx
 python-dotenv
 jsonschema
 datasets
+
+# validation/ (drift-detector benchmarking -- see validation/results/REPORT.md)
+frouros
+pandas
+numpy
+matplotlib
+tabulate
+river          # validation/live_replay.py -- real public-dataset validation

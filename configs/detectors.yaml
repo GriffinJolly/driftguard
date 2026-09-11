@@ -1,0 +1,107 @@
+# DriftGuard detector configuration.
+#
+# Values here are seeded from validation/results/ (run_validation.py +
+# tuning_sweep.py, 100 trials/condition, synthetic Bernoulli benchmark --
+# see validation/results/REPORT.md for full methodology and the "Known
+# limitations" section before trusting these blindly in production).
+#
+# IMPORTANT, read before changing live_detector.algorithm: all 8 detectors
+# from the deck's comparison were EACH individually tuned (not just
+# Page-Hinkley) and re-compared fairly -- see
+# validation/results/tuned/REPORT.md and
+# validation/results/live_replay/tuned/REAL_DATA_SUMMARY.md. On the
+# synthetic benchmark alone, two other tuned detectors (ECDD, HDDM_W)
+# actually out-scored tuned Page-Hinkley on composite score. But on BOTH
+# real, documented drift benchmarks (Elec2, Insects), those two detectors'
+# real-data behavior did not match their synthetic tuning: ECDD (tuned)
+# fired well before the real drift event even started on Insects, and
+# HDDM_W (tuned)'s alerts were scattered across the whole stream rather
+# than concentrated where the real degradation was. Page-Hinkley (tuned)
+# and DDM (tuned) were the only two whose real-data alarm timing closely
+# bracketed the actual degraded regions on BOTH real datasets. Page-Hinkley
+# is kept as the live_detector because of that real-data result, not
+# because of the synthetic composite score alone -- a synthetic ranking
+# that disagrees with real-data behavior should lose to the real-data
+# result, not the other way around. DDM (tuned) is the natural second
+# choice / ensemble candidate if a future change wants two independent
+# live detectors.
+#
+# An OR-logic hybrid of Page-Hinkley (tuned) + DDM (tuned) (alarm when
+# EITHER fires) was built and validated the same way -- see
+# validation/results/HYBRID_VERDICT.md -- and NOT adopted: on real Elec2/
+# Insects data its alert count and first-alert timing were identical to
+# DDM (tuned) alone, to the sample (every Page-Hinkley real-data alert
+# already coincided with a DDM alert), so it added no real-world benefit
+# over DDM by itself while running two detectors per monitored metric
+# instead of one. It did score a small, genuine improvement over either
+# detector alone on the synthetic benchmark (0.859 vs. 0.850/0.848
+# composite) -- not enough, on its own, to justify the added complexity
+# given the real-data result.
+
+live_detector:
+  # Used by driftguard/detection/changepoint_sequential.py for the
+  # low-latency / "immediate warning" path (see the project deck's
+  # "Page-Hinkley: the live warning" slide).
+  algorithm: page_hinkley
+  params:
+    # frouros library default is lambda_=50.0. Validated to be badly
+    # mismatched to DriftGuard's actual signal scale (per-call error
+    # rates in the ~5-40% range, not the higher-magnitude regime the
+    # default was evidently tuned for): at lambda_=50, Page-Hinkley had
+    # the WORST detection delay of all 8 compared detectors (243 samples,
+    # vs. 20-175 for everything else) and a below-average detection rate
+    # (~48%). At lambda_=12, it had 100%/98% detection (sudden/gradual),
+    # ~0.5% false-alarm rate, and a ~2x lower delay (117 samples).
+    # See validation/results/05_page_hinkley_tuning.png for the full
+    # lambda sweep this was chosen from, and validation/results/tuned/
+    # for how it held up once every other detector was ALSO tuned.
+    lambda_: 12.0
+    delta: 0.005          # frouros default -- not yet independently tuned
+    alpha: 0.9999          # frouros default -- not yet independently tuned
+    min_num_instances: 30  # frouros default -- not yet independently tuned
+
+# Alternative tuned configs considered and validated (validation/
+# tuning_sweep_all.py) but NOT selected as the primary live_detector --
+# kept here for reference/reproducibility, e.g. as a second detector in a
+# future ensemble. All reached the same <=5% false-alarm reliability gate
+# on the synthetic benchmark; see live_detector's comment above for why
+# ECDD and HDDM_W specifically were passed over despite scoring higher on
+# synthetic-only composite score.
+alternative_tuned_detectors:
+  ddm:      {warning_level: 2.667, drift_level: 4.0, min_num_instances: 150}  # 2nd-best real-data behavior
+  eddm:     {beta: 0.56}
+  adwin:    {delta: 0.1}
+  hddm_a:   {alpha_d: 0.005, alpha_w: 0.025}
+  hddm_w:   {alpha_d: 0.15, alpha_w: 0.75}   # synthetic #2 -- did not generalize to real data, see above
+  rddm:     {warning_level: 3.534, drift_level: 4.5}
+  ecdd:     {average_run_length: 400, lambda_: 0.02}  # synthetic #1 -- did not generalize to real data, see above
+
+retrospective_detector:
+  # Used by driftguard/detection/changepoint_pelt.py for the batch/
+  # historical-confirmation path (see "PELT: the historical confirmation"
+  # slide). NOT validated in validation/run_validation.py yet -- that
+  # benchmark only covers the 8 online/sequential detectors from the
+  # deck's comparison chart, not PELT itself. Treat these as placeholders
+  # until PELT is implemented and benchmarked the same way.
+  algorithm: pelt
+  params:
+    cost_model: rbf        # placeholder -- pick after PELT is implemented
+    penalty: null          # placeholder -- typically tuned via BIC or a
+                            # validation sweep once real data is available
+    min_segment_length: 20 # placeholder
+
+significance:
+  # Used by driftguard/detection/bootstrap.py to decide whether a PELT
+  # candidate change point is real before it becomes a ChangePointEventRow
+  # with significant=true. Not yet implemented or validated -- placeholder
+  # values only, matching the ChangePointEventRow schema's
+  # p_value_raw/p_value_corrected fields in driftguard/storage/store.py.
+  alpha: 0.05
+  n_bootstrap_samples: 1000
+  multiple_testing_correction: benjamini_hochberg  # see driftguard/detection/multiple_testing.py (also unbuilt)
+
+calibration:
+  # Used by driftguard/detection/baseline.py to define the reference
+  # window each detector compares against. Placeholder -- not yet tuned.
+  min_window_size: 100    # samples (individual eval_score calls, not eval runs)
+  baseline_error_rate_assumption: 0.05  # matches this benchmark's baseline; replace with each (provider, model, metric)'s own observed rate once real data exists

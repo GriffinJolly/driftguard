@@ -53,6 +53,13 @@ TUNED_DETECTOR_ORDER = [f"{name} (tuned)" for name in DETECTOR_ORDER[:8]]
 for _base_name in DETECTOR_ORDER[:8]:
     DETECTOR_COLOR[f"{_base_name} (tuned)"] = DETECTOR_COLOR[_base_name]
 
+# The OR-hybrid (Page-Hinkley (tuned) + DDM (tuned), validation/
+# detectors_registry.py's OrHybridDetector) is a new categorical entity --
+# not a config variant of an existing detector -- so it gets its own color,
+# not a tint of Page-Hinkley's or DDM's blue/orange.
+HYBRID_DETECTOR_NAME = "Page-Hinkley+DDM (OR hybrid)"
+DETECTOR_COLOR[HYBRID_DETECTOR_NAME] = "#7d5ba6"
+
 TEXT_PRIMARY = "#0b0b0b"
 TEXT_SECONDARY = "#52514e"
 GRID_COLOR = "#e3e2dd"

@@ -122,6 +122,17 @@ Page-Hinkley's on Insects (191 vs. 371 samples after onset) — and is documente
 `configs/detectors.yaml`'s new `alternative_tuned_detectors` section as the candidate for
 a future second/ensemble live detector.
 
+**Update: an OR-hybrid of the two was built and tested, and did not change this
+verdict.** See `validation/results/HYBRID_VERDICT.md` for the full result — short
+version: an ensemble that alarms whenever EITHER Page-Hinkley (tuned) or DDM (tuned)
+fires scored a small, genuine improvement over either alone on the synthetic benchmark
+(composite 0.859 vs. 0.850/0.848), but on both real datasets its alert count and
+first-alert timing were identical to DDM (tuned) alone, to the sample — every
+Page-Hinkley alert on real data already coincided with a DDM alert, so the hybrid added
+zero real-world benefit over DDM by itself while running two detectors instead of one.
+Page-Hinkley (tuned) remains `live_detector`; DDM (tuned) remains the documented
+second choice, not a combined default.
+
 ## Caveats, stated plainly
 
 - The Insects "estimated true onset" (sample 14,476) is derived independently from the

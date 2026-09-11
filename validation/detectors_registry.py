@@ -129,6 +129,79 @@ TUNED_CONFIGS = {
 }
 
 
+class OrHybridDetector:
+    """OR-logic ensemble: reports drift the moment EITHER of two wrapped
+    detectors reports drift at that same sample.
+
+    Built specifically to test, empirically rather than by reasoning
+    alone, whether combining Page-Hinkley (tuned) and DDM (tuned) -- the
+    two detectors whose real-data alarm timing was actually trustworthy
+    on both Elec2 and Insects, per validation/results/FINAL_VERDICT.md
+    section 3 -- catches drift faster than either alone, without paying
+    an unacceptable false-alarm cost. Nothing here assumes the hybrid is
+    better; it exists so the hybrid can be run through the exact same
+    synthetic (run_validation.py) and real-data (live_replay.py)
+    validation as every other detector in this repo.
+
+    Deliberately does NOT latch "drift" permanently true once either
+    constituent has ever fired -- it re-evaluates both constituents'
+    OWN current `.status` every sample and ORs that. This matters for
+    live_replay.py's run_all_alerts, which records every index where
+    `.status['drift']` is true (not just the first) -- a hybrid that
+    latched forever after one alarm would report ~every remaining
+    sample as an alert and make its real-data alert-frequency numbers
+    incomparable to every other detector in this suite. Each wrapped
+    detector already manages its own post-alarm reset/continuation
+    internally (that's why, e.g., Page-Hinkley alone shows a bounded
+    alerts_per_1000_samples rather than 1000); ORing their live status
+    each step preserves that same pulsing behavior for the hybrid.
+
+    Implements the same minimal interface every caller in this suite
+    relies on -- `.update(value=...)` and `.status` (a dict with
+    'drift' / 'warning' keys) -- so it's a drop-in DetectorSpec factory
+    result, indistinguishable from a single frouros detector to
+    run_detector_on_stream, run_all_alerts, or anything else here.
+    """
+
+    def __init__(self, factory_a: Callable[[], object], factory_b: Callable[[], object]):
+        self._a = factory_a()
+        self._b = factory_b()
+
+    def update(self, value: int) -> None:
+        self._a.update(value=value)
+        self._b.update(value=value)
+
+    @property
+    def status(self) -> dict:
+        status_a, status_b = self._a.status, self._b.status
+        return {
+            "drift": bool(status_a.get("drift")) or bool(status_b.get("drift")),
+            "warning": bool(status_a.get("warning")) or bool(status_b.get("warning")),
+        }
+
+
+# Name kept consistent everywhere (run_validation.py's raw_results,
+# live_replay.py's alert_summary, report.py's detector_order lists, etc.)
+# so every downstream table/chart can key off this one constant.
+HYBRID_NAME = "Page-Hinkley+DDM (OR hybrid)"
+
+
+def hybrid_registry() -> list[DetectorSpec]:
+    """Just the OR-hybrid itself, as a single-entry registry -- callers
+    that want it alongside the individually-tuned detectors it's built
+    from should concatenate this with tuned_registry(), e.g.
+    `tuned_registry() + hybrid_registry()`, so results are directly
+    comparable (same trial seeds -- seeding in run_validation.py depends
+    only on scenario/magnitude/trial/seed, not on which detectors are in
+    the registry)."""
+    return [
+        DetectorSpec(
+            HYBRID_NAME,
+            lambda: OrHybridDetector(TUNED_CONFIGS["Page-Hinkley"], TUNED_CONFIGS["DDM"]),
+        )
+    ]
+
+
 def tuned_registry() -> list[DetectorSpec]:
     """All 8 detectors from the deck's comparison, each individually tuned
     by validation/tuning_sweep_all.py (Page-Hinkley by tuning_sweep.py) --

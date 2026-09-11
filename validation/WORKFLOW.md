@@ -19,6 +19,7 @@ companion to `validation/results/REPORT.md` (the findings) and
 | `live_replay.py --dataset phishing` | On **real** (not synthetic) data, do the detectors behave sanely — no excess false alarms? | No (bundled) | No | ~5s |
 | `live_replay.py --dataset elec2` / `insects` [`--registry tuned`] | On a **real, documented concept-drift benchmark**, do detectors actually catch real drift? | Only if `validation/data/*.csv.gz` isn't present (see §2.4) | No | Elec2 ~3-4 min, Insects ~4-5 min |
 | `real_data_summary.py [--results-dir validation/results/live_replay/tuned]` | Combines phishing/elec2/insects results into one cross-dataset comparison | No | No | <5s |
+| `hybrid_validation.py` | Would an OR-hybrid of Page-Hinkley (tuned) + DDM (tuned) beat either alone? | Only if `validation/data/*.csv.gz` isn't present | No | ~8-10 min (synthetic + elec2 + insects) |
 | `live_replay_groq.py` | On **real, live LLM API traffic right now**, how do the detectors behave on DriftGuard's actual production signal? | Yes | Yes (Groq or OpenRouter) | ~1-10 min depending on `--rounds` |
 
 Run them in this order the first time — each one is independent, but this order goes from "no setup needed" to "needs an API key," so you can sanity-check the environment before touching real credentials.
@@ -30,6 +31,14 @@ benchmark — but on real data, both of those fire well before the real drift ev
 starts, while Page-Hinkley and DDM are the only two whose alarm timing actually tracks
 the real degraded regions on both real datasets tested. Page-Hinkley stays the
 recommended `live_detector` because of the real-data result, not the synthetic score.
+
+**Follow-up: an OR-hybrid of Page-Hinkley + DDM was tested and not adopted** (full
+writeup: `validation/results/HYBRID_VERDICT.md`). It scored a small, real improvement
+over either detector alone on the synthetic benchmark, but on both real datasets its
+alert count and first-alert timing were identical to DDM (tuned) alone, to the sample —
+every Page-Hinkley real-data alert already coincided with a DDM alert, so the hybrid
+added no real-world benefit over DDM by itself while running two detectors instead of
+one.
 
 ## 1. One-time setup
 
@@ -159,6 +168,25 @@ a few hundred samples *after* the real onset. Full breakdown, including why Page
 stays the `configs/detectors.yaml` recommendation despite not winning the synthetic
 comparison once everything was tuned fairly: `validation/results/FINAL_VERDICT.md`.
 
+### 2.4c OR-hybrid (Page-Hinkley + DDM): would combining them beat either alone?
+
+```bash
+python -m validation.hybrid_validation --trials 100 --seed 42 --out validation/results
+```
+Builds `OrHybridDetector` (alarms when EITHER Page-Hinkley (tuned) or DDM (tuned)
+fires), then runs it through both stages: the same synthetic benchmark as §2.2b (writes
+`validation/results/hybrid/`) and the same real Elec2/Insects data as §2.4b, but limited
+to just Page-Hinkley (tuned), DDM (tuned), and the hybrid so the comparison stays
+readable (writes `validation/results/live_replay/hybrid/`). Takes ~8-10 minutes total
+because it re-runs the full Elec2 + Insects prequential classifiers; pass
+`--skip-real-data` to only run the ~40s synthetic half.
+
+**Result: not adopted.** The hybrid scores a small, genuine improvement over either
+detector alone on the synthetic benchmark, but on both real datasets its alert count and
+first-alert timing are identical to DDM (tuned) alone, to the sample — every
+Page-Hinkley real-data alert already coincided with a DDM alert. Full breakdown:
+`validation/results/HYBRID_VERDICT.md`.
+
 ### 2.5 Live validation against a real LLM API right now
 
 ```bash
@@ -270,6 +298,15 @@ Instead of typing commands in the terminal, add this to `.vscode/launch.json` (c
       "type": "debugpy",
       "request": "launch",
       "module": "validation.real_data_summary",
+      "cwd": "${workspaceFolder}",
+      "console": "integratedTerminal"
+    },
+    {
+      "name": "Validation: hybrid_validation",
+      "type": "debugpy",
+      "request": "launch",
+      "module": "validation.hybrid_validation",
+      "args": ["--trials", "100", "--seed", "42"],
       "cwd": "${workspaceFolder}",
       "console": "integratedTerminal"
     },
