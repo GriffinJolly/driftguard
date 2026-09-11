@@ -1,0 +1,9 @@
+detector,dataset,n_samples,n_alerts,first_alert_index,alerts_per_1000_samples
+EDDM (tuned),insects,52848,0,,0.0
+RDDM (tuned),insects,52848,5,14725.0,0.09461095973357553
+HDDM_A (tuned),insects,52848,8,1629.0,0.15137753557372086
+HDDM_W (tuned),insects,52848,287,261.0,5.430669088707236
+ECDD (tuned),insects,52848,7090,1530.0,134.15834090221009
+Page-Hinkley (tuned),insects,52848,31850,14847.0,602.6718135028761
+DDM (tuned),insects,52848,38181,14667.0,722.4682107175296
+ADWIN (tuned),insects,52848,52721,127.0,997.5968816227671

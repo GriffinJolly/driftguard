@@ -1,0 +1,4 @@
+detector,dataset,n_samples,n_alerts,first_alert_index,alerts_per_1000_samples
+Page-Hinkley (tuned),elec2,45312,33648,5809,742.5847457627118
+DDM (tuned),elec2,45312,39874,250,879.9876412429378
+Page-Hinkley+DDM (OR hybrid),elec2,45312,39874,250,879.9876412429378
