@@ -12,3 +12,7 @@ numpy
 matplotlib
 tabulate
 river          # validation/live_replay.py -- real public-dataset validation
+fastapi
+uvicorn
+ruptures
+numpy
