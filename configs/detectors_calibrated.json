@@ -1,0 +1,95 @@
+{
+  "provider": "groq",
+  "model_id": "openai/gpt-oss-120b",
+  "n_points": 4,
+  "k": 3.0,
+  "warnings": [
+    "Only 4 quiet-window points available (recommended >= 20). Thresholds derived from this window may be unreliable until more data accumulates."
+  ],
+  "thresholds": {
+    "accuracy": {
+      "metric_name": "accuracy",
+      "direction": "lower_is_bad",
+      "baseline_threshold": 0.8324428947368421,
+      "pelt_penalty": 4.7480881496105926e-05,
+      "page_hinkley_delta": 0.0029261842105263247,
+      "page_hinkley_threshold": 0.01755710526315795,
+      "based_on": {
+        "metric_name": "accuracy",
+        "n": 4,
+        "mean": 0.8605263157894737,
+        "std": 0.026577644574637075,
+        "median": 0.85,
+        "mad": 0.003947368421052644,
+        "mad_scaled": 0.0058523684210526495,
+        "p05": 0.8432894736842105,
+        "p95": 0.8925,
+        "min_val": 0.8421052631578947,
+        "max_val": 0.9
+      }
+    },
+    "format_adherence": {
+      "metric_name": "format_adherence",
+      "direction": "lower_is_bad",
+      "baseline_threshold": 0.999997,
+      "pelt_penalty": 1e-06,
+      "page_hinkley_delta": 5e-07,
+      "page_hinkley_threshold": 3e-06,
+      "based_on": {
+        "metric_name": "format_adherence",
+        "n": 4,
+        "mean": 1.0,
+        "std": 0.0,
+        "median": 1.0,
+        "mad": 0.0,
+        "mad_scaled": 0.0,
+        "p05": 1.0,
+        "p95": 1.0,
+        "min_val": 1.0,
+        "max_val": 1.0
+      }
+    },
+    "refusal_rate": {
+      "metric_name": "refusal_rate",
+      "direction": "upper_is_bad",
+      "baseline_threshold": 3e-06,
+      "pelt_penalty": 1e-06,
+      "page_hinkley_delta": 5e-07,
+      "page_hinkley_threshold": 3e-06,
+      "based_on": {
+        "metric_name": "refusal_rate",
+        "n": 4,
+        "mean": 0.0,
+        "std": 0.0,
+        "median": 0.0,
+        "mad": 0.0,
+        "mad_scaled": 0.0,
+        "p05": 0.0,
+        "p95": 0.0,
+        "min_val": 0.0,
+        "max_val": 0.0
+      }
+    },
+    "latency_p95_ms": {
+      "metric_name": "latency_p95_ms",
+      "direction": "upper_is_bad",
+      "baseline_threshold": 4541.119913765209,
+      "pelt_penalty": 71793.36404171551,
+      "page_hinkley_delta": 113.78484646017182,
+      "page_hinkley_threshold": 682.7090787610309,
+      "based_on": {
+        "metric_name": "latency_p95_ms",
+        "n": 4,
+        "mean": 4155.3424537756655,
+        "std": 768.356969344708,
+        "median": 3858.410835004179,
+        "mad": 153.49365501169814,
+        "mad_scaled": 227.56969292034364,
+        "p05": 3640.103353989107,
+        "p95": 5086.285819842304,
+        "min_val": 3612.325999987661,
+        "max_val": 5292.222145106642
+      }
+    }
+  }
+}

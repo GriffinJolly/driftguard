@@ -4,3 +4,7 @@ httpx
 python-dotenv
 jsonschema
 datasets
+fastapi
+uvicorn
+ruptures
+numpy
