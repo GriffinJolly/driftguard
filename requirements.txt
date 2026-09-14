@@ -4,15 +4,10 @@ httpx
 python-dotenv
 jsonschema
 datasets
-
-# validation/ (drift-detector benchmarking -- see validation/results/REPORT.md)
 frouros
+ruptures
+numpy
+pyyaml
 pandas
 numpy
 matplotlib
-tabulate
-river          # validation/live_replay.py -- real public-dataset validation
-fastapi
-uvicorn
-ruptures
-numpy

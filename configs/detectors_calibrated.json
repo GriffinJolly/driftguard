@@ -1,29 +1,29 @@
 {
   "provider": "groq",
   "model_id": "openai/gpt-oss-120b",
-  "n_points": 4,
+  "n_points": 5,
   "k": 3.0,
   "warnings": [
-    "Only 4 quiet-window points available (recommended >= 20). Thresholds derived from this window may be unreliable until more data accumulates."
+    "Only 5 quiet-window points available (recommended >= 20). Thresholds derived from this window may be unreliable until more data accumulates."
   ],
   "thresholds": {
     "accuracy": {
       "metric_name": "accuracy",
       "direction": "lower_is_bad",
-      "baseline_threshold": 0.8324428947368421,
-      "pelt_penalty": 4.7480881496105926e-05,
-      "page_hinkley_delta": 0.0029261842105263247,
-      "page_hinkley_threshold": 0.01755710526315795,
+      "baseline_threshold": 0.8147599250726332,
+      "pelt_penalty": 0.00022207791139369464,
+      "page_hinkley_delta": 0.0058733458212278065,
+      "page_hinkley_threshold": 0.03524007492736684,
       "based_on": {
         "metric_name": "accuracy",
-        "n": 4,
-        "mean": 0.8605263157894737,
-        "std": 0.026577644574637075,
+        "n": 5,
+        "mean": 0.858421052631579,
+        "std": 0.023493383284911226,
         "median": 0.85,
-        "mad": 0.003947368421052644,
-        "mad_scaled": 0.0058523684210526495,
-        "p05": 0.8432894736842105,
-        "p95": 0.8925,
+        "mad": 0.0,
+        "mad_scaled": 0.0,
+        "p05": 0.8436842105263157,
+        "p95": 0.89,
         "min_val": 0.8421052631578947,
         "max_val": 0.9
       }
@@ -37,7 +37,7 @@
       "page_hinkley_threshold": 3e-06,
       "based_on": {
         "metric_name": "format_adherence",
-        "n": 4,
+        "n": 5,
         "mean": 1.0,
         "std": 0.0,
         "median": 1.0,
@@ -58,7 +58,7 @@
       "page_hinkley_threshold": 3e-06,
       "based_on": {
         "metric_name": "refusal_rate",
-        "n": 4,
+        "n": 5,
         "mean": 0.0,
         "std": 0.0,
         "median": 0.0,
@@ -73,20 +73,20 @@
     "latency_p95_ms": {
       "metric_name": "latency_p95_ms",
       "direction": "upper_is_bad",
-      "baseline_threshold": 4541.119913765209,
-      "pelt_penalty": 71793.36404171551,
-      "page_hinkley_delta": 113.78484646017182,
-      "page_hinkley_threshold": 682.7090787610309,
+      "baseline_threshold": 5284.731467533119,
+      "pelt_penalty": 333398.0579898707,
+      "page_hinkley_delta": 227.56969292034364,
+      "page_hinkley_threshold": 1365.4181575220618,
       "based_on": {
         "metric_name": "latency_p95_ms",
-        "n": 4,
-        "mean": 4155.3424537756655,
-        "std": 768.356969344708,
-        "median": 3858.410835004179,
-        "mad": 153.49365501169814,
-        "mad_scaled": 227.56969292034364,
-        "p05": 3640.103353989107,
-        "p95": 5086.285819842304,
+        "n": 5,
+        "mean": 4292.183963021961,
+        "std": 732.3983325482517,
+        "median": 3919.313310011057,
+        "mad": 306.9873100233963,
+        "mad_scaled": 455.1393858406873,
+        "p05": 3649.362471989589,
+        "p95": 5201.6877160867425,
         "min_val": 3612.325999987661,
         "max_val": 5292.222145106642
       }

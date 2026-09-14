@@ -164,3 +164,55 @@ def evaluate_candidates(
         )
 
     return results
+
+
+def store_significance_results(
+    store: "DriftStore",
+    provider: str,
+    model_id: str,
+    results: dict[str, SignificanceResult],
+) -> dict[str, "ChangePointEventRow"]:
+    """
+    Write one ChangePointEventRow per metric's SignificanceResult to the
+    store -- PROVISIONALLY: p_value_raw is set, p_value_corrected is left
+    None, and `significant` reflects only the UNCORRECTED 0.05 check
+    (significant_at_05), not a final verdict. multiple_testing.py's
+    apply_and_persist_bh_correction() is expected to run next in the same
+    evaluation cycle, patching p_value_corrected and the final
+    `significant` flag into these same rows via update_changepoint_event.
+
+    Per team convention: every detector populates ChangePointEventRow
+    directly, so downstream consumers (dashboard, classification) never
+    need to touch detection code -- this is bootstrap.py's half of that
+    contract for the PELT+bootstrap path (changepoint_sequential.py does
+    the equivalent for the Page-Hinkley path, independently, since that
+    detector doesn't produce p-values or need multiple-testing correction
+    at all).
+
+    Only metrics with a SignificanceResult are written -- a metric with
+    no adverse PELT candidate this run has nothing to report and gets no
+    row, rather than a row full of Nones.
+    """
+    from datetime import datetime, timezone
+    from driftguard.storage.store import ChangePointEventRow
+
+    written: dict[str, ChangePointEventRow] = {}
+    now = datetime.now(timezone.utc)
+
+    for metric_name, result in results.items():
+        event = ChangePointEventRow(
+            detected_at=now,
+            provider=provider,
+            model_id=model_id,
+            metric_name=metric_name,
+            detector="pelt",
+            changepoint_timestamp=result.candidate.timestamp,
+            pre_mean=result.candidate.pre_mean,
+            post_mean=result.candidate.post_mean,
+            p_value_raw=result.p_value,
+            p_value_corrected=None,  # filled in by multiple_testing.py next
+            significant=result.significant_at_05,  # PROVISIONAL -- pre-correction
+        )
+        written[metric_name] = store.write_changepoint_event(event)
+
+    return written

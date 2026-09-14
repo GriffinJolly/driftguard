@@ -122,3 +122,39 @@ def apply_bh_correction(
         )
 
     return corrected
+
+
+def apply_and_persist_bh_correction(
+    store: "DriftStore",
+    event_rows: dict[str, "ChangePointEventRow"],
+    results: dict[str, SignificanceResult],
+    alpha: float = DEFAULT_ALPHA,
+) -> dict[str, CorrectedResult]:
+    """
+    Full correct-and-persist step for one evaluation cycle: takes the
+    ChangePointEventRow rows bootstrap.py already wrote provisionally
+    (via store_significance_results -- p_value_corrected=None,
+    significant=uncorrected verdict), computes the BH-corrected p-values
+    across this batch, and patches the corrected p-value + FINAL
+    significance verdict back into each row via update_changepoint_event.
+
+    `event_rows` and `results` must share the same metric-name keys (as
+    produced together by bootstrap.store_significance_results, which
+    returns event_rows, and the `results` dict passed into it).
+
+    This is multiple_testing.py's half of the "every detector populates
+    ChangePointEventRow directly" contract -- after this call, the rows
+    in the store reflect the final, corrected verdict, and nothing
+    downstream needs to re-run or know about the correction step.
+    """
+    corrected = apply_bh_correction(results, alpha=alpha)
+
+    for metric_name, cr in corrected.items():
+        if metric_name not in event_rows:
+            continue  # defensive -- shouldn't happen if called with matching dicts
+        row = event_rows[metric_name]
+        row.p_value_corrected = cr.p_value_corrected
+        row.significant = cr.significant
+        event_rows[metric_name] = store.update_changepoint_event(row)
+
+    return corrected

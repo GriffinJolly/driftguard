@@ -38,7 +38,7 @@ def main():
     try:
         from driftguard.storage.store import DriftStore
         from driftguard.evalsuite.runner import run_once
-        from driftguard.detection import calibration as cal
+        from driftguard.detection import baseline as cal
         from driftguard.detection import changepoint_pelt as pelt
         from driftguard.ingest.wrapper import DriftGuardClient
         print("All modules imported successfully.")

@@ -79,29 +79,66 @@ alternative_tuned_detectors:
 retrospective_detector:
   # Used by driftguard/detection/changepoint_pelt.py for the batch/
   # historical-confirmation path (see "PELT: the historical confirmation"
-  # slide). NOT validated in validation/run_validation.py yet -- that
-  # benchmark only covers the 8 online/sequential detectors from the
-  # deck's comparison chart, not PELT itself. Treat these as placeholders
-  # until PELT is implemented and benchmarked the same way.
+  # slide).
+  #
+  # UPDATE (supersedes the rbf placeholder this section originally had):
+  # PELT has since been implemented and independently tested. cost_model
+  # was tested as both "rbf" and "l2", paired with a BIC-style penalty
+  # (sigma^2 * log(n)) derived from calibrated noise (see baseline.py's
+  # calibrate()). "rbf" caused severe over-segmentation on stable
+  # synthetic data -- 17+ false change points on pure noise with no
+  # injected drift, because rbf's cost scale doesn't match what a
+  # variance-derived penalty assumes. Switching to "l2" (whose cost IS
+  # variance-based, matching the penalty formula) brought that down to 5
+  # candidates on the same noise, with bootstrap significance testing
+  # correctly filtering essentially all of them out afterward. Recommend
+  # keeping "l2" unless the penalty formula is also independently
+  # re-derived for rbf's scale.
   algorithm: pelt
   params:
-    cost_model: rbf        # placeholder -- pick after PELT is implemented
-    penalty: null          # placeholder -- typically tuned via BIC or a
-                            # validation sweep once real data is available
-    min_segment_length: 20 # placeholder
+    cost_model: l2          # see UPDATE above -- do not revert to rbf without re-deriving the penalty formula
+    penalty: null            # derived per-metric by baseline.py's calibrate(), not a fixed constant here
+    min_segment_length: 3    # matches changepoint_pelt.py's MIN_SEGMENT_LENGTH; the prior placeholder of 20 was untested and likely too conservative for an hourly eval cadence
 
 significance:
   # Used by driftguard/detection/bootstrap.py to decide whether a PELT
   # candidate change point is real before it becomes a ChangePointEventRow
-  # with significant=true. Not yet implemented or validated -- placeholder
-  # values only, matching the ChangePointEventRow schema's
-  # p_value_raw/p_value_corrected fields in driftguard/storage/store.py.
+  # with significant=true.
+  #
+  # UPDATE: bootstrap.py and multiple_testing.py have since been
+  # implemented and tested (permutation test, one-sided, direction-aware;
+  # Benjamini-Hochberg correction across the metrics tested per run).
+  # n_bootstrap_samples below reflects what was actually validated
+  # (2000, not the original 1000 placeholder) -- real injected drift
+  # came back p<0.003 at this sample count; a pure-noise run's one
+  # borderline false positive (uncorrected p=0.025) was correctly
+  # suppressed by BH correction at alpha=0.05.
   alpha: 0.05
-  n_bootstrap_samples: 1000
-  multiple_testing_correction: benjamini_hochberg  # see driftguard/detection/multiple_testing.py (also unbuilt)
+  n_bootstrap_samples: 2000
+  multiple_testing_correction: benjamini_hochberg  # kept in the pipeline -- see multiple_testing.py's module docstring for the concrete false-positive evidence justifying this, since the original deck didn't call for this step explicitly
 
 calibration:
   # Used by driftguard/detection/baseline.py to define the reference
-  # window each detector compares against. Placeholder -- not yet tuned.
-  min_window_size: 100    # samples (individual eval_score calls, not eval runs)
+  # window each detector compares against.
+  #
+  # OPEN QUESTION FOR THE TEAM, NOT YET RESOLVED: this key
+  # (min_window_size) is defined here in units of individual eval_score
+  # CALLS, matching live_detector's tuning (frouros's Page-Hinkley was
+  # validated against per-call binary error streams). baseline.py's
+  # actual implementation, as built and tested, instead calibrates
+  # against aggregated PER-RUN MetricPoint values (one accuracy/format/
+  # refusal/latency number per hourly eval-suite run, ~20-30 calls
+  # collapsed into one point) -- confirmed by testing that frouros's
+  # tuned Page-Hinkley does NOT fire correctly if fed baseline.py's
+  # per-run aggregates instead of per-call values (zero alerts on a
+  # scenario with real injected drift). This means live_detector and
+  # baseline.py/changepoint_pelt.py are currently calibrated at two
+  # DIFFERENT granularities, which needs a team decision: either (a)
+  # change the live-detector integration to consume per-call scores
+  # directly (bypassing baseline.py's per-run window for that path), or
+  # (b) re-tune live_detector against per-run aggregates instead of
+  # adopting the per-call-tuned lambda_=12.0 as-is. Not resolved here --
+  # see changepoint_sequential.py's module docstring for the confirming
+  # test result.
+  min_window_size: 100    # samples (individual eval_score calls, not eval runs) -- see OPEN QUESTION above
   baseline_error_rate_assumption: 0.05  # matches this benchmark's baseline; replace with each (provider, model, metric)'s own observed rate once real data exists
