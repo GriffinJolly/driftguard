@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=61", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "driftguard"
+version = "0.1.0"
+description = "Detecting silent behavioral drift in deployed LLM APIs"
+readme = "README.md"
+# frouros (and the pinned river) cap at <3.13; 3.10-3.12 are the supported range.
+requires-python = ">=3.10,<3.13"
+dependencies = [
+    "pydantic>=2.0",
+    "sqlmodel",
+    "httpx",
+    "python-dotenv",
+    "jsonschema",
+    "datasets",
+    "pyyaml",
+    # validation/ (drift-detector benchmarking)
+    "frouros",
+    "pandas",
+    "numpy",
+    "matplotlib",
+    "tabulate",
+    "river",
+]
+
+[project.optional-dependencies]
+dev = ["pytest"]
+
+[project.scripts]
+# Run the hourly eval suite against a real provider/model.
+driftguard-eval = "driftguard.evalsuite.runner:_main"
+# Reproduce the slide-12 detector comparison on synthetic ground truth.
+driftguard-validate = "validation.run_validation:_main"
+
+[tool.setuptools.packages.find]
+include = ["driftguard*", "validation*"]

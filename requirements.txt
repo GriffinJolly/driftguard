@@ -4,6 +4,7 @@ httpx
 python-dotenv
 jsonschema
 datasets
+pyyaml         # configs/*.yaml + validation/provider_config.yaml
 
 # validation/ (drift-detector benchmarking -- see validation/results/REPORT.md)
 frouros

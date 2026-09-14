@@ -3,3 +3,9 @@ __pycache__/
 *.pyc
 
 driftguard.db
+venv/
+logs/
+*.egg-info/
+build/
+dist/
+.pytest_cache/
