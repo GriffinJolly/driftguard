@@ -1,0 +1,10 @@
+detector,provider,model_id,n_real_calls,n_alerts,first_alert_index,alerts_per_1000_calls
+Page-Hinkley (tuned),openrouter,nvidia/nemotron-3-super-120b-a12b:free,51,0,,0.0
+DDM (tuned),openrouter,nvidia/nemotron-3-super-120b-a12b:free,51,0,,0.0
+EDDM (tuned),openrouter,nvidia/nemotron-3-super-120b-a12b:free,51,0,,0.0
+ADWIN (tuned),openrouter,nvidia/nemotron-3-super-120b-a12b:free,51,0,,0.0
+HDDM_A (tuned),openrouter,nvidia/nemotron-3-super-120b-a12b:free,51,0,,0.0
+HDDM_W (tuned),openrouter,nvidia/nemotron-3-super-120b-a12b:free,51,0,,0.0
+RDDM (tuned),openrouter,nvidia/nemotron-3-super-120b-a12b:free,51,0,,0.0
+ECDD (tuned),openrouter,nvidia/nemotron-3-super-120b-a12b:free,51,0,,0.0
+Page-Hinkley+DDM (OR hybrid),openrouter,nvidia/nemotron-3-super-120b-a12b:free,51,0,,0.0
