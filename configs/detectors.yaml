@@ -93,26 +93,42 @@ alternative_tuned_detectors:
 retrospective_detector:
   # Used by driftguard/detection/changepoint_pelt.py for the batch/
   # historical-confirmation path (see "PELT: the historical confirmation"
-  # slide). NOT validated in validation/run_validation.py yet -- that
-  # benchmark only covers the 8 online/sequential detectors from the
-  # deck's comparison chart, not PELT itself. Treat these as placeholders
-  # until PELT is implemented and benchmarked the same way.
+  # slide). NOW IMPLEMENTED and validated on real historical data --
+  # validation/retrospective_validation.py runs this over the whole Insects
+  # error history (52,848 samples) and PELT+bootstrap locate the known drift
+  # (error 0.26 -> 0.92) at sample ~14,350, ~126 samples from the
+  # independently-estimated onset (~14,476). See that script + its output in
+  # validation/results/retrospective/.
   algorithm: pelt
   params:
-    cost_model: rbf        # placeholder -- pick after PELT is implemented
-    penalty: null          # placeholder -- typically tuned via BIC or a
-                            # validation sweep once real data is available
-    min_segment_length: 20 # placeholder
+    # cost_model was 'rbf' as a placeholder, but the RBF kernel cost builds an
+    # n x n Gram matrix (~20 GB at 52k samples) -- infeasible on real metric
+    # histories. 'l2' (piecewise-constant mean) is correct here: a metric drift
+    # IS a shift in the error/accuracy RATE, which is what l2 segments on, and
+    # it is O(n).
+    cost_model: l2
+    # penalty null -> a BIC-style default is computed from the signal
+    # (variance * log(n)) and scaled by penalty_scale; higher scale -> fewer
+    # candidate change points. PELT only PROPOSES; the significance step below
+    # confirms which candidates are real.
+    penalty: null
+    penalty_scale: 5
+    min_segment_length: 200  # 20 over-segments a noisy 50k stream; 200 is stable
+    jump: 25                 # grid resolution; keeps a 50k stream to ~15s
 
 significance:
   # Used by driftguard/detection/bootstrap.py to decide whether a PELT
   # candidate change point is real before it becomes a ChangePointEventRow
-  # with significant=true. Not yet implemented or validated -- placeholder
-  # values only, matching the ChangePointEventRow schema's
-  # p_value_raw/p_value_corrected fields in driftguard/storage/store.py.
+  # with significant=true. NOW IMPLEMENTED (permutation test on the two
+  # adjacent segments + Benjamini-Hochberg correction across all candidates).
+  # Honest caveat found on real data: on long segments even a tiny mean shift
+  # is "statistically significant" (large-n), so the effect SIZE (magnitude of
+  # the jump) matters as much as the p-value -- the permutation test uses a
+  # bounded window around each change point for exactly this reason.
   alpha: 0.05
   n_bootstrap_samples: 1000
-  multiple_testing_correction: benjamini_hochberg  # see driftguard/detection/multiple_testing.py (also unbuilt)
+  window: 2000  # samples each side of a change point the permutation test uses
+  multiple_testing_correction: benjamini_hochberg  # implemented in driftguard/detection/bootstrap.py
 
 calibration:
   # Used by driftguard/detection/baseline.py to define the reference
