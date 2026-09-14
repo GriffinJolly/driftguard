@@ -51,6 +51,7 @@ Usage (from the repo root):
 from __future__ import annotations
 
 import argparse
+import re
 import sys
 import time
 from pathlib import Path
@@ -64,15 +65,16 @@ import pandas as pd
 from driftguard.evalsuite.tasks import run_accuracy_tasks
 from driftguard.storage.store import DriftStore
 
-from validation.detectors_registry import default_registry
+from validation.detectors_registry import default_registry, tuned_registry
 from validation.live_replay import make_timeline_chart
 
 
-def run(provider: str, model_id: str, rounds: int, out_dir: Path, db_path: str) -> pd.DataFrame:
+def run(provider: str, model_id: str, rounds: int, out_dir: Path, db_path: str, registry=None) -> pd.DataFrame:
     out_dir.mkdir(parents=True, exist_ok=True)
     store = DriftStore(db_path=db_path)
 
-    registry = default_registry(include_tuned_variants=True)
+    if registry is None:
+        registry = default_registry(include_tuned_variants=True)
     detectors = {spec.name: spec.factory() for spec in registry}
     alerts_by_detector: dict[str, list[int]] = {name: [] for name in detectors}
 
@@ -135,7 +137,11 @@ def run(provider: str, model_id: str, rounds: int, out_dir: Path, db_path: str) 
         for name, alerts in alerts_by_detector.items()
     ]
     summary = pd.DataFrame(rows).sort_values("n_alerts")
-    tag = f"{provider}_{model_id}".replace("/", "-")
+    # Sanitize every filesystem-unsafe character, not just "/". OpenRouter's
+    # free model ids end in ":free", and on Windows a ":" in a path is the
+    # NTFS alternate-data-stream separator -- left unsanitized it silently
+    # routes the CSV/PNG into ADS streams instead of real files.
+    tag = re.sub(r'[^A-Za-z0-9._-]', "-", f"{provider}_{model_id}")
     summary.to_csv(out_dir / f"{tag}_alert_summary.csv", index=False)
     pd.Series(errors_arr).to_frame("error").to_csv(out_dir / f"{tag}_error_stream.csv", index=False)
     make_timeline_chart(errors_arr, alerts_by_detector, f"{provider}/{model_id} (LIVE)", out_dir / f"{tag}_timeline.png")
@@ -154,8 +160,18 @@ def _main() -> None:
     parser.add_argument("--rounds", type=int, default=10, help="Each round = 20 real API calls (the frozen MMLU subset)")
     parser.add_argument("--out", type=str, default="validation/results/live_replay_groq")
     parser.add_argument("--db-path", type=str, default="driftguard.db")
+    parser.add_argument(
+        "--registry", choices=["default", "tuned"], default="default",
+        help="'default': library defaults + Page-Hinkley (tuned) only. "
+             "'tuned': ALL 8 detectors individually tuned (validation/tuning_sweep_all.py), "
+             "so Page-Hinkley (tuned) and DDM (tuned) are validated live alongside the other 6. "
+             "The Page-Hinkley+DDM OR-hybrid is excluded (rejected -- see HYBRID_VERDICT.md; "
+             "the project uses Page-Hinkley alone). Mirrors validation/live_replay.py's --registry flag.",
+    )
     args = parser.parse_args()
-    run(args.provider, args.model, args.rounds, Path(args.out), args.db_path)
+    registry = tuned_registry() if args.registry == "tuned" else None
+    out_dir = Path(args.out) / "tuned" if args.registry == "tuned" else Path(args.out)
+    run(args.provider, args.model, args.rounds, out_dir, args.db_path, registry=registry)
 
 
 if __name__ == "__main__":

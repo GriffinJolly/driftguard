@@ -37,6 +37,20 @@
 # detector alone on the synthetic benchmark (0.859 vs. 0.850/0.848
 # composite) -- not enough, on its own, to justify the added complexity
 # given the real-data result.
+#
+# LIVE-TRAFFIC CHECK (validation/results/LIVE_TRAFFIC_VERDICT.md): the tuned
+# set + OR-hybrid was also run live against a real LLM API (OpenRouter,
+# nvidia/nemotron-3-super-120b-a12b:free) on the frozen MMLU suite. The run
+# was PARTIAL -- OpenRouter's free-tier quota capped it at 51 of 200 intended
+# calls -- and the model was stable (50/51 correct, 1.96% error, no drift in
+# the window). On that stable real stream ALL nine detectors (incl.
+# Page-Hinkley, DDM, and the hybrid) correctly fired ZERO alerts, matching the
+# clean-stream phishing baseline -- i.e. no false alarms on real, non-drifting
+# live traffic. This REINFORCES but does not change the recommendation below:
+# it did not test detection timing (no drift occurred), DDM never passed its
+# 150-sample warm-up floor at n=51, and 51 clean samples don't reproduce
+# ECDD/HDDM_W's real-data overfitting. The load-bearing evidence remains the
+# Elec2/Insects real-drift results above.
 
 live_detector:
   # Used by driftguard/detection/changepoint_sequential.py for the
