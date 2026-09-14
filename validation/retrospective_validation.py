@@ -39,7 +39,7 @@ import matplotlib.pyplot as plt
 import numpy as np
 import pandas as pd
 
-from driftguard.detection.bootstrap import SignificanceConfig, test_changepoints
+from driftguard.detection.bootstrap import SignificanceConfig, confirm_changepoints
 from driftguard.detection.changepoint_pelt import PeltConfig, detect_changepoints
 from validation.report import _style_axis
 
@@ -103,7 +103,7 @@ def run(dataset: str, pelt_cfg: PeltConfig, sig_cfg: SignificanceConfig, out_dir
     print(f"PELT ({pelt_cfg.cost_model}, penalty_scale={pelt_cfg.penalty_scale}, "
           f"min_seg={pelt_cfg.min_segment_length}) proposed {len(changepoints)} candidate change point(s).")
 
-    results = test_changepoints(errors, changepoints, sig_cfg)
+    results = confirm_changepoints(errors, changepoints, sig_cfg)
     df = pd.DataFrame(results)
     if not df.empty:
         df = df.sort_values("index").reset_index(drop=True)

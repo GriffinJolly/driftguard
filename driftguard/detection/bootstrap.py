@@ -99,7 +99,7 @@ def benjamini_hochberg(p_values: list[float], alpha: float = 0.05) -> tuple[np.n
     return significant, adjusted
 
 
-def test_changepoints(
+def confirm_changepoints(
     signal: np.ndarray, changepoints: list[int], config: SignificanceConfig = SignificanceConfig(),
 ) -> list[dict]:
     """Run the full confirm-or-reject step for a list of PELT change points.
