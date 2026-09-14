@@ -13,3 +13,4 @@ numpy
 matplotlib
 tabulate
 river          # validation/live_replay.py -- real public-dataset validation
+ruptures       # driftguard/detection/changepoint_pelt.py -- PELT retrospective path

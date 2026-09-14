@@ -24,6 +24,7 @@ dependencies = [
     "matplotlib",
     "tabulate",
     "river",
+    "ruptures",
 ]
 
 [project.optional-dependencies]
