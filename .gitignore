@@ -4,6 +4,7 @@ __pycache__/
 
 driftguard.db
 venv/
+.venv-mac/
 logs/
 *.egg-info/
 build/
