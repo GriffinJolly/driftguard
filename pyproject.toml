@@ -29,6 +29,7 @@ dependencies = [
 
 [project.optional-dependencies]
 dev = ["pytest"]
+dashboard = ["streamlit>=1.45", "plotly"]
 
 [project.scripts]
 # Run the hourly eval suite against a real provider/model.
