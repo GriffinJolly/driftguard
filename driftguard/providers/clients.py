@@ -28,6 +28,7 @@ project root. Never hardcode keys here.
 
 from __future__ import annotations
 
+import logging
 import os
 import time
 import threading
@@ -127,6 +128,24 @@ def _get_api_key(config: ProviderConfig) -> str:
 # Core call function
 # ---------------------------------------------------------------------------
 
+logger = logging.getLogger("driftguard.clients")
+
+MAX_429_RETRIES = 3
+MAX_RETRY_WAIT_S = 60.0          # sleep at most this long per retry
+GIVE_UP_IF_WAIT_OVER_S = 120.0   # a longer Retry-After means a daily cap; don't stall the run
+
+
+def _retry_wait(resp: httpx.Response, attempt: int) -> Optional[float]:
+    """Seconds to wait before retrying a 429, or None to give up now."""
+    try:
+        wait = float(resp.headers.get("retry-after", ""))
+    except ValueError:
+        wait = 5.0 * (2 ** attempt)
+    if wait > GIVE_UP_IF_WAIT_OVER_S:
+        return None
+    return min(max(wait, 1.0), MAX_RETRY_WAIT_S)
+
+
 def call_model(
     provider: str,
     model_id: str,
@@ -156,8 +175,6 @@ def call_model(
     request_params = request_params or {}
     api_key = _get_api_key(config)
 
-    config.rate_limiter.wait()
-
     payload = {
         "model": model_id,
         "messages": [{"role": "user", "content": prompt}],
@@ -175,8 +192,18 @@ def call_model(
 
     start = time.monotonic()
     try:
-        resp = client.post("/chat/completions", json=payload, headers=headers)
-        latency_ms = (time.monotonic() - start) * 1000
+        for attempt in range(MAX_429_RETRIES + 1):
+            config.rate_limiter.wait()
+            start = time.monotonic()  # latency = final attempt only, never backoff sleeps
+            resp = client.post("/chat/completions", json=payload, headers=headers)
+            latency_ms = (time.monotonic() - start) * 1000
+            if resp.status_code != 429 or attempt == MAX_429_RETRIES:
+                break
+            wait = _retry_wait(resp, attempt)
+            if wait is None:
+                break
+            logger.warning("429 from %s (attempt %d), retrying in %.0fs", provider, attempt + 1, wait)
+            time.sleep(wait)
 
         if resp.status_code == 429:
             return DriftLogEntry(
