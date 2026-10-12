@@ -1,3 +1,5 @@
+# Python 3.10-3.12 (frouros does not install on Python 3.13).
+# Exact versions that passed the full test suite: requirements-lock.txt
 pydantic>=2.0
 sqlmodel
 httpx
@@ -9,5 +11,6 @@ ruptures
 numpy
 pyyaml
 pandas
-numpy
 matplotlib
+fastapi        # driftguard/ingest/proxy.py (reverse-proxy mode) and tests/test_proxy.py
+pytest         # running the tests: python -m pytest tests/
