@@ -5,7 +5,8 @@ DriftGuard operator dashboard.
 
 Reads driftguard.db (set DRIFTGUARD_DB to point elsewhere), runs the tuned
 online detector and the retrospective PELT path over every per-call signal,
-and maps each shift to a category and a recommended action.
+and hands every detection to the classification layer -- rules.py labels it,
+incidents.py groups it, remediation/mapper.py gives the urgency and the plan.
 """
 
 from __future__ import annotations
@@ -25,8 +26,10 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-from driftguard.classification.rules import CATEGORIES, SIGNALS
+from driftguard.classification import rules
 from driftguard.dashboard import data as D
+from driftguard.dashboard.signals import SIGNALS
+from driftguard.remediation import mapper
 
 DB_PATH = Path(os.environ.get("DRIFTGUARD_DB", D.DEFAULT_DB))
 
@@ -34,15 +37,23 @@ DB_PATH = Path(os.environ.get("DRIFTGUARD_DB", D.DEFAULT_DB))
 INK, INK_2, MUTED = "#0b0b0b", "#52514e", "#898781"
 GRID, AXIS, SURFACE = "#e8e7e1", "#c3c2b7", "#ffffff"
 SERIES_1 = "#2a78d6"
-CATEGORY_COLOR = {"Capability": "#2a78d6", "Safety": "#eb6834", "Format": "#1baf7a", "Infrastructure": "#eda100"}
+# Drift labels from classification/rules.py, in its taxonomy order.
+DRIFT_TYPES = [r.drift_type for r in rules.TAXONOMY.values()]
+DRIFT_NAME = {r.drift_type: r.display_name for r in rules.TAXONOMY.values()}
+CATEGORY_COLOR = {rules.CAPABILITY_SHIFT: "#2a78d6", rules.SAFETY_SHIFT: "#eb6834",
+                  rules.FORMAT_DRIFT: "#1baf7a", rules.INFRA_CHANGE: "#eda100"}
+# Urgency levels from remediation/mapper.py, plus two dashboard-only states.
+_X, _BANG, _DASH, _I, _OK = ("M6.5 6.5l7 7M13.5 6.5l-7 7", "M10 5.5v5.5M10 14.2v.3", "M5.5 10h9",
+                             "M10 9v5M10 6v.3", "M5 10.5l3.2 3.2L15 7")
 STATUS = {
-    "good": ("#0ca30c", "No drift", "M5 10.5l3.2 3.2L15 7"),
-    "warning": ("#d99400", "Online alert", "M10 5.5v5.5M10 14.2v.3"),
-    "critical": ("#d03b3b", "Drift confirmed", "M6.5 6.5l7 7M13.5 6.5l-7 7"),
-    "watch": ("#898781", "Watch", "M5.5 10h9"),
-    "notice": ("#898781", "Client-side", "M10 9v5M10 6v.3"),
+    mapper.ACT_NOW: ("#d03b3b", "Act now", _X),
+    mapper.ACT: ("#d03b3b", "Act", _X),
+    mapper.INVESTIGATE: ("#ec835a", "Investigate", _BANG),
+    mapper.WATCH: ("#d99400", "Watch", _BANG),
+    mapper.NOTE: ("#898781", "Note", _DASH),
+    "context": ("#898781", "Context only", _I),
+    "clear": ("#0ca30c", "Clear", _OK),
 }
-SEVERITY = ["good", "watch", "warning", "critical"]  # "notice" never enters the drift verdict
 SEQ_SCALE = [[0.0, "#cde2fb"], [0.17, "#9ec5f4"], [0.33, "#6da7ec"], [0.5, "#3987e5"],
              [0.67, "#256abf"], [0.83, "#184f95"], [1.0, "#0d366b"]]
 FONT = 'system-ui, -apple-system, "Segoe UI", Roboto, sans-serif'
@@ -143,8 +154,26 @@ def status_pill(level: str) -> str:
     return f'<span class="dg-pill">{status_icon(level, 14)}{STATUS[level][1]}</span>'
 
 
-def cat_chip(category: str) -> str:
-    return f'<span class="dg-cat"><i style="background:{CATEGORY_COLOR[category]}"></i>{esc(category)}</span>'
+def cat_chip(drift_type) -> str:
+    """Chip for a rules.py drift label; grey 'Outside taxonomy' for signals rules.py never labels."""
+    if not drift_type:
+        return f'<span class="dg-cat"><i style="background:{MUTED}"></i>Outside taxonomy</span>'
+    return (f'<span class="dg-cat"><i style="background:{CATEGORY_COLOR[drift_type]}"></i>'
+            f'{esc(DRIFT_NAME[drift_type])}</span>')
+
+
+def signal_drift_type(key: str):
+    metric = SIGNALS[key].metric
+    return rules.TAXONOMY[metric].drift_type if metric else None
+
+
+def fmt_metric(metric: str, v) -> str:
+    """A before/after value in the metric's own units, as rules.py reports it."""
+    if v is None or pd.isna(v):
+        return "–"
+    if metric.startswith("latency"):
+        return f"{v:,.0f} ms"
+    return f"{v:.3f}"
 
 
 def pct(x, digits=1) -> str:
@@ -203,7 +232,7 @@ def cached_calls(path: str, version: float) -> pd.DataFrame:
     return D.load_calls(path)
 
 
-@st.cache_data(show_spinner="Running Page-Hinkley and PELT over the selected scope…")
+@st.cache_resource(show_spinner="Running Page-Hinkley and PELT, then classifying…")
 def cached_analysis(path: str, version: float, target: str, run_id: str | None):
     calls = cached_calls(path, version)
     scope = calls[calls["target"] == target]
@@ -213,13 +242,15 @@ def cached_analysis(path: str, version: float, target: str, run_id: str | None):
     settings = D.load_settings()
     streams = D.build_streams(scope, settings.baseline_window)
     results = D.analyse(streams, settings)
-    shifts = D.shift_table(results)
+    prov, model = target.split(" · ", 1)
+    analysis = D.classify_detections(results, prov, model, settings, sigmas=D.load_sigmas())
+    shifts = D.shift_table(analysis)
     pos = pd.Series(np.arange(1, len(scope) + 1), index=scope["seq_id"].to_numpy())
     if len(shifts):
         shifts["call_no"] = shifts["seq_id"].map(pos).astype(int)
     else:
         shifts["call_no"] = pd.Series(dtype=int)
-    return scope, results, shifts, pos, settings
+    return scope, results, analysis, shifts, pos, settings
 
 
 # ----------------------------------------------------------------------------- sidebar
@@ -270,14 +301,17 @@ with st.sidebar:
         f'<div class="dg-kv"><b>Online</b> · Page-Hinkley, λ = {s0.ph_lambda:g}, δ = {s0.ph_delta:g}, '
         f'warm-up {s0.ph_min_instances} calls<br><b>Retrospective</b> · PELT ({s0.pelt.cost_model}, '
         f'penalty × {s0.pelt.penalty_scale:g}) → permutation test ({s0.significance.n_bootstrap_samples:,}) '
-        f'→ Benjamini-Hochberg, α = {s0.significance.alpha:g}</div>', unsafe_allow_html=True)
+        f'→ Benjamini-Hochberg, α = {s0.significance.alpha:g}<br><b>Classification</b> · rules.py labels, '
+        f'incidents.py groups events within {int(D.DEFAULT_WINDOW.total_seconds() // 3600)} h, '
+        f'mapper.py sets urgency</div>', unsafe_allow_html=True)
     st.write("")
     if st.button("Reload data", icon=":material/refresh:", width="stretch"):
         st.cache_data.clear()
+        st.cache_resource.clear()
         st.rerun()
     st.caption(f"Database: `{DB_PATH.name}`")
 
-scope, results, shifts, pos, settings = cached_analysis(str(DB_PATH), db_version(), target, run_id)
+scope, results, analysis, shifts, pos, settings = cached_analysis(str(DB_PATH), db_version(), target, run_id)
 provider, model_id = target.split(" · ", 1)
 
 
@@ -293,9 +327,9 @@ X_TITLE = "Time (UTC)" if axis == "Time" else "Call # in scope"
 
 # ----------------------------------------------------------------------------- header
 
-levels = {k: D.signal_status(r) for k, r in results.items()}
-drift_levels = [v for k, v in levels.items() if SIGNALS[k].provider_drift]
-worst = max(drift_levels, key=SEVERITY.index) if drift_levels else "good"
+levels = {k: D.signal_status(k, analysis) for k in results}
+top = D.top_incident(analysis)
+worst = analysis.plans[top].urgency if top is not None else "clear"
 st.markdown(f"""
 <div class="dg-head">
   <div class="dg-brand"><div><h1>Behavioral drift monitor</h1>
@@ -311,17 +345,9 @@ st.markdown(f"""
 tab_over, tab_map, tab_sig, tab_log, tab_calls = st.tabs(
     ["Overview", "Shift map", "Signals", "Shift log & review", "Call explorer"])
 
-client_side = shifts[shifts["worsening"] & ~shifts["provider_drift"]] if len(shifts) else shifts
-worsening = shifts[shifts["worsening"] & shifts["provider_drift"]] if len(shifts) else shifts
-confirmed = worsening[worsening["detector"].str.startswith("PELT")] if len(worsening) else worsening
-online = worsening[worsening["detector"].str.startswith("Page")] if len(worsening) else worsening
-
-
-def alert_level(s) -> str:
-    """Card level for one shift row: confirmed = critical; online alert = warning or watch by size."""
-    if s["detector"].startswith("PELT"):
-        return "critical"
-    return "warning" if not pd.isna(s["change"]) and s["change"] >= D.WATCH_EFFECT else "watch"
+labelled = shifts[shifts["drift_type"].notna()] if len(shifts) else shifts
+context = (shifts[~shifts["in_taxonomy"] & ((shifts["detector"] == "Page-Hinkley") | (shifts["tier"] == rules.CONFIRMED))]
+           if len(shifts) else shifts)
 
 
 def recent_vs_base(values: np.ndarray, base_n: int, recent_n: int = 200):
@@ -332,27 +358,22 @@ def recent_vs_base(values: np.ndarray, base_n: int, recent_n: int = 200):
 
 # ============================================================================= OVERVIEW
 with tab_over:
-    flagged = [SIGNALS[k].label for k, v in levels.items()
-               if v == worst and worst != "good" and SIGNALS[k].provider_drift]
-    plural = "s" if len(flagged) != 1 else ""
-    banner_t = {"critical": f"Drift confirmed on {len(flagged)} signal{plural}",
-                "warning": "Online alert raised, not yet confirmed by the retrospective test",
-                "watch": f"No confirmed drift · {len(flagged)} signal{plural} under watch",
-                "good": "No drift detected in this scope"}[worst]
-    parts = []
-    if flagged:
-        parts.append(", ".join(flagged) + (". Open the shift map to see where it happened and what to do."
-                                           if worst != "watch" else ": small unconfirmed alerts only."))
+    if top is None:
+        banner_t = "No drift detected in this scope"
+        parts = [f"{sum(SIGNALS[k].metric is not None for k in results)} classified signals monitored "
+                 f"across {len(scope):,} calls."]
     else:
-        parts.append(f"{sum(SIGNALS[k].provider_drift for k in results)} signals monitored across {len(scope):,} calls.")
-    if len(client_side):
-        parts.append(f"Our rate limit or quota ran out {client_side['detector'].str.startswith('PELT').sum()} "
-                     "time(s) in this scope; that is client-side and not counted as drift.")
+        plan = analysis.plans[top]
+        banner_t = f"{STATUS[worst][1]} · {plan.headline}"
+        parts = [plan.steps[0]]
+    ctx = sorted({SIGNALS[k].label for k in context["signal"]}) if len(context) else []
+    if ctx:
+        parts.append(f"Also moved, outside the taxonomy and shown for context only: {', '.join(ctx)}.")
     if run_id is None:
         parts.append("This is the combined history of several experiments.")
     banner_s = " ".join(parts)
     st.markdown(f'<div class="dg-banner" style="border-left:4px solid {STATUS[worst][0]}">'
-                f'{status_icon(worst, 26)}<div><div class="t">{banner_t}</div><div class="s">{esc(banner_s)}</div>'
+                f'{status_icon(worst, 26)}<div><div class="t">{esc(banner_t)}</div><div class="s">{esc(banner_s)}</div>'
                 f'</div></div>', unsafe_allow_html=True)
 
     # KPI tiles
@@ -378,7 +399,9 @@ with tab_over:
         ("Answer error rate · last 200", pct(acc_r), delta_html(acc_r - acc_b, lambda v: f"{v * 100:.1f} pp")),
         ("p95 latency · last 200", "–" if pd.isna(lat_r) else f"{lat_r / 1000:.2f} s",
          delta_html(lat_r - lat_b, lambda v: f"{v / 1000:.2f} s")),
-        ("Shifts detected", f"{len(confirmed)}", f"confirmed worsening · {len(online)} online alert{'s' if len(online) != 1 else ''}"),
+        ("Incidents", f"{len(analysis.incidents)}",
+         f"{len(labelled)} classified event{'s' if len(labelled) != 1 else ''}"
+         + ("" if top is None else f" · top urgency: {STATUS[worst][1].lower()}")),
     ]
     st.markdown('<div class="dg-kpis">' + "".join(
         f'<div class="dg-kpi"><div class="l">{esc(l)}</div><div class="v">{v}</div><div class="d">{d}</div></div>'
@@ -399,7 +422,7 @@ with tab_over:
             n_conf = sum(1 for t in r.confirmed if t["significant"])
             with col.container(border=True):
                 st.markdown(
-                    f'<div class="dg-sig-row">{cat_chip(sig.category)}{status_pill(levels[key])}</div>'
+                    f'<div class="dg-sig-row">{cat_chip(signal_drift_type(key))}{status_pill(levels[key])}</div>'
                     f'<div class="dg-sig-title">{esc(sig.label)}</div>'
                     f'<div class="dg-nums"><div>Recent<b>{pct(rc)}</b></div><div>Baseline<b>{pct(b)}</b></div>'
                     f'<div>Calls<b>{len(r.stream.values):,}</b></div></div>', unsafe_allow_html=True)
@@ -417,19 +440,33 @@ with tab_over:
                 st.plotly_chart(fig, config=PLOT_CONFIG, key=f"spark_{key}")
                 st.markdown(f'<div class="dg-foot">{n_conf} confirmed shift{"s" if n_conf != 1 else ""} · '
                             f'{len(r.alerts)} online alert{"s" if len(r.alerts) != 1 else ""}'
-                            f'{" · " + esc(r.stream.note) if r.stream.note else ""}</div>', unsafe_allow_html=True)
+                            f'{" · " + esc(r.stream.note) if r.stream.note else ""}'
+                            f'{" · " + esc(sig.context_note) if sig.context_note else ""}</div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="dg-section">Latest shifts</div>', unsafe_allow_html=True)
-    if len(worsening) == 0:
-        st.markdown('<div class="dg-empty">No worsening shift in this scope.</div>', unsafe_allow_html=True)
-    for _, s in worsening.sort_values("seq_id", ascending=False).head(4).iterrows():
-        lvl = alert_level(s)
+    st.markdown('<div class="dg-section">Incidents</div>'
+                '<div class="dg-sub">Events that moved together, grouped by incidents.py; urgency and plan from '
+                'remediation/mapper.py.</div>', unsafe_allow_html=True)
+    if not analysis.incidents:
+        st.markdown('<div class="dg-empty">No incident in this scope.</div>', unsafe_allow_html=True)
+    order = sorted(range(len(analysis.incidents)), key=lambda k: analysis.incidents[k].start, reverse=True)
+    for k in order[:4]:
+        inc, plan = analysis.incidents[k], analysis.plans[k]
+        chips = "".join(cat_chip(c) for c in inc.channels)
+        meanings = "".join(f"<li>{esc(m)}</li>" for m in plan.meanings)
+        hints = "".join(f"<li>{esc(h)}</li>" for h in plan.possible_explanations)
+        steps = "".join(f"<li>{esc(x)}</li>" for x in plan.steps[:4])
+        ev = D.incident_evidence(DB_PATH, inc)
+        ev_html = ("".join(f"<li><b>{esc(m)}</b>: {esc(e.summary)}</li>" for m, e in ev.items()) if ev else
+                   "<li>Flip-set evidence needs per-run eval data (<code>metric_series</code>); this scope has none.</li>")
         st.markdown(
-            f'<div class="dg-shift" style="border-left-color:{STATUS[lvl][0]}"><div class="top">'
-            f'{status_pill(lvl)}<span class="what">{esc(s["signal_label"])}</span>{cat_chip(s["category"])}'
-            f'<span class="when">call #{s["call_no"]:,} · {fmt_ts(s["timestamp"])}</span></div>'
-            f'<div class="num">{esc(s["detector"])} · {pct(s["before"])} → {pct(s["after"])} '
-            f'({pp(s["change"])})</div><div class="act"><span>Recommended:</span> {esc(s["action"])}</div></div>',
+            f'<div class="dg-shift" style="border-left-color:{STATUS[plan.urgency][0]}"><div class="top">'
+            f'{status_pill(plan.urgency)}{chips}<span class="when">{fmt_ts(inc.start)}</span></div>'
+            f'<div class="num" style="color:{INK}">{esc(plan.headline)}</div>'
+            f'<div class="act"><span>What it means</span><ul style="margin:2px 0 4px 18px">{meanings}</ul></div>'
+            + (f'<div class="act"><span>Possible explanations</span><ul style="margin:2px 0 4px 18px">{hints}</ul></div>'
+               if hints else "")
+            + f'<div class="act"><span>Plan</span><ol style="margin:2px 0 4px 18px">{steps}</ol></div>'
+            f'<div class="act"><span>Evidence</span><ul style="margin:2px 0 0 18px">{ev_html}</ul></div></div>',
             unsafe_allow_html=True)
 
 
@@ -483,7 +520,7 @@ with tab_map:
         base_layout(fig, 90 + 74 * len(keys), barmode="overlay", bargap=0.0)
         fig.update_yaxes(tickvals=list(range(len(keys))), autorange="reversed", showgrid=False,
                          ticktext=[f"<b>{SIGNALS[k].label}</b>  <span style='color:{MUTED}'>"
-                                   f"{SIGNALS[k].category if SIGNALS[k].provider_drift else 'Client-side'}</span>"
+                                   f"{DRIFT_NAME[signal_drift_type(k)] if signal_drift_type(k) else 'context only'}</span>"
                                    for k in keys], tickfont=dict(color=INK, size=12), range=[len(keys) - 0.4, -0.75])
         fig.update_xaxes(title=dict(text=X_TITLE, font=dict(color=MUTED, size=11)), showgrid=True, gridcolor=GRID)
         with st.container(border=True):
@@ -497,45 +534,45 @@ with tab_map:
                 f'<span style="width:120px;height:9px;border-radius:3px;background:linear-gradient(90deg,'
                 f'#cde2fb,#6da7ec,#256abf,#0d366b)"></span>100%</span></div>', unsafe_allow_html=True)
 
-    st.markdown('<div class="dg-section">Shifts by category</div>'
-                '<div class="dg-sub">Each shift is attributed to the category of the signal it was found on.</div>',
+    st.markdown('<div class="dg-section">Events by drift type</div>'
+                '<div class="dg-sub">Adverse events labelled by rules.py, counted by evidence tier.</div>',
                 unsafe_allow_html=True)
     cells = []
-    for c in CATEGORIES:
-        sub = worsening[worsening["category"] == c] if len(worsening) else worsening
-        n_c = int(sub["detector"].str.startswith("PELT").sum()) if len(sub) else 0
-        n_o = int(sub["detector"].str.startswith("Page").sum()) if len(sub) else 0
-        monitored = [SIGNALS[k].label for k in results if SIGNALS[k].category == c]
+    adverse = labelled[labelled["adverse"] == True] if len(labelled) else labelled  # noqa: E712
+    for dt in DRIFT_TYPES:
+        sub = adverse[adverse["drift_type"] == dt] if len(adverse) else adverse
+        n_c = int(sub["tier"].isin([rules.CONFIRMED, rules.PROVISIONAL]).sum()) if len(sub) else 0
+        n_o = int((sub["tier"] == rules.EARLY_WARNING).sum()) if len(sub) else 0
+        n_u = int((sub["tier"] == rules.UNCONFIRMED).sum()) if len(sub) else 0
+        monitored = [SIGNALS[k].label for k in results if signal_drift_type(k) == dt]
         note = ", ".join(monitored) if monitored else "no data in this scope"
-        cells.append(f'<div class="c">{cat_chip(c)}<div class="n">{n_c}</div>'
-                     f'<div class="x">confirmed · {n_o} online alert{"s" if n_o != 1 else ""}<br>{esc(note)}</div></div>')
+        cells.append(f'<div class="c">{cat_chip(dt)}<div class="n">{n_c}</div>'
+                     f'<div class="x">confirmed · {n_o} early warning{"s" if n_o != 1 else ""} · {n_u} unconfirmed'
+                     f'<br>{esc(note)}</div></div>')
     st.markdown('<div class="dg-catgrid">' + "".join(cells) + "</div>", unsafe_allow_html=True)
 
-    st.markdown('<div class="dg-section">Shift → category → action</div>', unsafe_allow_html=True)
+    st.markdown('<div class="dg-section">Every detection, as rules.py reads it</div>', unsafe_allow_html=True)
     if len(shifts) == 0:
-        st.markdown('<div class="dg-empty">No shifts detected in this scope.</div>', unsafe_allow_html=True)
+        st.markdown('<div class="dg-empty">No detections in this scope.</div>', unsafe_allow_html=True)
     else:
         view = shifts.assign(
             when=shifts["timestamp"].dt.tz_convert(None),
-            before_pct=shifts["before"] * 100, after_pct=shifts["after"] * 100, change_pp=shifts["change"] * 100,
-            direction=np.where(shifts["worsening"], "Worse", "Better"),
-            category=np.where(shifts["provider_drift"], shifts["category"], "Client-side (not drift)"),
-        )[["when", "call_no", "signal_label", "category", "detector", "before_pct", "after_pct", "change_pp",
-           "direction", "p_adj", "action"]]
+            label=shifts["label"].fillna("—"),
+            before_s=[fmt_metric(m, v) for m, v in zip(shifts["metric"], shifts["before"])],
+            after_s=[fmt_metric(m, v) for m, v in zip(shifts["metric"], shifts["after"])],
+            tier=shifts["tier"].str.replace("_", " "),
+            urgency=shifts["urgency"].fillna("—"),
+        )[["when", "call_no", "signal_label", "label", "detector", "tier", "before_s", "after_s", "urgency", "reason"]]
         st.dataframe(view, hide_index=True, column_config={
-            "when": st.column_config.DatetimeColumn("Shift at (UTC)", format="D MMM YYYY, HH:mm"),
+            "when": st.column_config.DatetimeColumn("Change at (UTC)", format="D MMM YYYY, HH:mm"),
             "call_no": st.column_config.NumberColumn("Call #", format="%d"),
-            "signal_label": "Signal", "category": "Category", "detector": "Detector",
-            "before_pct": st.column_config.NumberColumn("Before", format="%.1f%%"),
-            "after_pct": st.column_config.NumberColumn("After", format="%.1f%%"),
-            "change_pp": st.column_config.NumberColumn("Change (pp)", format="%+.1f"),
-            "direction": "Direction",
-            "p_adj": st.column_config.NumberColumn("Adj. p", format="%.4f"),
-            "action": st.column_config.TextColumn("Recommended action", width="large"),
+            "signal_label": "Signal", "label": "Drift type", "detector": "Detector", "tier": "Evidence",
+            "before_s": "Before", "after_s": "After", "urgency": "Urgency",
+            "reason": st.column_config.TextColumn("rules.py reading", width="large"),
         })
-        st.caption("Before/after for a confirmed shift are the means of the two PELT regimes either side of it. "
-                   f"For an online alert they are the {D.COMPARE_WINDOW} calls before and after the alert, which "
-                   "is when the detector noticed the change, not when it began.")
+        st.caption("Before/after are in each metric's own units (accuracy, not error rate). For a PELT change they "
+                   f"come from the two regimes either side of it; for an online alert from the {D.COMPARE_WINDOW} calls "
+                   "before and after the alert, which is when the detector noticed, not when the change began.")
 
 
 # ============================================================================= SIGNALS
@@ -548,7 +585,7 @@ with tab_sig:
             or list(results.keys())[0]
         r, sig = results[key], SIGNALS[key]
         st.markdown(f'<div class="dg-sig-row" style="justify-content:flex-start;gap:14px;margin-top:8px">'
-                    f'{cat_chip(sig.category)}{status_pill(levels[key])}</div>'
+                    f'{cat_chip(signal_drift_type(key))}{status_pill(levels[key])}</div>'
                     f'<div class="dg-sub" style="margin-top:6px">A bad outcome on this signal means: '
                     f'{esc(sig.meaning)}{" (" + esc(r.stream.note) + ")" if r.stream.note else ""}</div>',
                     unsafe_allow_html=True)
@@ -591,15 +628,16 @@ with tab_sig:
                 st.markdown('<div class="dg-empty">PELT proposed no change point.</div>', unsafe_allow_html=True)
             else:
                 tv = tested.assign(call_no=pos.loc[r.stream.seq_id[tested["index"].to_numpy()]].to_numpy(),
-                                   pre=tested["pre_mean"] * 100, post=tested["post_mean"] * 100)
-                st.dataframe(tv[["call_no", "pre", "post", "p_value_raw", "p_value_corrected", "significant"]],
+                                   pre=tested["pre_mean"] * 100, post=tested["post_mean"] * 100,
+                                   tier=np.where(tested["significant"], "confirmed", "unconfirmed"))
+                st.dataframe(tv[["call_no", "pre", "post", "p_value_raw", "p_value_corrected", "tier"]],
                              hide_index=True, column_config={
                                  "call_no": st.column_config.NumberColumn("Call #", format="%d"),
                                  "pre": st.column_config.NumberColumn("Before", format="%.1f%%"),
                                  "post": st.column_config.NumberColumn("After", format="%.1f%%"),
                                  "p_value_raw": st.column_config.NumberColumn("Raw p", format="%.4f"),
                                  "p_value_corrected": st.column_config.NumberColumn("Adj. p", format="%.4f"),
-                                 "significant": st.column_config.CheckboxColumn("Kept"),
+                                 "tier": "Evidence (rules.py)",
                              })
         with c2:
             pc = r.pelt_config
@@ -635,16 +673,20 @@ with tab_sig:
 # ============================================================================= SHIFT LOG & REVIEW
 with tab_log:
     st.markdown('<div class="dg-section">Recorded shifts</div>'
-                '<div class="dg-sub">Shifts saved to the <code>changepoint_events</code> table, with their category '
-                'and recommended action. Tick a row once someone has looked at it.</div>', unsafe_allow_html=True)
-    n_new = len(worsening)
+                '<div class="dg-sub">Events saved to the <code>changepoint_events</code> table. Labels and plans are '
+                'written by remediation/mapper.apply_remediation, as for any stored event. Tick a row once someone '
+                'has looked at it.</div>', unsafe_allow_html=True)
+    to_record = [d for d in analysis.events
+                 if d.classification.drift_type and d.classification.adverse and d.event.significant]
+    n_new = len(to_record)
     c1, c2 = st.columns([1, 3])
     with c1:
-        if st.button(f"Record {n_new} worsening shift{'s' if n_new != 1 else ''} from this scope",
+        if st.button(f"Record {n_new} open event{'s' if n_new != 1 else ''} from this scope",
                      type="primary", disabled=n_new == 0, icon=":material/save:"):
-            added = D.record_shifts(DB_PATH, provider, model_id, worsening)
+            added = D.record_shifts(DB_PATH, analysis)
             st.cache_data.clear()
-            st.toast(f"{added} new shift{'s' if added != 1 else ''} recorded"
+            st.cache_resource.clear()
+            st.toast(f"{added} new event{'s' if added != 1 else ''} recorded"
                      + ("" if added == n_new else f", {n_new - added} already in the log"))
     events = D.load_events(DB_PATH)
     if events.empty:
@@ -653,10 +695,12 @@ with tab_log:
     else:
         ev = events.copy()
         ev["reviewed"] = ev["reviewed"].astype(bool)
-        ev["metric_name"] = ev["metric_name"].map(lambda m: SIGNALS[m].label if m in SIGNALS else m)
-        ev["detector"] = ev["detector"].map({"pelt": "PELT (confirmed)", "sequential": "Page-Hinkley (online)"}).fillna(ev["detector"])
         for c in ("pre_mean", "post_mean"):
-            ev[c] = ev[c] * 100
+            ev[c] = [fmt_metric(m, v) for m, v in zip(ev["metric_name"], ev[c])]
+        ev["metric_name"] = ev["metric_name"].map(
+            lambda m: rules.TAXONOMY[m].metric_label if m in rules.TAXONOMY else (SIGNALS[m].label if m in SIGNALS else m))
+        ev["drift_type"] = ev["drift_type"].map(lambda d: DRIFT_NAME.get(d, d) if isinstance(d, str) else d)
+        ev["detector"] = ev["detector"].map({"pelt": "PELT", "sequential": "Page-Hinkley"}).fillna(ev["detector"])
         cols = ["id", "reviewed", "changepoint_timestamp", "provider", "model_id", "metric_name", "drift_type",
                 "detector", "pre_mean", "post_mean", "p_value_corrected", "remediation"]
         edited = st.data_editor(ev[cols], hide_index=True, disabled=[c for c in cols if c != "reviewed"],
@@ -664,12 +708,11 @@ with tab_log:
                                     "id": None,
                                     "reviewed": st.column_config.CheckboxColumn("Reviewed"),
                                     "changepoint_timestamp": st.column_config.DatetimeColumn("Shift at (UTC)", format="D MMM YYYY, HH:mm"),
-                                    "provider": "Provider", "model_id": "Model", "metric_name": "Signal",
-                                    "drift_type": "Category", "detector": "Detector",
-                                    "pre_mean": st.column_config.NumberColumn("Before", format="%.1f%%"),
-                                    "post_mean": st.column_config.NumberColumn("After", format="%.1f%%"),
+                                    "provider": "Provider", "model_id": "Model", "metric_name": "Metric",
+                                    "drift_type": "Drift type", "detector": "Detector",
+                                    "pre_mean": "Before", "post_mean": "After",
                                     "p_value_corrected": st.column_config.NumberColumn("Adj. p", format="%.4f"),
-                                    "remediation": st.column_config.TextColumn("Recommended action", width="large"),
+                                    "remediation": st.column_config.TextColumn("Plan (mapper.py)", width="large"),
                                 })
         changed = edited[edited["reviewed"] != ev["reviewed"]]
         open_n = int((~edited["reviewed"]).sum())
@@ -694,7 +737,8 @@ with tab_calls:
         focus = st.selectbox(
             "Centre on", shift_opts,
             format_func=lambda i: "All calls in scope" if i is None else
-            f"{shifts.loc[i, 'signal_label']} · {shifts.loc[i, 'detector']} · call #{shifts.loc[i, 'call_no']:,}")
+            f"{shifts.loc[i, 'signal_label']} · {shifts.loc[i, 'detector']} · "
+            f"{shifts.loc[i, 'tier'].replace('_', ' ')} · call #{shifts.loc[i, 'call_no']:,}")
     with c2:
         span = st.number_input("Calls either side", 5, 500, 30, step=5, disabled=focus is None)
     with c3:

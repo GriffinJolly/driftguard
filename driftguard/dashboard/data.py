@@ -11,8 +11,11 @@ Pipeline, per (provider, model, scope):
      per call, exactly as it would run live
   4. run the RETROSPECTIVE path (PELT -> permutation test -> Benjamini-Hochberg)
      over the same streams to confirm and locate sustained shifts
-  5. attach a category (classification/rules.py) and an action
-     (remediation/mapper.py) to every shift
+  5. hand every shift to the classification layer AS AN EVENT in its own
+     vocabulary (see dashboard/signals.py): rules.classify_event labels it and
+     sets its evidence tier, incidents.group_into_incidents groups events that
+     moved together, and remediation/mapper.py turns each incident into an
+     urgency and a plan. The dashboard adds no classification rules of its own.
 
 Wording follows the project's reporting rule: a Page-Hinkley alarm is an
 "alert observed at call N", not the true onset; PELT gives the estimated
@@ -30,18 +33,24 @@ import numpy as np
 import pandas as pd
 import yaml
 
-from driftguard.classification.rules import SIGNALS, classify
+from datetime import datetime, timedelta, timezone
+from typing import Optional
+
+from driftguard.classification import rules
+from driftguard.classification.incidents import DEFAULT_WINDOW, Incident, group_into_incidents
+from driftguard.dashboard.signals import SIGNALS, to_metric_value
 from driftguard.detection.bootstrap import SignificanceConfig, confirm_changepoints
 from driftguard.detection.changepoint_pelt import PeltConfig, detect_changepoints, segments_from_changepoints
-from driftguard.remediation.mapper import remediation_for
+from driftguard.remediation import mapper
+from driftguard.storage.store import ChangePointEventRow
 
 ROOT = Path(__file__).resolve().parent.parent.parent
 DEFAULT_DB = ROOT / "driftguard.db"
 DETECTORS_YAML = ROOT / "configs" / "detectors.yaml"
+CALIBRATION_JSON = ROOT / "configs" / "detectors_calibrated.json"
 XSTEST_FROZEN = ROOT / "configs" / "xstest_frozen.json"
 
-COMPARE_WINDOW = 200     # calls each side of an online alert used for the before/after rates
-WATCH_EFFECT = 0.05      # an unconfirmed online alert moving the rate by less than this is "watch", not "warning"
+COMPARE_WINDOW = 200     # calls each side of an online alert used for the before/after values
 MIN_SIGNAL_CALLS = 60    # below this a stream is too short to say anything about
 
 
@@ -145,6 +154,7 @@ class Stream:
     seq_id: np.ndarray           # rowid of each call, links back to the log
     timestamp: pd.Series
     note: str = ""
+    latency_ms: Optional[np.ndarray] = None   # measured latency per call (slow_call only)
 
 
 def build_streams(calls: pd.DataFrame, baseline_window: int = 100) -> dict[str, Stream]:
@@ -152,10 +162,10 @@ def build_streams(calls: pd.DataFrame, baseline_window: int = 100) -> dict[str, 
     streams: dict[str, Stream] = {}
     ok = calls[(calls["outcome"] == "ok") & calls["eval_score"].notna()]
 
-    def add(key, frame, values, note=""):
+    def add(key, frame, values, note="", latency=None):
         if len(frame) >= MIN_SIGNAL_CALLS:
             streams[key] = Stream(key, np.asarray(values, dtype=float), frame["seq_id"].to_numpy(),
-                                  frame["timestamp"].reset_index(drop=True), note)
+                                  frame["timestamp"].reset_index(drop=True), note, latency)
 
     acc = ok[ok["eval_task_type"] == "accuracy"]
     add("accuracy_error", acc, 1.0 - acc["eval_score"])
@@ -182,7 +192,8 @@ def build_streams(calls: pd.DataFrame, baseline_window: int = 100) -> dict[str, 
     if len(lat) >= max(MIN_SIGNAL_CALLS, baseline_window + 20):
         p95 = float(np.percentile(lat["latency_ms"].iloc[:baseline_window], 95))
         add("slow_call", lat, (lat["latency_ms"] > p95).astype(float),
-            note=f"slow = above {p95:,.0f} ms, the p95 of the first {baseline_window} calls")
+            note=f"slow = above {p95:,.0f} ms, the p95 of the first {baseline_window} calls",
+            latency=lat["latency_ms"].to_numpy(dtype=float))
     return streams
 
 
@@ -247,52 +258,163 @@ def _ts(stream: Stream, i: int):
     return stream.timestamp.iloc[min(i, len(stream.timestamp) - 1)]
 
 
-def shift_table(results: dict[str, SignalResult]) -> pd.DataFrame:
-    """Every shift from both detectors, with category and recommended action."""
-    rows = []
+# --------------------------------------------------------------------------- classification bridge
+#
+# Everything below hands the detections to the classification layer
+# (classification/rules.py, classification/incidents.py, remediation/mapper.py)
+# and reads its verdicts back. No labelling decisions are made here.
+
+URGENCY_RANK = {"clear": 0, "context": 0, mapper.NOTE: 1, mapper.WATCH: 2,
+                mapper.INVESTIGATE: 3, mapper.ACT: 4, mapper.ACT_NOW: 5}
+
+
+@dataclass
+class DashEvent:
+    """One detection, as an event in the classification layer's vocabulary."""
+    signal: str                       # dashboard signal key (signals.py)
+    index: int                        # position in that signal's stream
+    seq_id: int                       # log row of the call where it was placed
+    event: ChangePointEventRow        # what rules.py / incidents.py read
+    classification: rules.Classification
+
+
+@dataclass
+class Analysis:
+    events: list[DashEvent]
+    incidents: list[Incident]
+    plans: list[mapper.RemediationPlan]          # aligned with incidents
+    incident_of: dict[int, int]                  # id(event) -> index into incidents
+
+
+def load_sigmas(path: Path = CALIBRATION_JSON) -> Optional[dict[str, float]]:
+    """Normal spread per metric from the quiet-window calibration, for noise units.
+    None when no calibration file exists (rules.py then reports no noise units)."""
+    if not path.exists():
+        return None
+    from driftguard.detection.baseline import load_calibration
+    return rules.noise_sigmas_from_calibration(load_calibration(path))
+
+
+def _p95(x: np.ndarray) -> float:
+    return float(np.percentile(x, 95)) if len(x) else np.nan
+
+
+def _metric_values(st: Stream, lo_pre: int, cut: int, hi_post: int, rate_pre: float, rate_post: float):
+    """Before/after values in the metric's own units."""
+    metric = SIGNALS[st.key].metric
+    if metric == "latency_p95_ms" and st.latency_ms is not None:
+        return _p95(st.latency_ms[lo_pre:cut]), _p95(st.latency_ms[cut:hi_post])
+    return to_metric_value(st.key, rate_pre), to_metric_value(st.key, rate_post)
+
+
+def _naive_utc(ts) -> datetime:
+    return pd.Timestamp(ts).tz_convert("UTC").tz_localize(None).to_pydatetime()
+
+
+def build_events(results: dict[str, SignalResult], provider: str, model_id: str,
+                 s: DetectionSettings, sigmas: Optional[dict[str, float]] = None) -> list[DashEvent]:
+    """Turn every detection into a ChangePointEventRow (not saved) and classify it with rules.py.
+    PELT candidates that failed the significance test are included: rules.py calls them
+    'unconfirmed', exactly as it would for stored events."""
+    now = datetime.now(timezone.utc)
+    win = s.significance.window or 10**9
+    out: list[DashEvent] = []
     for key, r in results.items():
-        st, v = r.stream, r.stream.values
-        sig = SIGNALS[key]
-        for t in r.confirmed:
-            if not t["significant"]:
-                continue
+        st, v, n = r.stream, r.stream.values, len(r.stream.values)
+        metric = SIGNALS[key].metric or key
+        bounds = [0, *[t["index"] for t in r.confirmed], n]
+        for j, t in enumerate(r.confirmed):
             i = t["index"]
-            worse = t["post_mean"] > t["pre_mean"]
-            rows.append(dict(
-                signal=key, signal_label=sig.label, category=classify(key), detector="PELT (confirmed)",
-                index=i, seq_id=int(st.seq_id[i]), timestamp=_ts(st, i),
-                before=t["pre_mean"], after=t["post_mean"], change=t["post_mean"] - t["pre_mean"],
-                p_adj=t["p_value_corrected"], worsening=worse, action=remediation_for(key, worse),
-            ))
+            pre, post = _metric_values(st, max(bounds[j], i - win), i, min(bounds[j + 2], i + win),
+                                       t["pre_mean"], t["post_mean"])
+            ev = ChangePointEventRow(
+                detected_at=now, provider=provider, model_id=model_id, metric_name=metric, detector="pelt",
+                changepoint_timestamp=_naive_utc(_ts(st, i)), pre_mean=pre, post_mean=post,
+                p_value_raw=t["p_value_raw"], p_value_corrected=t.get("p_value_corrected"),
+                significant=bool(t.get("significant")))
+            out.append(DashEvent(key, i, int(st.seq_id[i]), ev, rules.classify_event(ev, sigmas)))
         for i in r.alerts:
-            before, after = alert_effect(v, i)
-            rows.append(dict(
-                signal=key, signal_label=sig.label, category=classify(key), detector="Page-Hinkley (online)",
-                index=i, seq_id=int(st.seq_id[i]), timestamp=_ts(st, i),
-                before=before, after=after, change=after - before,
-                p_adj=np.nan, worsening=True, action=remediation_for(key, True),
-            ))
-    for row in rows:
-        row["provider_drift"] = SIGNALS[row["signal"]].provider_drift
-    cols = ["signal", "signal_label", "category", "detector", "index", "seq_id", "timestamp",
-            "before", "after", "change", "p_adj", "worsening", "action", "provider_drift"]
-    df = pd.DataFrame(rows, columns=cols)
-    return df.sort_values(["seq_id", "detector"]).reset_index(drop=True)
+            rb, ra = alert_effect(v, i)
+            pre, post = _metric_values(st, max(0, i - COMPARE_WINDOW), i, i + COMPARE_WINDOW, rb, ra)
+            ev = ChangePointEventRow(
+                detected_at=now, provider=provider, model_id=model_id, metric_name=metric, detector="sequential",
+                changepoint_timestamp=_naive_utc(_ts(st, i)), pre_mean=pre, post_mean=post, significant=True)
+            out.append(DashEvent(key, i, int(st.seq_id[i]), ev, rules.classify_event(ev, sigmas)))
+    out.sort(key=lambda d: (d.seq_id, d.event.detector))
+    return out
 
 
-def signal_status(r: SignalResult) -> str:
-    """'critical' = a confirmed worsening shift; 'warning' = an unconfirmed online alert that
-    moved the rate by at least WATCH_EFFECT; 'watch' = only smaller unconfirmed alerts;
-    'good' = nothing. Signals that are not provider drift (quota) cap at 'notice'."""
-    level = "good"
-    if any(t["significant"] and t["post_mean"] > t["pre_mean"] for t in r.confirmed):
-        level = "critical"
-    elif r.alerts:
-        effects = [a - b for b, a in (alert_effect(r.stream.values, i) for i in r.alerts)]
-        level = "warning" if any(e >= WATCH_EFFECT for e in effects if not np.isnan(e)) else "watch"
-    if level != "good" and not SIGNALS[r.stream.key].provider_drift:
-        return "notice"
-    return level
+def classify_detections(results: dict[str, SignalResult], provider: str, model_id: str,
+                        s: DetectionSettings, window: timedelta = DEFAULT_WINDOW,
+                        sigmas: Optional[dict[str, float]] = None) -> Analysis:
+    """Detections -> events -> incidents -> remediation plans, all via the classification layer."""
+    events = build_events(results, provider, model_id, s, sigmas)
+    incidents = group_into_incidents([d.event for d in events], sigmas=sigmas, window=window)
+    plans = [mapper.plan_for_incident(inc) for inc in incidents]
+    incident_of = {id(m.event): k for k, inc in enumerate(incidents) for m in inc.members}
+    return Analysis(events, incidents, plans, incident_of)
+
+
+def shift_table(a: Analysis) -> pd.DataFrame:
+    """One row per detection with the classification layer's verdict on it."""
+    rows = []
+    for d in a.events:
+        c, ev = d.classification, d.event
+        rule = rules.TAXONOMY.get(ev.metric_name)
+        k = a.incident_of.get(id(ev))
+        rows.append(dict(
+            signal=d.signal, signal_label=SIGNALS[d.signal].label, metric=ev.metric_name,
+            label=rule.display_name if (rule and c.drift_type) else None, drift_type=c.drift_type,
+            detector="PELT" if ev.detector == "pelt" else "Page-Hinkley",
+            tier=c.evidence_tier, adverse=c.adverse, index=d.index, seq_id=d.seq_id,
+            timestamp=pd.Timestamp(ev.changepoint_timestamp, tz="UTC"),
+            before=ev.pre_mean, after=ev.post_mean, change=c.change, noise_units=c.noise_units,
+            p_adj=ev.p_value_corrected, reason=c.reason,
+            incident=None if k is None else a.incidents[k].incident_id,
+            urgency=None if k is None else a.plans[k].urgency,
+            in_taxonomy=rule is not None,
+        ))
+    cols = ["signal", "signal_label", "metric", "label", "drift_type", "detector", "tier", "adverse", "index",
+            "seq_id", "timestamp", "before", "after", "change", "noise_units", "p_adj", "reason", "incident",
+            "urgency", "in_taxonomy"]
+    return pd.DataFrame(rows, columns=cols)
+
+
+def signal_status(key: str, a: Analysis) -> str:
+    """Urgency the classification layer gives this signal: the strongest per-metric evidence
+    across the incidents it appears in (mapper.URGENCY_BY_TIER). 'context' for signals outside
+    the taxonomy that had detections, 'clear' for none."""
+    mine = [d for d in a.events if d.signal == key]
+    metric = SIGNALS[key].metric
+    if metric is None:
+        return "context" if any(d.event.detector == "sequential" or d.event.significant for d in mine) else "clear"
+    best = "clear"
+    for d in mine:
+        k = a.incident_of.get(id(d.event))
+        if k is None:
+            continue
+        u = mapper.URGENCY_BY_TIER.get(a.incidents[k].metric_evidence(metric), mapper.NOTE)
+        if URGENCY_RANK[u] > URGENCY_RANK[best]:
+            best = u
+    return best
+
+
+def top_incident(a: Analysis) -> Optional[int]:
+    """Index of the most urgent incident (latest wins a tie)."""
+    if not a.incidents:
+        return None
+    return max(range(len(a.incidents)), key=lambda k: (URGENCY_RANK[a.plans[k].urgency], a.incidents[k].start))
+
+
+def incident_evidence(db_path: Path | str, incident: Incident) -> dict:
+    """Flip-set / infrastructure evidence from remediation/evidence.py. It needs per-run eval
+    data (metric_series); empty when the scope has none, e.g. per-call drift trials."""
+    from driftguard.remediation.evidence import evidence_for_incident
+    from driftguard.storage.store import DriftStore
+    try:
+        return evidence_for_incident(DriftStore(db_path=str(db_path)), incident)
+    except Exception:
+        return {}
 
 
 def default_run(calls: pd.DataFrame, min_scored: int = 150) -> str | None:
@@ -314,36 +436,32 @@ def rolling_rate(values: np.ndarray, window: int) -> np.ndarray:
 
 # --------------------------------------------------------------------------- persistence
 
-def record_shifts(db_path: Path | str, provider: str, model_id: str, shifts: pd.DataFrame) -> int:
-    """Write shifts into changepoint_events (with category and action), skipping any
-    already recorded for the same target, signal, detector and call. Returns rows added."""
-    from datetime import datetime, timezone
-
-    from driftguard.storage.store import ChangePointEventRow, DriftStore
+def record_shifts(db_path: Path | str, analysis: Analysis) -> int:
+    """Write the open events (labelled, adverse, and live or passing PELT) into changepoint_events,
+    skipping any already recorded, then let remediation/mapper.apply_remediation fill drift_type
+    and the one-line plan, exactly as it does for any stored event. Returns rows added."""
+    from driftguard.storage.store import DriftStore
 
     store = DriftStore(db_path=str(db_path))
     existing = load_events(db_path)
     seen = set()
     if not existing.empty:
         for _, e in existing.iterrows():
-            seen.add((e["provider"], e["model_id"], e["metric_name"], e["detector"], str(e["changepoint_timestamp"])[:26]))
+            seen.add((e["provider"], e["model_id"], e["metric_name"], e["detector"],
+                      str(e["changepoint_timestamp"])[:19]))
     added = 0
-    for _, s in shifts.iterrows():
-        detector = "pelt" if s["detector"].startswith("PELT") else "sequential"
-        ts = s["timestamp"].tz_convert(None).to_pydatetime()
-        key = (provider, model_id, s["signal"], detector, str(ts)[:26])
+    for d in analysis.events:
+        ev, c = d.event, d.classification
+        if not (c.drift_type and c.adverse and ev.significant):
+            continue
+        key = (ev.provider, ev.model_id, ev.metric_name, ev.detector, str(ev.changepoint_timestamp)[:19])
         if key in seen:
             continue
-        store.write_changepoint_event(ChangePointEventRow(
-            detected_at=datetime.now(timezone.utc), provider=provider, model_id=model_id,
-            metric_name=s["signal"], detector=detector, changepoint_timestamp=ts,
-            pre_mean=None if pd.isna(s["before"]) else float(s["before"]),
-            post_mean=None if pd.isna(s["after"]) else float(s["after"]),
-            p_value_raw=None, p_value_corrected=None if pd.isna(s["p_adj"]) else float(s["p_adj"]),
-            significant=True, drift_type=s["category"], remediation=s["action"],
-        ))
+        store.write_changepoint_event(ChangePointEventRow(**ev.model_dump(exclude={"id"})))
         seen.add(key)
         added += 1
+    if added:
+        mapper.apply_remediation(store)
     return added
 
 
