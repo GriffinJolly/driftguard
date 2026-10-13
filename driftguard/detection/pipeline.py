@@ -258,7 +258,9 @@ def _metric_values(st: Stream, lo_pre: int, cut: int, hi_post: int, rate_pre: fl
 
 def _ts(st: Stream, i: int) -> datetime:
     t = st.timestamp.iloc[min(i, len(st.timestamp) - 1)]
-    return pd.Timestamp(t).tz_convert("UTC").tz_localize(None).to_pydatetime()
+    # Keep the timezone (UTC). Stripping it with tz_localize(None) made newer sqlmodel
+    # (0.0.48+) reject the write: "Datetime values must have timezone information".
+    return pd.Timestamp(t).tz_convert("UTC").to_pydatetime()
 
 
 def detect(calls: pd.DataFrame, provider: str, model_id: str,
