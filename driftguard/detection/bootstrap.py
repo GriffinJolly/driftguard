@@ -1,218 +1,97 @@
 """
 driftguard/detection/bootstrap.py
 
-Statistical significance filter for PELT's candidate change points
-(changepoint_pelt.py). PELT proposes candidates liberally by design --
-this module decides which ones are bigger than ordinary noise would
-explain, using a permutation test rather than a parametric one (no
-assumption that any metric is normally distributed -- important, since
-we already know accuracy/format/refusal are small-n proportions and
-latency is skewed).
+Bootstrap / permutation significance testing for candidate change points.
 
-Method: permutation test on the difference of means.
-  1. Take the observed pre-segment and post-segment values around a
-     candidate change point.
-  2. Compute the observed delta (post_mean - pre_mean).
-  3. Pool both segments together, then repeatedly (n_permutations times)
-     shuffle the pooled values and re-split them into two groups of the
-     SAME SIZES as the real pre/post segments, computing the delta each
-     time.
-  4. The p-value is the fraction of permuted deltas at least as extreme
-     (in the adverse direction) as the observed one. If shuffling the
-     data essentially never produces a gap this big, the observed split
-     probably isn't due to chance -- if shuffled data regularly produces
-     gaps this big, the observed split doesn't tell us much.
+PELT (changepoint_pelt.py) will always return *some* split points, even in pure
+noise. This module decides which of them are real: for each candidate it runs a
+permutation test on the two adjacent segments -- if the observed jump in the
+mean (e.g. error rate) is no bigger than what random re-labelling of the same
+samples routinely produces, the change point is not significant.
 
-This module only computes p-values for candidates already flagged
-`is_adverse=True` by changepoint_pelt.py -- a candidate where the metric
-moved in the GOOD direction is never something we'd want to alert on,
-regardless of its p-value, so there's no reason to spend permutations on
-it.
+Because a whole history is searched for change points, many are tested at once,
+so raw p-values are corrected for multiple testing with Benjamini-Hochberg
+(multiple_testing.py; config: configs/detectors.yaml -> significance). The output maps 1:1 onto the
+ChangePointEventRow fields (pre_mean, post_mean, p_value_raw, p_value_corrected,
+significant) in driftguard/storage/store.py.
 
-Multiple-testing correction (Benjamini-Hochberg) across the several
-metrics tested per run is intentionally NOT done here -- that's
-multiple_testing.py's job, applied on top of the p-values this module
-produces. Keeping them separate means this module answers one honest
-question ("is this one shift bigger than shuffling would produce") and
-the correction step answers a different one ("given we ran 4 such tests,
-how many of the 'significant' ones are we confident are not false
-alarms").
+Honest caveat: on very long segments even a tiny mean difference is
+"statistically significant" (large-n), so `delta` (the effect size -- how big
+the jump actually is) matters as much as the p-value. The permutation test takes
+a bounded `window` around each change point for exactly this reason: it asks
+"did the rate change *locally and sharply here*", not "do two thousand-sample
+halves differ at all".
 """
 
 from __future__ import annotations
 
-import random
 from dataclasses import dataclass
-from typing import Optional
 
-from driftguard.detection.changepoint_pelt import ChangePointCandidate
+import numpy as np
 
-DEFAULT_N_PERMUTATIONS = 2000
-DEFAULT_SEED = 42  # fixed for reproducibility -- same rationale as the frozen eval-suite subsets
+from driftguard.detection.multiple_testing import benjamini_hochberg  # noqa: F401  (re-exported)
 
 
-@dataclass
-class SignificanceResult:
-    candidate: ChangePointCandidate
-    observed_delta: float
-    p_value: float
-    n_permutations: int
-    significant_at_05: bool  # convenience flag at the conventional (uncorrected) 0.05 level
+@dataclass(frozen=True)
+class SignificanceConfig:
+    alpha: float = 0.05
+    n_bootstrap_samples: int = 1000
+    window: int | None = 2000  # samples each side of the change point to test; None = full segments
 
 
-def permutation_test(
-    pre_values: list[float],
-    post_values: list[float],
-    direction: str,  # "lower_is_bad" or "upper_is_bad" -- from METRIC_DIRECTIONS
-    n_permutations: int = DEFAULT_N_PERMUTATIONS,
-    seed: int = DEFAULT_SEED,
-) -> tuple[float, float]:
+def changepoint_pvalue(
+    signal: np.ndarray, cp: int, left_bound: int, right_bound: int,
+    n_bootstrap: int = 1000, window: int | None = 2000, seed: int = 0,
+) -> dict:
+    """Permutation test that the mean of [left_bound, cp) differs from [cp, right_bound).
+
+    Returns pre_mean, post_mean, delta (|post-pre|), and p_value_raw =
+    P(a random re-labelling gives a jump >= the observed one).
     """
-    Core permutation test. Returns (observed_delta, p_value).
+    left = np.asarray(signal[left_bound:cp], dtype=float)
+    right = np.asarray(signal[cp:right_bound], dtype=float)
+    if window is not None:
+        left = left[-window:]
+        right = right[:window]
 
-    p_value is one-sided, in the ADVERSE direction only -- we don't care
-    whether the metric improved by an implausibly large margin, only
-    whether it got worse by one. This roughly doubles statistical power
-    for the direction that actually matters, compared to a two-sided
-    test, at no extra cost in permutations.
+    pre_mean, post_mean = float(left.mean()), float(right.mean())
+    observed = abs(post_mean - pre_mean)
+
+    pooled = np.concatenate([left, right])
+    n_left = len(left)
+    rng = np.random.default_rng(seed)
+    count = 0
+    for _ in range(n_bootstrap):
+        perm = rng.permutation(pooled)
+        if abs(perm[n_left:].mean() - perm[:n_left].mean()) >= observed - 1e-12:
+            count += 1
+    # +1 smoothing so a p-value is never exactly 0 (Davison & Hinkley convention)
+    p_value_raw = (1 + count) / (1 + n_bootstrap)
+    return {"index": cp, "pre_mean": pre_mean, "post_mean": post_mean,
+            "delta": observed, "p_value_raw": p_value_raw}
+
+
+def confirm_changepoints(
+    signal: np.ndarray, changepoints: list[int], config: SignificanceConfig = SignificanceConfig(),
+) -> list[dict]:
+    """Run the full confirm-or-reject step for a list of PELT change points.
+
+    Each change point is tested against its two neighbouring segments; then all
+    raw p-values are BH-corrected together. Returns one dict per change point
+    with pre/post means, effect size, raw + corrected p-values, and `significant`.
     """
-    if len(pre_values) < 2 or len(post_values) < 2:
-        raise ValueError("Need at least 2 values in each segment to run a permutation test")
-
-    rng = random.Random(seed)
-    observed_delta = (sum(post_values) / len(post_values)) - (sum(pre_values) / len(pre_values))
-
-    pooled = list(pre_values) + list(post_values)
-    n_pre = len(pre_values)
-    n_total = len(pooled)
-
-    count_as_extreme = 0
-    for _ in range(n_permutations):
-        rng.shuffle(pooled)
-        perm_pre = pooled[:n_pre]
-        perm_post = pooled[n_pre:]
-        perm_delta = (sum(perm_post) / len(perm_post)) - (sum(perm_pre) / len(perm_pre))
-
-        if direction == "lower_is_bad":
-            # adverse = delta is very negative; "as extreme" means <= observed (which is negative)
-            if perm_delta <= observed_delta:
-                count_as_extreme += 1
-        else:  # upper_is_bad
-            if perm_delta >= observed_delta:
-                count_as_extreme += 1
-
-    p_value = count_as_extreme / n_permutations
-    return observed_delta, p_value
-
-
-def evaluate_candidate(
-    candidate: ChangePointCandidate,
-    pre_values: list[float],
-    post_values: list[float],
-    n_permutations: int = DEFAULT_N_PERMUTATIONS,
-    seed: int = DEFAULT_SEED,
-) -> SignificanceResult:
-    """
-    Run the permutation test for one candidate, using its own pre/post
-    raw values (NOT just the means already stored on the candidate --
-    the test needs the actual per-run values to shuffle).
-    """
-    observed_delta, p_value = permutation_test(
-        pre_values, post_values, direction=candidate.direction,
-        n_permutations=n_permutations, seed=seed,
-    )
-    return SignificanceResult(
-        candidate=candidate,
-        observed_delta=observed_delta,
-        p_value=p_value,
-        n_permutations=n_permutations,
-        significant_at_05=p_value < 0.05,
-    )
-
-
-def evaluate_candidates(
-    candidates: list[ChangePointCandidate],
-    full_series_values: list[float],
-    n_permutations: int = DEFAULT_N_PERMUTATIONS,
-    seed: int = DEFAULT_SEED,
-    only_adverse: bool = True,
-) -> list[SignificanceResult]:
-    """
-    Evaluate a list of candidates (as produced by
-    changepoint_pelt.find_changepoints_for_metric) against the FULL
-    series they were detected in. `full_series_values` must be the exact
-    same values array passed to PELT, in the same order -- candidate.index
-    is used to re-slice it into pre/post segments for the permutation test.
-
-    only_adverse=True (default) skips candidates where is_adverse is
-    False, per the module's rationale above -- no reason to test
-    something we'd never alert on regardless of significance.
-    """
+    n = len(signal)
+    bounds = [0, *changepoints, n]
     results = []
-    for candidate in candidates:
-        if only_adverse and not candidate.is_adverse:
-            continue
-
-        pre_values = full_series_values[: candidate.index]
-        post_values = full_series_values[candidate.index :]
-
-        if len(pre_values) < 2 or len(post_values) < 2:
-            continue  # too close to an edge -- changepoint_pelt.py should already filter these, but be defensive
-
+    for i, cp in enumerate(changepoints):
+        left_bound, right_bound = bounds[i], bounds[i + 2]
         results.append(
-            evaluate_candidate(candidate, pre_values, post_values, n_permutations=n_permutations, seed=seed)
+            changepoint_pvalue(signal, cp, left_bound, right_bound,
+                               n_bootstrap=config.n_bootstrap_samples, window=config.window, seed=i)
         )
-
+    if results:
+        significant, adjusted = benjamini_hochberg([r["p_value_raw"] for r in results], config.alpha)
+        for r, s, a in zip(results, significant, adjusted):
+            r["p_value_corrected"] = float(a)
+            r["significant"] = bool(s)
     return results
-
-
-def store_significance_results(
-    store: "DriftStore",
-    provider: str,
-    model_id: str,
-    results: dict[str, SignificanceResult],
-) -> dict[str, "ChangePointEventRow"]:
-    """
-    Write one ChangePointEventRow per metric's SignificanceResult to the
-    store -- PROVISIONALLY: p_value_raw is set, p_value_corrected is left
-    None, and `significant` reflects only the UNCORRECTED 0.05 check
-    (significant_at_05), not a final verdict. multiple_testing.py's
-    apply_and_persist_bh_correction() is expected to run next in the same
-    evaluation cycle, patching p_value_corrected and the final
-    `significant` flag into these same rows via update_changepoint_event.
-
-    Per team convention: every detector populates ChangePointEventRow
-    directly, so downstream consumers (dashboard, classification) never
-    need to touch detection code -- this is bootstrap.py's half of that
-    contract for the PELT+bootstrap path (changepoint_sequential.py does
-    the equivalent for the Page-Hinkley path, independently, since that
-    detector doesn't produce p-values or need multiple-testing correction
-    at all).
-
-    Only metrics with a SignificanceResult are written -- a metric with
-    no adverse PELT candidate this run has nothing to report and gets no
-    row, rather than a row full of Nones.
-    """
-    from datetime import datetime, timezone
-    from driftguard.storage.store import ChangePointEventRow
-
-    written: dict[str, ChangePointEventRow] = {}
-    now = datetime.now(timezone.utc)
-
-    for metric_name, result in results.items():
-        event = ChangePointEventRow(
-            detected_at=now,
-            provider=provider,
-            model_id=model_id,
-            metric_name=metric_name,
-            detector="pelt",
-            changepoint_timestamp=result.candidate.timestamp,
-            pre_mean=result.candidate.pre_mean,
-            post_mean=result.candidate.post_mean,
-            p_value_raw=result.p_value,
-            p_value_corrected=None,  # filled in by multiple_testing.py next
-            significant=result.significant_at_05,  # PROVISIONAL -- pre-correction
-        )
-        written[metric_name] = store.write_changepoint_event(event)
-
-    return written

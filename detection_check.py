@@ -1,10 +1,10 @@
 import random
 from datetime import datetime, timedelta, timezone
 
+import pandas as pd
+
 from driftguard.detection import baseline as cal
-from driftguard.detection import changepoint_pelt as pelt
-from driftguard.detection import bootstrap as bs
-from driftguard.detection import multiple_testing as mt
+from driftguard.detection import pipeline
 from driftguard.detection.changepoint_sequential import run_sequential_detection
 from driftguard.detection.naive_detector import run_baseline_detection
 from driftguard.storage.store import DriftStore, MetricSeriesRow
@@ -53,31 +53,21 @@ def main():
     for name, t in calibration.thresholds.items():
         print(f"{name:<18} threshold={t.baseline_threshold:.4f}   pelt_penalty={t.pelt_penalty:.6f}")
 
-    line("2. PELT candidates (changepoint_pelt.py)")
-    bootstrap_results = {}
-    for name, t in calibration.thresholds.items():
-        candidates = pel_candidates = pelt.find_changepoints_for_metric(points, name, penalty=t.pelt_penalty)
-        print(f"{name:<18} {len(candidates)} candidate(s)")
-        if not candidates:
-            continue
-        ordered = sorted(points, key=lambda p: p.timestamp)
-        values = [getattr(p, name) for p in ordered]
-        sig = bs.evaluate_candidates(candidates, values, n_permutations=2000)
-        if sig:
-            bootstrap_results[name] = min(sig, key=lambda r: r.p_value)
-
-    line("3. Significance test (bootstrap.py)")
-    for name, r in bootstrap_results.items():
-        print(f"{name:<18} delta={r.observed_delta:+.4f}   p_value={r.p_value:.4f}")
-
-    line("4. Multiple-testing correction (multiple_testing.py)")
-    if bootstrap_results:
-        corrected = mt.apply_bh_correction(bootstrap_results, alpha=0.05)
-        for name, c in corrected.items():
-            verdict = "SIGNIFICANT" if c.significant else "not significant"
-            print(f"{name:<18} corrected_p={c.p_value_corrected:.4f}   {verdict}")
-    else:
-        print("no candidates to correct")
+    line("2-4. Detection pipeline on per-call data (pipeline.py: PELT + permutation + BH, Page-Hinkley)")
+    values, timestamps = build_per_call_data()
+    calls = pd.DataFrame({
+        "seq_id": range(1, len(values) + 1), "timestamp": pd.to_datetime(timestamps, utc=True),
+        "outcome": "ok", "latency_ms": 400.0, "eval_task_type": "accuracy", "eval_task_id": "q",
+        "eval_score": [1.0 - v for v in values],
+    })
+    det = pipeline.detect(calls, "synthetic", "test-model")
+    acc_result = det.results["accuracy_error"]
+    for t in acc_result.tested:
+        verdict = "SIGNIFICANT" if t["significant"] else "not significant"
+        print(f"PELT candidate at call {t['index']}: error {t['pre_mean']:.3f} -> {t['post_mean']:.3f}   "
+              f"p={t['p_value_raw']:.4f}  corrected_p={t['p_value_corrected']:.4f}   {verdict}")
+    print(f"Page-Hinkley alarms at calls: {acc_result.alerts}")
+    print(f"{len(det.events)} event(s) for the classification layer (true change at call 300)")
 
     line("5. Naive detector, for comparison (naive_detector.py)")
     acc = calibration.thresholds["accuracy"]

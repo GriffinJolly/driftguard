@@ -16,8 +16,9 @@ What it does, in order:
   4. Runs calibration on whatever quiet-window data currently exists
      (will show the "not enough points" warning if you've only run a
      handful of times so far -- that's expected, not a failure).
-  5. Runs PELT change-point detection on that same series using the
-     calibration output, for every metric.
+  5. Runs the detection pipeline (driftguard/detection/pipeline.py) over the
+     stored PER-CALL scores -- Page-Hinkley + PELT/permutation/BH -- then the
+     classification layer labels and plans any new events.
   6. OPTIONAL: tests wrapper.py by making one real call through
      DriftGuardClient and confirming it's captured with
      integration_path="wrapper" -- separate from the eval-suite data path.
@@ -39,7 +40,7 @@ def main():
         from driftguard.storage.store import DriftStore
         from driftguard.evalsuite.runner import run_once
         from driftguard.detection import baseline as cal
-        from driftguard.detection import changepoint_pelt as pelt
+        from driftguard.detection import pipeline
         from driftguard.ingest.wrapper import DriftGuardClient
         print("All modules imported successfully.")
     except Exception:
@@ -85,19 +86,20 @@ def main():
         traceback.print_exc()
         sys.exit(1)
 
-    section("STEP 5: Run PELT change-point detection")
+    section("STEP 5: Run the detection pipeline (per call) + classification")
     try:
-        loaded_calib = cal.load_calibration()
-        all_candidates = pelt.find_changepoints_all_metrics(series, loaded_calib)
-        for metric_name, candidates in all_candidates.items():
-            print(f"\n{metric_name}: {len(candidates)} candidate(s)")
-            for c in candidates:
-                print(f"  index={c.index} delta={c.delta:.4f} is_adverse={c.is_adverse}")
-        if len(series) < 20:
-            print("\n(With this little data, PELT candidates aren't meaningful yet -- "
-                  "this just confirms the code runs without crashing.)")
+        report = pipeline.run_detection(store, "groq", "openai/gpt-oss-120b")
+        for key, r in report.detection.results.items():
+            kept = sum(t["significant"] for t in r.tested)
+            print(f"  {key:<18} calls={len(r.stream.values):>5}  PELT confirmed={kept}  "
+                  f"Page-Hinkley alarms={len(r.alerts)}")
+        print(f"\n{report.written} new event(s) saved; {report.labelled} labelled/planned "
+              f"by the classification layer.")
+        if not report.detection.results:
+            print("(Each signal needs at least 60 calls before it is tested -- "
+                  "run the eval suite a few more times.)")
     except Exception:
-        print("PELT DETECTION FAILED.")
+        print("DETECTION FAILED.")
         traceback.print_exc()
         sys.exit(1)
 

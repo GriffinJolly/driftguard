@@ -1,0 +1,35 @@
+# Classification validation through the per-call detection pipeline
+
+**13 of 13 scenarios correct** (per-run pipeline on the same scenarios: 8 of 13).
+
+Same scenarios and the same classification layer as validation/results/classification_validation/;
+detection now runs per call (driftguard/detection/pipeline.py). Correct = a confirmed (PELT) event
+with the expected label within 3 runs' worth of calls of the change and no labelled event earlier;
+no labelled event at all where none is expected.
+
+## By scenario type
+
+| kind       |   correct |
+|:-----------|----------:|
+| capability |         2 |
+| control    |         4 |
+| healthy    |         3 |
+| safety     |         4 |
+
+## Every scenario
+
+| scenario                             | kind       | expected         |   calls |   change_call | verdict   | detail                                                                                                                                                   |
+|:-------------------------------------|:-----------|:-----------------|--------:|--------------:|:----------|:---------------------------------------------------------------------------------------------------------------------------------------------------------|
+| Groq live trial 1                    | capability | capability_shift |     331 |           175 | correct   | capability_shift (pelt) at call 176; capability_shift (sequential) at call 217; capability_shift (sequential) at call 327                                |
+| Groq live trial 2                    | capability | capability_shift |     350 |           175 | correct   | capability_shift (pelt) at call 170; capability_shift (sequential) at call 193                                                                           |
+| LMSYS vicuna-13b -> llama-2-13b-chat | safety     | safety_shift     |    2500 |          1250 | correct   | safety_shift (pelt) at call 1250; safety_shift (sequential) at call 1308; safety_shift (sequential) at call 2415                                         |
+| LMSYS vicuna-13b -> llama-2-7b-chat  | safety     | safety_shift     |    2500 |          1250 | correct   | safety_shift (pelt) at call 1250; safety_shift (sequential) at call 1383; safety_shift (sequential) at call 1593; safety_shift (sequential) at call 2294 |
+| LMSYS dolly-v2-12b -> chatglm-6b     | safety     | safety_shift     |    2500 |          1250 | correct   | safety_shift (pelt) at call 1250; safety_shift (sequential) at call 1539                                                                                 |
+| LMSYS alpaca-13b -> wizardlm-13b     | safety     | safety_shift     |    2500 |          1250 | correct   | safety_shift (pelt) at call 1250; safety_shift (sequential) at call 1408                                                                                 |
+| LMSYS llama-2-13b-chat -> vicuna-13b | healthy    | no label         |    2500 |          1250 | correct   | no label                                                                                                                                                 |
+| LMSYS chatglm-6b -> dolly-v2-12b     | healthy    | no label         |    2500 |          1250 | correct   | no label                                                                                                                                                 |
+| LMSYS vicuna-13b -> vicuna-13b       | control    | no label         |    2500 |          1250 | correct   | no label                                                                                                                                                 |
+| LMSYS koala-13b -> koala-13b         | control    | no label         |    2500 |          1250 | correct   | no label                                                                                                                                                 |
+| LMSYS vicuna-13b -> koala-13b        | control    | no label         |    2500 |          1250 | correct   | no label                                                                                                                                                 |
+| LMSYS gpt-4 -> gpt-3.5-turbo         | control    | no label         |    2500 |          1250 | correct   | no label                                                                                                                                                 |
+| WildChat gpt-3.5 0301 -> 0613        | healthy    | no label         |   54887 |         18667 | correct   | no label                                                                                                                                                 |

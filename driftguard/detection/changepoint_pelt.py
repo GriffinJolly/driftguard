@@ -1,198 +1,77 @@
 """
 driftguard/detection/changepoint_pelt.py
 
-Retrospective, confirmatory change-point detection using PELT (Pruned
-Exact Linear Time), via the `ruptures` library.
+Retrospective / batch change-point detection via PELT (Pruned Exact Linear
+Time; Killick, Fearnhead & Eckley 2012), backed by the `ruptures` library.
 
-Scope of this module, deliberately narrow: given a metric's time series
-and its calibrated penalty (from calibration.py), find CANDIDATE change
-points and describe them (index, timestamp, pre/post means, whether the
-shift is in the "bad" direction for that metric). This module does NOT
-decide statistical significance -- that's bootstrap.py's job, run on top
-of whatever candidates this module proposes. Keeping these separate
-means PELT's role stays purely "where might something have changed",
-while "is this shift bigger than noise would explain" is answered by an
-independent, dedicated significance test -- which is also what makes the
-Benjamini-Hochberg multiple-testing correction (applied across metrics
-downstream) meaningful, since it corrects p-values, not raw PELT output.
+This is the deck's "PELT: the historical confirmation" path. Unlike the online
+sequential detectors (changepoint_sequential.py / Page-Hinkley), which alert the
+moment drift appears in a live stream, PELT runs over a WHOLE recorded metric
+history at once and returns every sustained change point it can find. Those
+candidates are then confirmed or rejected by bootstrap significance testing
+(driftguard/detection/bootstrap.py), so the two modules are meant to be used
+together: PELT proposes, the bootstrap disposes.
 
-Why PELT is paired with a sequential detector (changepoint_sequential.py,
-Page-Hinkley) elsewhere in the pipeline rather than used alone: PELT is a
-batch/offline method -- it needs a reasonably dense, already-collected
-series to work well, and re-running it from scratch each time is how
-it's meant to be used (a live/incremental use is what Page-Hinkley is
-for instead). This module is the "look back over the full history and
-confirm/localize a change" half of the pair.
+Config: configs/detectors.yaml -> retrospective_detector.
+
+Cost model note: the config originally listed `rbf`, but the RBF kernel cost
+builds an n x n Gram matrix -- ~20 GB for a 52k-sample stream -- so it is not
+usable on real metric histories. `l2` (piecewise-constant mean, i.e. detect a
+shift in the error/accuracy RATE) is the right model here: it is O(n), and a
+metric drift IS a shift in the mean, which is exactly what l2 segments on.
 """
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass
-from datetime import datetime
-from typing import Optional
 
 import numpy as np
-import ruptures as rpt
-
-from driftguard.detection.baseline import METRIC_DIRECTIONS, Direction
-from driftguard.storage.store import MetricSeriesRow
-
-# Cost model for ruptures.Pelt. "l2" (assumes piecewise-constant mean,
-# Gaussian-ish noise within each segment) is used deliberately -- it's
-# the cost model the BIC-style penalty (sigma^2 * log(n), computed in
-# calibration.py) is actually derived for. "rbf" was tried first but
-# produces a mismatched cost scale relative to a variance-based penalty,
-# which caused severe over-segmentation (dozens of false change points on
-# pure stable noise, confirmed in testing) -- l2 doesn't have that
-# mismatch, since its cost is directly variance-based like the penalty
-# formula assumes. l2 is a reasonable fit for our metrics regardless:
-# accuracy/format/refusal are proportions with roughly stable variance
-# within a regime, and latency, while skewed, is still well-served by a
-# mean-shift model for the purpose of localizing WHEN a shift happened.
-DEFAULT_PELT_MODEL = "l2"
-
-# PELT needs a minimum run length either side of a candidate change point
-# to estimate a meaningful pre/post mean from. Below this, a "change
-# point" right at the edge of the series is more likely an artifact of
-# too little data than a real shift.
-MIN_SEGMENT_LENGTH = 3
 
 
-@dataclass
-class ChangePointCandidate:
-    metric_name: str
-    index: int  # position in the input series where the new segment starts
-    timestamp: Optional[datetime]  # timestamp of the point at `index`, if available
-    pre_mean: float
-    post_mean: float
-    delta: float  # post_mean - pre_mean
-    direction: Direction
-    is_adverse: bool  # True if the shift moves the metric in its "bad" direction
-    pre_n: int
-    post_n: int
+@dataclass(frozen=True)
+class PeltConfig:
+    cost_model: str = "l2"          # "l2" (mean shift) | "normal" | "rbf" (small streams only)
+    penalty: float | None = None    # None -> BIC-style default derived from the signal
+    penalty_scale: float = 3.0      # multiplies the BIC default; higher -> fewer change points
+    min_segment_length: int = 200   # minimum samples between change points
+    jump: int = 25                  # grid resolution PELT considers; larger = much faster on long
+                                    # histories, at coarser change-point precision (25 is plenty for
+                                    # metric drift, and keeps a 50k-sample stream to ~15s not minutes)
 
 
-def _extract_series(points: list[MetricSeriesRow], metric_name: str) -> tuple[list[float], list[int]]:
+def default_penalty(signal: np.ndarray, cost_model: str, penalty_scale: float) -> float:
+    """A BIC-style penalty: bigger streams and noisier data need a larger
+    penalty to avoid over-segmenting. For l2 the natural scale is the signal
+    variance times log(n); kernel costs are ~O(1) so just log(n)."""
+    n = len(signal)
+    base = math.log(n)
+    if cost_model in ("l2", "normal"):
+        base *= float(np.var(signal)) or 1.0
+    return penalty_scale * base
+
+
+def detect_changepoints(signal, config: PeltConfig = PeltConfig()) -> list[int]:
+    """Return the sorted interior change-point indices PELT finds in `signal`.
+
+    Indices are positions in the stream where a new segment begins; the trailing
+    endpoint (len(signal)) that ruptures always appends is dropped.
     """
-    Pull one metric's values out of a list of MetricSeriesRow, in
-    timestamp order, skipping None (uncomputable) entries. Returns the
-    values AND the original indices they came from, since PELT needs a
-    contiguous array but we still want to map back to the right
-    timestamp/row afterward.
-    """
-    ordered = sorted(points, key=lambda p: p.timestamp)
-    values: list[float] = []
-    original_indices: list[int] = []
-    for i, p in enumerate(ordered):
-        v = getattr(p, metric_name, None)
-        if v is not None:
-            values.append(v)
-            original_indices.append(i)
-    return values, original_indices
+    import ruptures as rpt
 
-
-def detect_breakpoints(values: list[float], penalty: float, model: str = DEFAULT_PELT_MODEL) -> list[int]:
-    """
-    Run PELT over a 1D series. Returns breakpoint indices (each is the
-    START of a new segment), excluding the trailing endpoint ruptures
-    always includes (len(values)), which isn't a real change point.
-    """
-    if len(values) < 2 * MIN_SEGMENT_LENGTH:
-        return []  # too short to say anything meaningful
-
-    series = np.array(values).reshape(-1, 1)
-    algo = rpt.Pelt(model=model, min_size=MIN_SEGMENT_LENGTH, jump=1).fit(series)
-    breakpoints = algo.predict(pen=penalty)
-
-    # ruptures always includes len(values) as the final "breakpoint" --
-    # that's a sentinel marking the end of the last segment, not a real
-    # change point, so drop it.
-    return [bp for bp in breakpoints if bp < len(values)]
-
-
-def _describe_candidate(
-    metric_name: str,
-    values: list[float],
-    timestamps: list[Optional[datetime]],
-    bp_index: int,
-    direction: Direction,
-) -> Optional[ChangePointCandidate]:
-    pre_segment = values[:bp_index]
-    post_segment = values[bp_index:]
-
-    if len(pre_segment) < MIN_SEGMENT_LENGTH or len(post_segment) < MIN_SEGMENT_LENGTH:
-        return None  # too close to an edge to trust the pre/post means
-
-    pre_mean = float(np.mean(pre_segment))
-    post_mean = float(np.mean(post_segment))
-    delta = post_mean - pre_mean
-
-    if direction == "lower_is_bad":
-        is_adverse = delta < 0
-    else:
-        is_adverse = delta > 0
-
-    ts = timestamps[bp_index] if bp_index < len(timestamps) else None
-
-    return ChangePointCandidate(
-        metric_name=metric_name,
-        index=bp_index,
-        timestamp=ts,
-        pre_mean=pre_mean,
-        post_mean=post_mean,
-        delta=delta,
-        direction=direction,
-        is_adverse=is_adverse,
-        pre_n=len(pre_segment),
-        post_n=len(post_segment),
-    )
-
-
-def find_changepoints_for_metric(
-    points: list[MetricSeriesRow],
-    metric_name: str,
-    penalty: float,
-    model: str = DEFAULT_PELT_MODEL,
-) -> list[ChangePointCandidate]:
-    """
-    Full pipeline for one metric: extract the series, run PELT, describe
-    every resulting candidate change point (pre/post means, direction,
-    whether it's adverse).
-    """
-    if metric_name not in METRIC_DIRECTIONS:
-        raise ValueError(f"Unknown metric '{metric_name}'. Known: {list(METRIC_DIRECTIONS)}")
-
-    direction = METRIC_DIRECTIONS[metric_name]
-    ordered = sorted(points, key=lambda p: p.timestamp)
-    values, original_indices = _extract_series(ordered, metric_name)
-
-    if not values:
+    x = np.asarray(signal, dtype=float).reshape(-1, 1)
+    n = len(x)
+    if n < 2 * config.min_segment_length:
         return []
-
-    timestamps = [ordered[i].timestamp for i in original_indices]
-    breakpoints = detect_breakpoints(values, penalty=penalty, model=model)
-
-    candidates = []
-    for bp in breakpoints:
-        candidate = _describe_candidate(metric_name, values, timestamps, bp, direction)
-        if candidate is not None:
-            candidates.append(candidate)
-
-    return candidates
+    pen = config.penalty if config.penalty is not None else default_penalty(
+        x.ravel(), config.cost_model, config.penalty_scale
+    )
+    algo = rpt.Pelt(model=config.cost_model, min_size=config.min_segment_length, jump=config.jump).fit(x)
+    bkps = algo.predict(pen=pen)
+    return [int(b) for b in bkps if 0 < b < n]
 
 
-def find_changepoints_all_metrics(
-    points: list[MetricSeriesRow],
-    calibration: dict,
-) -> dict[str, list[ChangePointCandidate]]:
-    """
-    Run PELT across every metric present in a loaded calibration dict
-    (as produced by calibration.save_calibration / load_calibration).
-    Metrics with no calibrated threshold entry are skipped, since there's
-    no calibrated penalty to use for them.
-    """
-    results: dict[str, list[ChangePointCandidate]] = {}
-    for metric_name, threshold_info in calibration.get("thresholds", {}).items():
-        penalty = threshold_info["pelt_penalty"]
-        results[metric_name] = find_changepoints_for_metric(points, metric_name, penalty=penalty)
-    return results
+def segments_from_changepoints(n: int, changepoints: list[int]) -> list[tuple[int, int]]:
+    """Turn interior change points into [start, end) segment bounds covering [0, n)."""
+    bounds = [0, *changepoints, n]
+    return [(bounds[i], bounds[i + 1]) for i in range(len(bounds) - 1)]
