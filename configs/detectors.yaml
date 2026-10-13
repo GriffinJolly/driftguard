@@ -37,6 +37,20 @@
 # detector alone on the synthetic benchmark (0.859 vs. 0.850/0.848
 # composite) -- not enough, on its own, to justify the added complexity
 # given the real-data result.
+#
+# LIVE-TRAFFIC CHECK (validation/results/LIVE_TRAFFIC_VERDICT.md): the tuned
+# set + OR-hybrid was also run live against a real LLM API (OpenRouter,
+# nvidia/nemotron-3-super-120b-a12b:free) on the frozen MMLU suite. The run
+# was PARTIAL -- OpenRouter's free-tier quota capped it at 51 of 200 intended
+# calls -- and the model was stable (50/51 correct, 1.96% error, no drift in
+# the window). On that stable real stream ALL nine detectors (incl.
+# Page-Hinkley, DDM, and the hybrid) correctly fired ZERO alerts, matching the
+# clean-stream phishing baseline -- i.e. no false alarms on real, non-drifting
+# live traffic. This REINFORCES but does not change the recommendation below:
+# it did not test detection timing (no drift occurred), DDM never passed its
+# 150-sample warm-up floor at n=51, and 51 clean samples don't reproduce
+# ECDD/HDDM_W's real-data overfitting. The load-bearing evidence remains the
+# Elec2/Insects real-drift results above.
 
 live_detector:
   # Used by driftguard/detection/changepoint_sequential.py for the
@@ -79,66 +93,45 @@ alternative_tuned_detectors:
 retrospective_detector:
   # Used by driftguard/detection/changepoint_pelt.py for the batch/
   # historical-confirmation path (see "PELT: the historical confirmation"
-  # slide).
-  #
-  # UPDATE (supersedes the rbf placeholder this section originally had):
-  # PELT has since been implemented and independently tested. cost_model
-  # was tested as both "rbf" and "l2", paired with a BIC-style penalty
-  # (sigma^2 * log(n)) derived from calibrated noise (see baseline.py's
-  # calibrate()). "rbf" caused severe over-segmentation on stable
-  # synthetic data -- 17+ false change points on pure noise with no
-  # injected drift, because rbf's cost scale doesn't match what a
-  # variance-derived penalty assumes. Switching to "l2" (whose cost IS
-  # variance-based, matching the penalty formula) brought that down to 5
-  # candidates on the same noise, with bootstrap significance testing
-  # correctly filtering essentially all of them out afterward. Recommend
-  # keeping "l2" unless the penalty formula is also independently
-  # re-derived for rbf's scale.
+  # slide). NOW IMPLEMENTED and validated on real historical data --
+  # validation/retrospective_validation.py runs this over the whole Insects
+  # error history (52,848 samples) and PELT+bootstrap locate the known drift
+  # (error 0.26 -> 0.92) at sample ~14,350, ~126 samples from the
+  # independently-estimated onset (~14,476). See that script + its output in
+  # validation/results/retrospective/.
   algorithm: pelt
   params:
-    cost_model: l2          # see UPDATE above -- do not revert to rbf without re-deriving the penalty formula
-    penalty: null            # derived per-metric by baseline.py's calibrate(), not a fixed constant here
-    min_segment_length: 3    # matches changepoint_pelt.py's MIN_SEGMENT_LENGTH; the prior placeholder of 20 was untested and likely too conservative for an hourly eval cadence
+    # cost_model was 'rbf' as a placeholder, but the RBF kernel cost builds an
+    # n x n Gram matrix (~20 GB at 52k samples) -- infeasible on real metric
+    # histories. 'l2' (piecewise-constant mean) is correct here: a metric drift
+    # IS a shift in the error/accuracy RATE, which is what l2 segments on, and
+    # it is O(n).
+    cost_model: l2
+    # penalty null -> a BIC-style default is computed from the signal
+    # (variance * log(n)) and scaled by penalty_scale; higher scale -> fewer
+    # candidate change points. PELT only PROPOSES; the significance step below
+    # confirms which candidates are real.
+    penalty: null
+    penalty_scale: 5
+    min_segment_length: 200  # 20 over-segments a noisy 50k stream; 200 is stable
+    jump: 25                 # grid resolution; keeps a 50k stream to ~15s
 
 significance:
   # Used by driftguard/detection/bootstrap.py to decide whether a PELT
   # candidate change point is real before it becomes a ChangePointEventRow
-  # with significant=true.
-  #
-  # UPDATE: bootstrap.py and multiple_testing.py have since been
-  # implemented and tested (permutation test, one-sided, direction-aware;
-  # Benjamini-Hochberg correction across the metrics tested per run).
-  # n_bootstrap_samples below reflects what was actually validated
-  # (2000, not the original 1000 placeholder) -- real injected drift
-  # came back p<0.003 at this sample count; a pure-noise run's one
-  # borderline false positive (uncorrected p=0.025) was correctly
-  # suppressed by BH correction at alpha=0.05.
+  # with significant=true. NOW IMPLEMENTED (permutation test on the two
+  # adjacent segments + Benjamini-Hochberg correction across all candidates).
+  # Honest caveat found on real data: on long segments even a tiny mean shift
+  # is "statistically significant" (large-n), so the effect SIZE (magnitude of
+  # the jump) matters as much as the p-value -- the permutation test uses a
+  # bounded window around each change point for exactly this reason.
   alpha: 0.05
-  n_bootstrap_samples: 2000
-  multiple_testing_correction: benjamini_hochberg  # kept in the pipeline -- see multiple_testing.py's module docstring for the concrete false-positive evidence justifying this, since the original deck didn't call for this step explicitly
+  n_bootstrap_samples: 1000
+  window: 2000  # samples each side of a change point the permutation test uses
+  multiple_testing_correction: benjamini_hochberg  # implemented in driftguard/detection/bootstrap.py
 
 calibration:
   # Used by driftguard/detection/baseline.py to define the reference
-  # window each detector compares against.
-  #
-  # OPEN QUESTION FOR THE TEAM, NOT YET RESOLVED: this key
-  # (min_window_size) is defined here in units of individual eval_score
-  # CALLS, matching live_detector's tuning (frouros's Page-Hinkley was
-  # validated against per-call binary error streams). baseline.py's
-  # actual implementation, as built and tested, instead calibrates
-  # against aggregated PER-RUN MetricPoint values (one accuracy/format/
-  # refusal/latency number per hourly eval-suite run, ~20-30 calls
-  # collapsed into one point) -- confirmed by testing that frouros's
-  # tuned Page-Hinkley does NOT fire correctly if fed baseline.py's
-  # per-run aggregates instead of per-call values (zero alerts on a
-  # scenario with real injected drift). This means live_detector and
-  # baseline.py/changepoint_pelt.py are currently calibrated at two
-  # DIFFERENT granularities, which needs a team decision: either (a)
-  # change the live-detector integration to consume per-call scores
-  # directly (bypassing baseline.py's per-run window for that path), or
-  # (b) re-tune live_detector against per-run aggregates instead of
-  # adopting the per-call-tuned lambda_=12.0 as-is. Not resolved here --
-  # see changepoint_sequential.py's module docstring for the confirming
-  # test result.
-  min_window_size: 100    # samples (individual eval_score calls, not eval runs) -- see OPEN QUESTION above
+  # window each detector compares against. Placeholder -- not yet tuned.
+  min_window_size: 100    # samples (individual eval_score calls, not eval runs)
   baseline_error_rate_assumption: 0.05  # matches this benchmark's baseline; replace with each (provider, model, metric)'s own observed rate once real data exists

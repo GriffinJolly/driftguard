@@ -26,15 +26,16 @@ alerts. Feeding it a per-call binary error stream at the SAME baseline
 error rate and shift magnitude this config was tuned for fired correctly,
 ~49 calls after the real shift.
 
-*** INTEGRATION REQUIREMENT, NOT YET WIRED ***
-For this detector to work as intended, whatever code produces individual
-eval_score values per call (tasks.py's per-question grading,
-format_check.py's per-task pass/fail, refusal_probe.py's per-prompt
-refusal flag) needs to feed each one into this detector's .update() as
-it happens, in ADDITION to being aggregated into the per-run MetricPoint
-that baseline.py/changepoint_pelt.py/bootstrap.py consume. That call-site
-wiring is outside this file's scope -- flagged here, and in the project's
-notes, for whoever owns the eval-suite runner integration.
+*** HOW IT IS WIRED ***
+Detection in DriftGuard is per call throughout. driftguard/detection/
+pipeline.py turns the stored calls into per-call signal streams
+(signals.py), feeds every value through this detector one at a time
+(resetting it after each alarm), and hands each alarm to the
+classification layer as a ChangePointEventRow with detector="sequential".
+The retrospective path (changepoint_pelt.py + bootstrap.py) runs over the
+same per-call streams. Calling .update() from the eval runner as each
+score is produced -- so alarms appear while a run is still going -- is
+the remaining runner-side integration.
 
 Direction handling: frouros's PageHinkley assumes "higher value = worse"
 (it's built around error rates, where an increase is the drift being
