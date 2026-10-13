@@ -1,0 +1,5 @@
+part,stream,expected,calls,bad_rate_before,bad_rate_after,verdict,labels
+format,fault,format_drift,240,0.0,0.375,correct,format_drift (sequential) at call 157; format_drift (pelt) at call 120; infra_change (sequential) at call 173
+format,control,no label,240,,,correct,no label
+infra,fault,infra_change,1200,0.07166666666666667,0.4633333333333333,correct,infra_change (pelt) at call 600; infra_change (sequential) at call 623
+infra,control,no label,1200,,,correct,no label
