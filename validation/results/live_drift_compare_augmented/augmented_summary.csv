@@ -1,0 +1,9 @@
+detector,detection_rate_sudden,detection_rate_gradual,detection_rate_overall,false_alarm_rate,median_delay_samples,n_trials_sudden,n_trials_gradual,composite_score
+HDDM_W (tuned),0.925,0.9,0.9125,0.0875,26.0,40,40,0.8835714285714286
+ECDD (tuned),0.975,1.0,0.9875,0.0,66.0,40,40,0.8771428571428572
+HDDM_A (tuned),0.975,0.925,0.95,0.0375,51.0,40,40,0.8739285714285715
+Page-Hinkley (tuned),0.975,1.0,0.9875,0.0,72.0,40,40,0.8664285714285714
+DDM (tuned),1.0,0.975,0.9875,0.0,74.0,40,40,0.8628571428571429
+RDDM (tuned),0.95,0.875,0.9125,0.0,90.0,40,40,0.8042857142857143
+EDDM (tuned),0.75,0.55,0.65,0.0125,104.5,40,40,0.6683928571428571
+ADWIN (tuned),0.75,0.275,0.5125,0.0,112.0,40,40,0.605

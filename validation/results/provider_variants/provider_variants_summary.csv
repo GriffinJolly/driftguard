@@ -1,0 +1,25 @@
+variant,detector,n_samples,error_rate,n_alerts,first_alert_index,alerts_per_1000_samples
+groq-gpt-oss-120b,Page-Hinkley (tuned),1200,0.17416666666666666,654,500.0,545.0
+groq-gpt-oss-120b,DDM (tuned),1200,0.17416666666666666,401,627.0,334.1666666666667
+groq-gpt-oss-120b,EDDM (tuned),1200,0.17416666666666666,0,,0.0
+groq-gpt-oss-120b,ADWIN (tuned),1200,0.17416666666666666,0,,0.0
+groq-gpt-oss-120b,HDDM_A (tuned),1200,0.17416666666666666,0,,0.0
+groq-gpt-oss-120b,HDDM_W (tuned),1200,0.17416666666666666,2,241.0,1.6666666666666667
+groq-gpt-oss-120b,RDDM (tuned),1200,0.17416666666666666,0,,0.0
+groq-gpt-oss-120b,ECDD (tuned),1200,0.17416666666666666,0,,0.0
+groq-gpt-oss-20b,Page-Hinkley (tuned),609,0.1625615763546798,0,,0.0
+groq-gpt-oss-20b,DDM (tuned),609,0.1625615763546798,0,,0.0
+groq-gpt-oss-20b,EDDM (tuned),609,0.1625615763546798,0,,0.0
+groq-gpt-oss-20b,ADWIN (tuned),609,0.1625615763546798,0,,0.0
+groq-gpt-oss-20b,HDDM_A (tuned),609,0.1625615763546798,0,,0.0
+groq-gpt-oss-20b,HDDM_W (tuned),609,0.1625615763546798,1,305.0,1.6420361247947455
+groq-gpt-oss-20b,RDDM (tuned),609,0.1625615763546798,0,,0.0
+groq-gpt-oss-20b,ECDD (tuned),609,0.1625615763546798,0,,0.0
+openrouter-nemotron-super-120b,Page-Hinkley (tuned),51,0.0196078431372549,0,,0.0
+openrouter-nemotron-super-120b,DDM (tuned),51,0.0196078431372549,0,,0.0
+openrouter-nemotron-super-120b,EDDM (tuned),51,0.0196078431372549,0,,0.0
+openrouter-nemotron-super-120b,ADWIN (tuned),51,0.0196078431372549,0,,0.0
+openrouter-nemotron-super-120b,HDDM_A (tuned),51,0.0196078431372549,0,,0.0
+openrouter-nemotron-super-120b,HDDM_W (tuned),51,0.0196078431372549,0,,0.0
+openrouter-nemotron-super-120b,RDDM (tuned),51,0.0196078431372549,0,,0.0
+openrouter-nemotron-super-120b,ECDD (tuned),51,0.0196078431372549,0,,0.0

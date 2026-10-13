@@ -1,0 +1,9 @@
+detector,stable_false_alarm_rate
+Page-Hinkley (tuned),0.0
+DDM (tuned),0.0
+EDDM (tuned),0.025
+ADWIN (tuned),0.0
+HDDM_A (tuned),0.05
+HDDM_W (tuned),0.5
+RDDM (tuned),0.0
+ECDD (tuned),0.0
