@@ -1,0 +1,21 @@
+# validation/provider_config.yaml
+#
+# Provider/model variants for cross-provider drift-detector validation,
+# consumed by validation/provider_variants.py. Each variant names a
+# (provider, model) pair the eval suite is (or has been) run against; the
+# validation compares how the detectors behave on the REAL per-call error
+# stream each variant produced (read back from driftguard.db), so a detector
+# tuned on one model isn't assumed to generalize to another without evidence.
+#
+# provider must be one of the keys in driftguard/providers/clients.py's
+# PROVIDERS ("groq" | "openrouter"); model is the id as that provider names it.
+variants:
+  - name: groq-gpt-oss-120b
+    provider: groq
+    model: openai/gpt-oss-120b
+  - name: groq-gpt-oss-20b
+    provider: groq
+    model: openai/gpt-oss-20b
+  - name: openrouter-nemotron-super-120b
+    provider: openrouter
+    model: nvidia/nemotron-3-super-120b-a12b:free

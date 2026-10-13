@@ -257,8 +257,10 @@ def _metric_values(st: Stream, lo_pre: int, cut: int, hi_post: int, rate_pre: fl
 
 
 def _ts(st: Stream, i: int) -> datetime:
-    t = st.timestamp.iloc[min(i, len(st.timestamp) - 1)]
-    return pd.Timestamp(t).tz_convert("UTC").tz_localize(None).to_pydatetime()
+    """Timestamp of call i as a timezone-aware UTC datetime (newer sqlmodel refuses naive ones)."""
+    t = pd.Timestamp(st.timestamp.iloc[min(i, len(st.timestamp) - 1)])
+    t = t.tz_localize("UTC") if t.tzinfo is None else t.tz_convert("UTC")
+    return t.to_pydatetime()
 
 
 def detect(calls: pd.DataFrame, provider: str, model_id: str,
@@ -311,25 +313,32 @@ def _event_key(e) -> tuple:
     return (e.provider, e.model_id, e.metric_name, e.detector, str(e.changepoint_timestamp)[:19])
 
 
-def run_detection(store: DriftStore, provider: str, model_id: str,
-                  s: Optional[DetectionSettings] = None) -> RunReport:
-    """Detect drift for one target from its stored calls, save every new event, then let the
+def save_events(store: DriftStore, events: list[ChangePointEventRow]) -> tuple[int, int]:
+    """Save events not already stored (same target, metric, detector and time), then let the
     classification layer label and plan them (remediation/mapper.apply_remediation, which runs
-    rules.py and incidents.py). Re-running over the same calls adds nothing twice."""
+    rules.py and incidents.py). Returns (events written, events labelled/planned)."""
     from driftguard.remediation import mapper
 
-    det = detect(load_calls(store, provider, model_id), provider, model_id, s)
     existing = pd.read_sql_query("SELECT provider, model_id, metric_name, detector, changepoint_timestamp "
                                  "FROM changepoint_events", store.engine)
     seen = {(r.provider, r.model_id, r.metric_name, r.detector, str(r.changepoint_timestamp)[:19])
             for r in existing.itertuples(index=False)}
     written = 0
-    for d in det.events:
-        k = _event_key(d.event)
+    for e in events:
+        k = _event_key(e)
         if k in seen:
             continue
-        store.write_changepoint_event(ChangePointEventRow(**d.event.model_dump(exclude={"id"})))
+        store.write_changepoint_event(ChangePointEventRow(**e.model_dump(exclude={"id"})))
         seen.add(k)
         written += 1
     labelled = mapper.apply_remediation(store) if written else 0
+    return written, labelled
+
+
+def run_detection(store: DriftStore, provider: str, model_id: str,
+                  s: Optional[DetectionSettings] = None) -> RunReport:
+    """Detect drift for one target from its stored calls, save every new event, then let the
+    classification layer label and plan them. Re-running over the same calls adds nothing twice."""
+    det = detect(load_calls(store, provider, model_id), provider, model_id, s)
+    written, labelled = save_events(store, [d.event for d in det.events])
     return RunReport(det, written, labelled)

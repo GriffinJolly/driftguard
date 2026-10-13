@@ -1,0 +1,19 @@
+detector,scenario,magnitude,trial,is_real_drift,detected_at_all,correct_detection,false_alarm,delay,first_alert_index,n_samples,onset,provider,strong_model,weak_model
+Page-Hinkley (tuned),sudden,0.0343,sudden_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
+DDM (tuned),sudden,0.0343,sudden_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
+EDDM (tuned),sudden,0.0343,sudden_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
+ADWIN (tuned),sudden,0.0343,sudden_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
+HDDM_A (tuned),sudden,0.0343,sudden_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
+HDDM_W (tuned),sudden,0.0343,sudden_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
+RDDM (tuned),sudden,0.0343,sudden_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
+ECDD (tuned),sudden,0.0343,sudden_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
+Page-Hinkley+DDM (OR hybrid),sudden,0.0343,sudden_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
+Page-Hinkley (tuned),gradual,0.0629,gradual_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
+DDM (tuned),gradual,0.0629,gradual_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
+EDDM (tuned),gradual,0.0629,gradual_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
+ADWIN (tuned),gradual,0.0629,gradual_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
+HDDM_A (tuned),gradual,0.0629,gradual_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
+HDDM_W (tuned),gradual,0.0629,gradual_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
+RDDM (tuned),gradual,0.0629,gradual_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
+ECDD (tuned),gradual,0.0629,gradual_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
+Page-Hinkley+DDM (OR hybrid),gradual,0.0629,gradual_1789291540,True,False,False,False,,,350,175,groq,openai/gpt-oss-120b,openai/gpt-oss-20b
