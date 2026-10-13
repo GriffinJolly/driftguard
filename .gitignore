@@ -6,3 +6,12 @@ driftguard.db
 .venv-mac/
 venv/
 *.egg-info/
+build/
+dist/
+.pytest_cache/
+
+# local experiment caches (rebuilt by the validation scripts)
+validation/data/*.db
+validation/data/*.parquet
+validation/data/*.ground_truth.json
+validation/data/lmsys-chat-1m/
