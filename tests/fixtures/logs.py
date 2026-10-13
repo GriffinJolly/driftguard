@@ -122,3 +122,58 @@ def write_eval_history(
         ))
 
     return start + timedelta(hours=n_before)
+
+
+def write_call_trial(
+    store: DriftStore,
+    tasks: list[Task],
+    passes_before: int = 10,
+    passes_after: int = 10,
+    provider: str = PROVIDER,
+    model_id: str = MODEL_A,
+    start: datetime = BASE_TIME,
+    latency_before_ms: float = 1500.0,
+    latency_after_ms: float = 1500.0,
+    failed_calls_after: int = 0,
+    run_id: str = "trial",
+) -> datetime:
+    """
+    A per-call trial, the shape the detection pipeline and dashboard work on:
+    ONE run, one call per minute, cycling through every task once per pass.
+    Task.before / Task.after give the score for each pass (one value for
+    every pass, or a list with one score per pass). No MetricPoint rows are
+    written, because a per-call trial has no per-run metrics.
+
+    Returns the change time: the timestamp of the first call after the change.
+    failed_calls_after: in each pass after the change, this many extra calls
+    end in a timeout (no answer, no score), for infra tests.
+    """
+    minute = 0
+    change_time: Optional[datetime] = None
+    for p in range(passes_before + passes_after):
+        side, index = ("before", p) if p < passes_before else ("after", p - passes_before)
+        latency = latency_before_ms if side == "before" else latency_after_ms
+        calls = [(task, task.score(side, index)) for task in tasks]
+        if side == "after":
+            calls += [(None, None)] * failed_calls_after
+        for task, score in calls:
+            when = start + timedelta(minutes=minute)
+            if side == "after" and change_time is None:
+                change_time = when
+            if task is None:
+                entry = DriftLogEntry(
+                    integration_path="eval_suite", provider=provider, model_id=model_id, timestamp=when,
+                    prompt="Timed-out call", outcome="timeout", eval_run_id=run_id,
+                    eval_task_type="accuracy", eval_task_id=f"timeout_{minute}", eval_score=None,
+                )
+            else:
+                entry = DriftLogEntry(
+                    integration_path="eval_suite", provider=provider, model_id=model_id, timestamp=when,
+                    prompt=f"Prompt for {task.task_id}",
+                    response_text=f"{side} answer {index} to {task.task_id} (score {score})",
+                    latency_ms=latency, eval_run_id=run_id,
+                    eval_task_type=task.task_type, eval_task_id=task.task_id, eval_score=score,
+                )
+            store.write_log(entry)
+            minute += 1
+    return change_time if change_time is not None else start + timedelta(minutes=minute)
