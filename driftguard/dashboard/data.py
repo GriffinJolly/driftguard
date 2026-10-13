@@ -154,6 +154,11 @@ def analyse_scope(calls: pd.DataFrame, provider: str, model_id: str,
     return Analysis(det.results, events, incidents, plans, incident_of)
 
 
+def _utc(t) -> pd.Timestamp:
+    t = pd.Timestamp(t)
+    return t.tz_localize("UTC") if t.tzinfo is None else t.tz_convert("UTC")
+
+
 def shift_table(a: Analysis) -> pd.DataFrame:
     """One row per detection with the classification layer's verdict on it."""
     rows = []
@@ -166,7 +171,7 @@ def shift_table(a: Analysis) -> pd.DataFrame:
             label=rule.display_name if (rule and c.drift_type) else None, drift_type=c.drift_type,
             detector="PELT" if ev.detector == "pelt" else "Page-Hinkley",
             tier=c.evidence_tier, adverse=c.adverse, index=d.index, seq_id=d.seq_id,
-            timestamp=pd.Timestamp(ev.changepoint_timestamp, tz="UTC"),
+            timestamp=_utc(ev.changepoint_timestamp),
             before=ev.pre_mean, after=ev.post_mean, change=c.change, noise_units=c.noise_units,
             p_adj=ev.p_value_corrected, reason=c.reason,
             incident=None if k is None else a.incidents[k].incident_id,

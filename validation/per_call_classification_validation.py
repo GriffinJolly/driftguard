@@ -138,8 +138,9 @@ def run(sc: Scenario, workdir: Path) -> pd.DataFrame:
     ev = pd.read_sql_query("SELECT * FROM changepoint_events WHERE significant = 1 AND drift_type IS NOT NULL",
                            store.engine)
     store.engine.dispose()
-    ts = pd.to_datetime(pd.Series(sc.timestamps), utc=True).dt.tz_localize(None)
-    ev["call"] = [int(ts.searchsorted(pd.Timestamp(t))) for t in ev["changepoint_timestamp"]]
+    ts = pd.to_datetime(pd.Series(sc.timestamps), utc=True)
+    when = pd.to_datetime(ev["changepoint_timestamp"], utc=True, format="mixed")
+    ev["call"] = [int(ts.searchsorted(t)) for t in when]
     return ev
 
 

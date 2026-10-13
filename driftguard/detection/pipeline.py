@@ -257,8 +257,10 @@ def _metric_values(st: Stream, lo_pre: int, cut: int, hi_post: int, rate_pre: fl
 
 
 def _ts(st: Stream, i: int) -> datetime:
-    t = st.timestamp.iloc[min(i, len(st.timestamp) - 1)]
-    return pd.Timestamp(t).tz_convert("UTC").tz_localize(None).to_pydatetime()
+    """Timestamp of call i as a timezone-aware UTC datetime (newer sqlmodel refuses naive ones)."""
+    t = pd.Timestamp(st.timestamp.iloc[min(i, len(st.timestamp) - 1)])
+    t = t.tz_localize("UTC") if t.tzinfo is None else t.tz_convert("UTC")
+    return t.to_pydatetime()
 
 
 def detect(calls: pd.DataFrame, provider: str, model_id: str,

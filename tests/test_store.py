@@ -3,7 +3,7 @@ against a throwaway SQLite file (tmp_path), no network."""
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta
+from datetime import datetime, timedelta, timezone
 
 import pytest
 
@@ -43,7 +43,7 @@ def test_write_log_and_get_logs_for_run(store):
 
 
 def test_metric_series_ordered_and_filtered(store):
-    ts = datetime(2024, 1, 1)
+    ts = datetime(2024, 1, 1, tzinfo=timezone.utc)
     store.write_metric_point(MetricPoint(run_id="r2", timestamp=ts + timedelta(hours=1),
                                          provider="groq", model_id="m1", accuracy=0.8, n_calls=20))
     store.write_metric_point(MetricPoint(run_id="r1", timestamp=ts,
@@ -57,7 +57,7 @@ def test_metric_series_ordered_and_filtered(store):
 
 
 def test_open_events_only_significant_and_unreviewed(store):
-    now = datetime(2024, 1, 1)
+    now = datetime(2024, 1, 1, tzinfo=timezone.utc)
 
     def _event(**kw):
         base = dict(detected_at=now, provider="groq", model_id="m",
@@ -78,14 +78,14 @@ def test_open_events_only_significant_and_unreviewed(store):
 
 def test_write_changepoint_event_assigns_id(store):
     saved = store.write_changepoint_event(
-        ChangePointEventRow(detected_at=datetime(2024, 1, 1), provider="groq",
+        ChangePointEventRow(detected_at=datetime(2024, 1, 1, tzinfo=timezone.utc), provider="groq",
                             model_id="m", metric_name="accuracy", detector="sequential")
     )
     assert saved.id is not None
 
 
 def test_get_exemplars_respects_window_and_limit(store):
-    base = datetime(2024, 1, 1, 12, 0, 0)
+    base = datetime(2024, 1, 1, 12, 0, 0, tzinfo=timezone.utc)
     for i in range(5):
         store.write_log(_entry(timestamp=base + timedelta(minutes=i)))
 
