@@ -25,6 +25,10 @@ Entry points:
     detect(calls, provider, model_id, settings)   -> Detection   (nothing written)
     run_detection(store, provider, model_id)       -> RunReport   (writes new events,
                                                                    then mapper.apply_remediation)
+    call_signals(...)                              per-call signal values, shared with the
+                                                   live monitor (live.py) so both agree
+The eval runner calls both paths automatically: live.py on every score during a
+run, run_detection at the end of it.
 
 A Page-Hinkley alarm marks where the change was NOTICED, not where it began;
 PELT gives the estimated location of a confirmed change.
@@ -137,47 +141,68 @@ def _should_refuse_map() -> dict[str, bool]:
     return {t["task_id"]: bool(t["should_refuse"]) for t in tasks}
 
 
+def slow_threshold(calls: pd.DataFrame, baseline_window: int = 100) -> Optional[float]:
+    """Latency above which a call counts as slow: the p95 of the first `baseline_window`
+    successful calls. None until there are enough successful calls to fix it."""
+    lat = calls.loc[(calls["outcome"] == "ok") & calls["latency_ms"].notna(), "latency_ms"]
+    if len(lat) < max(MIN_SIGNAL_CALLS, baseline_window + 20):
+        return None
+    return float(np.percentile(lat.iloc[:baseline_window], 95))
+
+
+def call_signals(outcome: str, task_type: Optional[str], task_id: Optional[str], score, latency_ms,
+                 should_refuse: dict[str, bool], slow_ms: Optional[float]) -> dict[str, float]:
+    """The per-call signal values (1 = bad outcome) one call contributes. The single definition
+    used by both the batch path (build_streams) and the live monitor (live.py), so the two always
+    agree on where an alarm falls."""
+    out: dict[str, float] = {}
+    ok = outcome == "ok"
+    scored = ok and score is not None and not (isinstance(score, float) and np.isnan(score))
+    if scored and task_type == "accuracy":
+        out["accuracy_error"] = 1.0 - float(score)
+    elif scored and task_type == "format":
+        out["format_error"] = 1.0 - float(score)
+    elif scored and task_type == "refusal":
+        should = should_refuse.get(task_id or "")
+        if should is None:
+            # prompts from outside the frozen XSTest file carry the "_safe_" / "_unsafe_"
+            # task-id convention that remediation/evidence.py also reads
+            should = True if "_unsafe_" in (task_id or "") else False if "_safe_" in (task_id or "") else None
+        if should is False:
+            out["safe_refusal"] = float(score)
+        elif should is True:
+            out["unsafe_compliance"] = 1.0 - float(score)
+    # rate limits are our own quota running out, not a change in the provider
+    out["quota_exhausted"] = 1.0 if outcome == "rate_limited" else 0.0
+    if outcome != "rate_limited":
+        out["call_failure"] = 0.0 if ok else 1.0
+    if ok and slow_ms is not None and latency_ms is not None and not np.isnan(latency_ms):
+        out["slow_call"] = 1.0 if latency_ms > slow_ms else 0.0
+    return out
+
+
 def build_streams(calls: pd.DataFrame, baseline_window: int = 100) -> dict[str, Stream]:
     """Turn the call log into per-call signal streams (only those with enough calls)."""
+    should = _should_refuse_map()
+    slow_ms = slow_threshold(calls, baseline_window)
+    cols: dict[str, dict[str, list]] = {}
+    for r in calls.itertuples(index=False):
+        latency = None if pd.isna(r.latency_ms) else float(r.latency_ms)
+        score = None if pd.isna(r.eval_score) else float(r.eval_score)
+        for key, value in call_signals(r.outcome, r.eval_task_type, r.eval_task_id, score, latency,
+                                       should, slow_ms).items():
+            c = cols.setdefault(key, {"v": [], "seq": [], "ts": [], "lat": []})
+            c["v"].append(value); c["seq"].append(r.seq_id); c["ts"].append(r.timestamp); c["lat"].append(latency)
     streams: dict[str, Stream] = {}
-    ok = calls[(calls["outcome"] == "ok") & calls["eval_score"].notna()]
-
-    def add(key, frame, values, note="", latency=None):
-        if len(frame) >= MIN_SIGNAL_CALLS:
-            streams[key] = Stream(key, np.asarray(values, dtype=float), frame["seq_id"].to_numpy(),
-                                  frame["timestamp"].reset_index(drop=True), note, latency)
-
-    acc = ok[ok["eval_task_type"] == "accuracy"]
-    add("accuracy_error", acc, 1.0 - acc["eval_score"])
-
-    fmt = ok[ok["eval_task_type"] == "format"]
-    add("format_error", fmt, 1.0 - fmt["eval_score"])
-
-    ref = ok[ok["eval_task_type"] == "refusal"]
-    if len(ref):
-        should = ref["eval_task_id"].map(_should_refuse_map())
-        # prompts from outside the frozen XSTest file carry the "_safe_" / "_unsafe_"
-        # task-id convention that remediation/evidence.py also reads
-        ids = ref["eval_task_id"].fillna("")
-        should = should.where(should.notna(), np.where(ids.str.contains("_unsafe_"), True,
-                                                       np.where(ids.str.contains("_safe_"), False, None)))
-        safe, unsafe = ref[should == False], ref[should == True]  # noqa: E712
-        add("safe_refusal", safe, safe["eval_score"])
-        add("unsafe_compliance", unsafe, 1.0 - unsafe["eval_score"])
-
-    # rate limits are our own quota running out, not a change in the provider
-    limited = calls["outcome"] == "rate_limited"
-    served = calls[~limited]
-    add("call_failure", served, (served["outcome"] != "ok").astype(float))
-    if limited.any():
-        add("quota_exhausted", calls, limited.astype(float))
-
-    lat = calls[(calls["outcome"] == "ok") & calls["latency_ms"].notna()]
-    if len(lat) >= max(MIN_SIGNAL_CALLS, baseline_window + 20):
-        p95 = float(np.percentile(lat["latency_ms"].iloc[:baseline_window], 95))
-        add("slow_call", lat, (lat["latency_ms"] > p95).astype(float),
-            note=f"slow = above {p95:,.0f} ms, the p95 of the first {baseline_window} calls",
-            latency=lat["latency_ms"].to_numpy(dtype=float))
+    has_quota = bool(cols.get("quota_exhausted", {}).get("v")) and max(cols["quota_exhausted"]["v"]) > 0
+    for key, c in cols.items():
+        if len(c["v"]) < MIN_SIGNAL_CALLS or (key == "quota_exhausted" and not has_quota):
+            continue
+        note = (f"slow = above {slow_ms:,.0f} ms, the p95 of the first {baseline_window} calls"
+                if key == "slow_call" else "")
+        streams[key] = Stream(key, np.asarray(c["v"], dtype=float), np.asarray(c["seq"]),
+                              pd.Series(c["ts"]).reset_index(drop=True), note,
+                              np.asarray(c["lat"], dtype=float) if key == "slow_call" else None)
     return streams
 
 

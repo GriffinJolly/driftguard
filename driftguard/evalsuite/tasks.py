@@ -23,7 +23,7 @@ from __future__ import annotations
 import json
 import random
 from pathlib import Path
-from typing import Optional
+from typing import Callable, Optional
 
 from driftguard.ingest.log_schema import DriftLogEntry
 from driftguard.providers.clients import call_model
@@ -130,6 +130,7 @@ def run_accuracy_tasks(
     provider: str,
     model_id: str,
     eval_run_id: str,
+    on_entry: Optional[Callable[[DriftLogEntry], None]] = None,
 ) -> list[DriftLogEntry]:
     """
     Run the full frozen MMLU subset against one (provider, model_id),
@@ -159,6 +160,8 @@ def run_accuracy_tasks(
         else:
             entry.eval_score = None  # failed calls don't count toward accuracy either way
 
+        if on_entry is not None:  # e.g. the live drift monitor, fed each score as it is produced
+            on_entry(entry)
         entries.append(entry)
 
     return entries

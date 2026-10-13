@@ -38,7 +38,7 @@ from __future__ import annotations
 
 import json
 import re
-from typing import Optional
+from typing import Callable, Optional
 
 import jsonschema
 
@@ -233,6 +233,7 @@ def run_format_tasks(
     provider: str,
     model_id: str,
     eval_run_id: str,
+    on_entry: Optional[Callable[[DriftLogEntry], None]] = None,
 ) -> list[DriftLogEntry]:
     """
     Run the fixed format-adherence task set against one (provider, model_id).
@@ -262,6 +263,8 @@ def run_format_tasks(
         else:
             entry.eval_score = None
 
+        if on_entry is not None:  # e.g. the live drift monitor, fed each score as it is produced
+            on_entry(entry)
         entries.append(entry)
 
     return entries

@@ -36,7 +36,7 @@ import json
 import random
 import re
 from pathlib import Path
-from typing import Optional
+from typing import Callable, Optional
 
 from driftguard.ingest.log_schema import DriftLogEntry
 from driftguard.providers.clients import call_model
@@ -146,6 +146,7 @@ def run_refusal_tasks(
     provider: str,
     model_id: str,
     eval_run_id: str,
+    on_entry: Optional[Callable[[DriftLogEntry], None]] = None,
 ) -> list[DriftLogEntry]:
     """
     Run the frozen XSTest subset (safe + unsafe prompts) against one
@@ -173,6 +174,8 @@ def run_refusal_tasks(
         else:
             entry.eval_score = None
 
+        if on_entry is not None:  # e.g. the live drift monitor, fed each score as it is produced
+            on_entry(entry)
         entries.append(entry)
 
     return entries

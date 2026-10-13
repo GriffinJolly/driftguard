@@ -33,9 +33,9 @@ pipeline.py turns the stored calls into per-call signal streams
 (resetting it after each alarm), and hands each alarm to the
 classification layer as a ChangePointEventRow with detector="sequential".
 The retrospective path (changepoint_pelt.py + bootstrap.py) runs over the
-same per-call streams. Calling .update() from the eval runner as each
-score is produced -- so alarms appear while a run is still going -- is
-the remaining runner-side integration.
+same per-call streams. During an eval run, live.py feeds this detector
+each score the moment it is produced (the runner's on_entry hook), so an
+alarm is saved and classified while the run is still going.
 
 Direction handling: frouros's PageHinkley assumes "higher value = worse"
 (it's built around error rates, where an increase is the drift being
