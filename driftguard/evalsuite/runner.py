@@ -72,26 +72,57 @@ def _latency_percentiles(entries: list[DriftLogEntry]) -> tuple[Optional[float],
     return _percentile(latencies, 0.50), _percentile(latencies, 0.95)
 
 
+def _live_hook(store: DriftStore, provider: str, model_id: str):
+    """A callback that feeds each score to the live Page-Hinkley monitor as it is produced
+    (driftguard/detection/live.py). Detection problems are logged and never stop a run."""
+    try:
+        from driftguard.detection.live import LiveMonitor
+        monitor = LiveMonitor(store, provider, model_id)
+    except Exception:
+        logger.exception("Live drift monitor could not start -- this run continues without it")
+        return None
+
+    def observe(entry: DriftLogEntry) -> None:
+        try:
+            for alarm in monitor.observe(entry):
+                logger.warning(f"LIVE DRIFT ALARM on {provider}/{model_id}: {alarm.signal} "
+                               f"({alarm.event.metric_name} {alarm.event.pre_mean} -> {alarm.event.post_mean}); "
+                               f"saved and classified")
+        except Exception:
+            logger.exception("Live drift monitor failed on one call -- continuing")
+    return observe
+
+
 def run_once(
     provider: str,
     model_id: str,
     store: Optional[DriftStore] = None,
     db_path: str = "driftguard.db",
+    detect: bool = True,
 ) -> MetricPoint:
     """
     Run one full batch (accuracy + format + refusal) against
     (provider, model_id), save every call and the aggregated point to
     the store, and return the MetricPoint.
+
+    With detect=True (the default) drift detection runs as part of the run:
+    every score is passed to the live Page-Hinkley monitor the moment it is
+    produced, and once the calls are saved the retrospective path
+    (driftguard/detection/pipeline.run_detection) confirms and locates any
+    change. Both save their events through the classification layer, so
+    alerts reach changepoint_events -- and the dashboard -- with no separate
+    script. Detection problems are logged and never fail the run.
     """
     run_id = str(uuid.uuid4())
     store = store or DriftStore(db_path=db_path)
 
     logger.info(f"Starting eval run {run_id} for provider={provider} model={model_id}")
 
+    on_entry = _live_hook(store, provider, model_id) if detect else None
     all_entries: list[DriftLogEntry] = []
 
     try:
-        acc_entries = run_accuracy_tasks(provider, model_id, run_id)
+        acc_entries = run_accuracy_tasks(provider, model_id, run_id, on_entry=on_entry)
         all_entries.extend(acc_entries)
         logger.info(f"  accuracy: {len(acc_entries)} calls, rate={accuracy_rate(acc_entries)}")
     except Exception:
@@ -99,7 +130,7 @@ def run_once(
         acc_entries = []
 
     try:
-        fmt_entries = run_format_tasks(provider, model_id, run_id)
+        fmt_entries = run_format_tasks(provider, model_id, run_id, on_entry=on_entry)
         all_entries.extend(fmt_entries)
         logger.info(f"  format: {len(fmt_entries)} calls, rate={format_adherence_rate(fmt_entries)}")
     except Exception:
@@ -107,7 +138,7 @@ def run_once(
         fmt_entries = []
 
     try:
-        ref_entries = run_refusal_tasks(provider, model_id, run_id)
+        ref_entries = run_refusal_tasks(provider, model_id, run_id, on_entry=on_entry)
         all_entries.extend(ref_entries)
         logger.info(f"  refusal: {len(ref_entries)} calls, safe_rate={refusal_rate(ref_entries, 'safe')}")
     except Exception:
@@ -133,6 +164,15 @@ def run_once(
         n_calls=len(all_entries),
     )
     store.write_metric_point(point)
+
+    if detect:
+        try:
+            from driftguard.detection.pipeline import run_detection
+            report = run_detection(store, provider, model_id)
+            logger.info(f"Retrospective detection: {report.written} new event(s), "
+                        f"{report.labelled} labelled/planned by the classification layer")
+        except Exception:
+            logger.exception("Retrospective detection failed -- the run's data is saved regardless")
 
     logger.info(
         f"Run {run_id} complete: accuracy={point.accuracy}, format={point.format_adherence}, "
