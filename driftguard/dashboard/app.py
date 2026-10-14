@@ -297,8 +297,10 @@ with st.sidebar:
     s0 = D.load_settings()
     st.markdown('<div class="dg-side-h">Detectors</div>', unsafe_allow_html=True)
     st.markdown(
-        f'<div class="dg-kv"><b>Online</b> · Page-Hinkley, λ = {s0.ph_lambda:g}, δ = {s0.ph_delta:g}, '
-        f'warm-up {s0.ph_min_instances} calls<br><b>Retrospective</b> · PELT ({s0.pelt.cost_model}, '
+        f'<div class="dg-kv"><b>Online</b> · Page-Hinkley, λ = {s0.ph_lambda:g}, δ = {s0.ph_delta:g}'
+        + (f' at a {s0.ph_noise_ref:.0%} error rate, scaled up for noisier signals, α = {s0.ph_alpha:g}'
+           if s0.ph_noise_ref is not None else '')
+        + f', warm-up {s0.ph_min_instances} calls<br><b>Retrospective</b> · PELT ({s0.pelt.cost_model}, '
         f'penalty × {s0.pelt.penalty_scale:g}) → permutation test ({s0.significance.n_bootstrap_samples:,}) '
         f'→ Benjamini-Hochberg, α = {s0.significance.alpha:g}<br><b>Classification</b> · rules.py labels, '
         f'incidents.py groups events within {int(D.DEFAULT_WINDOW.total_seconds() // 3600)} h, '
