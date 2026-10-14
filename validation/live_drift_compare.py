@@ -136,6 +136,9 @@ def _registry():
 # (--degrade-mode temperature instead spikes sampling temperature). The calls are
 # still real and live; only the CAUSE of the errors is engineered, and its
 # magnitude is tunable via `degrade_frac`.
+SWAP_MODEL: str | None = None   # --degrade-mode swap: the model that silently takes over after the onset
+
+
 def _schedule(
     scenario: str, i: int, onset: int, ramp_len: int, model: str,
     base_temp: float, base_max_tokens: int,
@@ -161,6 +164,8 @@ def _schedule(
     if rng.random() < p:  # this call is degraded
         if degrade_mode == "temperature":
             return model, degrade_temp, base_max_tokens
+        if degrade_mode == "swap":                         # a different model answers, same settings
+            return SWAP_MODEL, base_temp, base_max_tokens
         return model, base_temp, degrade_max_tokens        # default: truncate -> wrong/no answer
     return baseline
 
@@ -208,6 +213,12 @@ def _collect_stream(
             eval_run_id=f"live_drift_compare_{trial_id}",
             eval_task_type="accuracy", eval_task_id=task["task_id"],
         )
+
+        if model_id != model:
+            # a silent swap: the log keeps the name the caller asked for, as it would see it;
+            # which model really answered is recorded after the call, never sent to the API
+            entry.request_params = {**entry.request_params, "served_by": model_id}
+            entry.model_id = model
 
         if entry.outcome == "ok":
             letter = _extract_answer_letter(entry.response_text)
@@ -279,7 +290,12 @@ def run_once(args) -> None:
     raw_path = out_dir / f"{args.provider}_raw_results.csv"
     all_rows: list[dict] = []
 
+    global SWAP_MODEL
+    SWAP_MODEL = args.swap_model
+    if args.degrade_mode == "swap" and not SWAP_MODEL:
+        raise SystemExit("--degrade-mode swap needs --swap-model")
     degrade_desc = (f"{args.model}#degraded(temp={args.degrade_temp})" if args.degrade_mode == "temperature"
+                    else f"silent swap to {SWAP_MODEL}" if args.degrade_mode == "swap"
                     else f"{args.model}#degraded(max_tokens={args.degrade_max_tokens})")
     print(f"Live drift comparison -- provider={args.provider}  model={args.model}\n"
           f"drift: {args.degrade_mode} degradation, degrade_frac={args.degrade_frac}  ({degrade_desc})\n"
@@ -486,7 +502,7 @@ def _main() -> None:
                    help="the single model whose config is degraded mid-stream to induce drift")
     p.add_argument("--scenarios", default="sudden,gradual",
                    help="comma-separated subset of: sudden,gradual,stable")
-    p.add_argument("--degrade-mode", dest="degrade_mode", choices=["truncate", "temperature"], default="truncate",
+    p.add_argument("--degrade-mode", dest="degrade_mode", choices=["truncate", "temperature", "swap"], default="truncate",
                    help="how post-onset calls are degraded: 'truncate' = tiny max_tokens so the model is cut "
                         "off before the answer letter (reliable, err~1.0); 'temperature' = spike sampling temp.")
     p.add_argument("--degrade-frac", dest="degrade_frac", type=float, default=DEGRADE_FRAC_DEFAULT,
@@ -496,6 +512,8 @@ def _main() -> None:
                    help="max_tokens for a degraded (truncate-mode) call")
     p.add_argument("--degrade-temp", dest="degrade_temp", type=float, default=DEGRADE_TEMP_DEFAULT,
                    help="temperature for a degraded (temperature-mode) call")
+    p.add_argument("--swap-model", dest="swap_model", default=None,
+                   help="swap mode: the model that answers degraded calls; the log keeps --model's name")
     p.add_argument("--onset", type=int, default=ONSET_DEFAULT)
     p.add_argument("--post", type=int, default=POST_DEFAULT)
     p.add_argument("--ramp-len", dest="ramp_len", type=int, default=GRADUAL_RAMP_DEFAULT)
