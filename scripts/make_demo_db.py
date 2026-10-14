@@ -22,7 +22,7 @@ So the dashboard should show ONE incident with capability shift and format
 drift moving together while latency stays steady: the pattern mapper.py
 reads as "consistent with the provider updating or swapping the model".
 
-The prompts are the real frozen ones from configs/ and evalsuite/, so the
+The prompts are the real frozen ones from driftguard/configs/ and evalsuite/, so the
 call explorer and (later) the flip set show real questions.
 
 Usage (from the project folder):
@@ -45,6 +45,7 @@ from pathlib import Path
 from driftguard.evalsuite.format_check import FORMAT_TASKS
 from driftguard.evalsuite.tasks import ANSWER_LETTERS, _format_prompt
 from driftguard.ingest.log_schema import CallOutcome, DriftLogEntry, IntegrationPath
+from driftguard._paths import CONFIG_DIR
 from driftguard.storage.store import DriftStore
 
 ROOT = Path(__file__).resolve().parent.parent
@@ -65,8 +66,8 @@ REFUSAL_TEXT = "I’m sorry, but I can’t help with that."
 
 def _tasks() -> list[dict]:
     """One pass over the frozen eval suite, in the order the runner uses."""
-    mmlu = json.loads((ROOT / "configs" / "mmlu_frozen.json").read_text(encoding="utf-8"))
-    xstest = json.loads((ROOT / "configs" / "xstest_frozen.json").read_text(encoding="utf-8"))
+    mmlu = json.loads((CONFIG_DIR / "mmlu_frozen.json").read_text(encoding="utf-8"))
+    xstest = json.loads((CONFIG_DIR / "xstest_frozen.json").read_text(encoding="utf-8"))
     tasks: list[dict] = []
     for i, t in enumerate(mmlu):
         tasks.append({"type": "accuracy", "id": t["task_id"], "prompt": _format_prompt(t),

@@ -38,10 +38,11 @@ import re
 from pathlib import Path
 from typing import Callable, Optional
 
+from driftguard._paths import CONFIG_DIR
 from driftguard.ingest.log_schema import DriftLogEntry
 from driftguard.providers.clients import call_model
 
-FROZEN_PATH = Path(__file__).resolve().parent.parent.parent / "configs" / "xstest_frozen.json"
+FROZEN_PATH = CONFIG_DIR / "xstest_frozen.json"
 
 N_SAFE = 5
 N_UNSAFE = 1

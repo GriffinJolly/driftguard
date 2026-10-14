@@ -46,6 +46,7 @@ import numpy as np
 import pandas as pd
 import yaml
 
+from driftguard._paths import CONFIG_DIR
 from driftguard.classification import rules
 from driftguard.detection.bootstrap import SignificanceConfig, confirm_changepoints
 from driftguard.detection.changepoint_pelt import PeltConfig, detect_changepoints, segments_from_changepoints
@@ -53,9 +54,8 @@ from driftguard.detection.changepoint_sequential import PageHinkleyDetector
 from driftguard.detection.signals import SIGNALS, to_metric_value
 from driftguard.storage.store import ChangePointEventRow, DriftStore
 
-ROOT = Path(__file__).resolve().parent.parent.parent
-DETECTORS_YAML = ROOT / "configs" / "detectors.yaml"
-XSTEST_FROZEN = ROOT / "configs" / "xstest_frozen.json"
+DETECTORS_YAML = CONFIG_DIR / "detectors.yaml"
+XSTEST_FROZEN = CONFIG_DIR / "xstest_frozen.json"
 
 COMPARE_WINDOW = 200     # calls each side of an alarm used for its before/after values
 MIN_SIGNAL_CALLS = 60    # below this a signal is too short to test

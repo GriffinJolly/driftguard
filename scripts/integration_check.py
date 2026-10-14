@@ -80,7 +80,7 @@ def main():
             print(f"  {name}: baseline_threshold={mt.baseline_threshold:.4f}, "
                   f"pelt_penalty={mt.pelt_penalty:.6f}")
         cal.save_calibration(result)
-        print("\nSaved to configs/detectors_calibrated.json")
+        print("\nSaved to driftguard/configs/detectors_calibrated.json")
     except Exception:
         print("CALIBRATION FAILED.")
         traceback.print_exc()
