@@ -16,6 +16,7 @@ from driftguard.storage.store import DriftStore
 DEFAULT_PROVIDER_BASE_URLS = {
     "groq": "https://api.groq.com",
     "openrouter": "https://openrouter.ai",
+    "nvidia": "https://integrate.api.nvidia.com",
     "openai": "https://api.openai.com",
     "anthropic": "https://api.anthropic.com",
 }
