@@ -69,6 +69,7 @@ class DetectionSettings:
     ph_delta: float = 0.005
     ph_alpha: float = 0.9999
     ph_min_instances: int = 30
+    ph_noise_ref: Optional[float] = None   # bad-call rate lambda was tuned at; None = no noise scaling
     pelt: PeltConfig = field(default_factory=PeltConfig)
     significance: SignificanceConfig = field(default_factory=SignificanceConfig)
     baseline_window: int = 100   # calls used as the quiet baseline (calibration.min_window_size)
@@ -89,6 +90,7 @@ def load_settings(path: Path = DETECTORS_YAML) -> DetectionSettings:
         ph_delta=float(ph.get("delta", 0.005)),
         ph_alpha=float(ph.get("alpha", 0.9999)),
         ph_min_instances=int(ph.get("min_num_instances", 30)),
+        ph_noise_ref=(float(ph["noise_reference_rate"]) if ph.get("noise_reference_rate") is not None else None),
         pelt=PeltConfig(
             cost_model=rp.get("cost_model", "l2"),
             penalty=rp.get("penalty"),
@@ -208,17 +210,56 @@ def build_streams(calls: pd.DataFrame, baseline_window: int = 100) -> dict[str, 
 
 # --------------------------------------------------------------------------- the two detectors
 
+def ph_noise_scale(baseline: np.ndarray, s: DetectionSettings) -> float:
+    """How much noisier this signal's quiet baseline is than the stream lambda was tuned on.
+
+    lambda = 12 was tuned on 0/1 streams with a 5% bad-call rate. A signal that is wrong 30% of
+    the time wanders much further by chance, so with the same threshold it alarms on noise. The
+    threshold and drift allowance are scaled by the ratio of standard deviations, sqrt(p(1-p)),
+    and only ever scaled up, so quiet signals behave exactly as tuned."""
+    if s.ph_noise_ref is None or len(baseline) == 0:
+        return 1.0
+    p, ref = float(np.mean(baseline)), s.ph_noise_ref
+    return max(1.0, float(np.sqrt(p * (1 - p) / (ref * (1 - ref)))))
+
+
+def new_page_hinkley(s: DetectionSettings, scale: float = 1.0) -> PageHinkleyDetector:
+    return PageHinkleyDetector("signal", lambda_=s.ph_lambda * scale, delta=s.ph_delta * scale,
+                               alpha=s.ph_alpha, min_num_instances=s.ph_min_instances)
+
+
+def ph_start(s: DetectionSettings) -> int:
+    """With noise scaling on, alarms start after the baseline window the scale is taken from."""
+    return s.baseline_window if s.ph_noise_ref is not None else 0
+
+
+def warmed_page_hinkley(baseline: np.ndarray, s: DetectionSettings) -> tuple[PageHinkleyDetector, float]:
+    """A scaled detector that has already seen the baseline calls, so its running mean starts
+    from the quiet level instead of being learned from calls that may include the change.
+    Alarms during the warm-up are ignored (the detector is restarted)."""
+    scale = ph_noise_scale(baseline, s)
+    det = new_page_hinkley(s, scale)
+    for v in baseline:
+        if det.update(float(v)) is not None:
+            det = new_page_hinkley(s, scale)
+    return det, scale
+
+
 def page_hinkley_alerts(values: np.ndarray, s: DetectionSettings) -> list[int]:
     """Where the tuned Page-Hinkley detector alarms, fed one call at a time. It is reset after
     each alarm, so a sustained change gives one alarm rather than a permanent alarm state."""
-    def fresh():
-        return PageHinkleyDetector("signal", lambda_=s.ph_lambda, delta=s.ph_delta,
-                                   alpha=s.ph_alpha, min_num_instances=s.ph_min_instances)
-    det, alerts = fresh(), []
-    for i, v in enumerate(values):
-        if det.update(float(v)) is not None:
+    start = ph_start(s)
+    if len(values) <= start:
+        return []
+    if start:
+        det, scale = warmed_page_hinkley(np.asarray(values[:start], dtype=float), s)
+    else:
+        det, scale = new_page_hinkley(s), 1.0
+    alerts = []
+    for i in range(start, len(values)):
+        if det.update(float(values[i])) is not None:
             alerts.append(i)
-            det = fresh()
+            det = new_page_hinkley(s, scale)
     return alerts
 
 

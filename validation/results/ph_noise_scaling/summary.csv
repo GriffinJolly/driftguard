@@ -1,0 +1,67 @@
+test,base_rate,shift,setting,false_alarm,detected,median_delay
+long stream,0.05,0.0,"previous (fixed λ=12, α=0.9999)",0.11666666666666667,,
+long stream,0.05,0.0,"current (noise-scaled, α=0.998)",0.016666666666666666,,
+long stream,0.05,0.03,"previous (fixed λ=12, α=0.9999)",0.03333333333333333,1.0,1405.5
+long stream,0.05,0.03,"current (noise-scaled, α=0.998)",0.0,0.9,962.5
+long stream,0.05,0.05,"previous (fixed λ=12, α=0.9999)",0.1,1.0,800.5
+long stream,0.05,0.05,"current (noise-scaled, α=0.998)",0.0,1.0,494.0
+long stream,0.05,0.1,"previous (fixed λ=12, α=0.9999)",0.0,1.0,367.5
+long stream,0.05,0.1,"current (noise-scaled, α=0.998)",0.0,1.0,202.5
+long stream,0.05,0.2,"previous (fixed λ=12, α=0.9999)",0.03333333333333333,1.0,160.5
+long stream,0.05,0.2,"current (noise-scaled, α=0.998)",0.03333333333333333,1.0,84.0
+long stream,0.15,0.0,"previous (fixed λ=12, α=0.9999)",0.4,,
+long stream,0.15,0.0,"current (noise-scaled, α=0.998)",0.016666666666666666,,
+long stream,0.15,0.03,"previous (fixed λ=12, α=0.9999)",0.35,0.9166666666666666,1558.0
+long stream,0.15,0.03,"current (noise-scaled, α=0.998)",0.03333333333333333,0.48333333333333334,1671.0
+long stream,0.15,0.05,"previous (fixed λ=12, α=0.9999)",0.35,1.0,647.0
+long stream,0.15,0.05,"current (noise-scaled, α=0.998)",0.0,0.95,864.0
+long stream,0.15,0.1,"previous (fixed λ=12, α=0.9999)",0.4166666666666667,1.0,396.0
+long stream,0.15,0.1,"current (noise-scaled, α=0.998)",0.03333333333333333,1.0,294.5
+long stream,0.15,0.2,"previous (fixed λ=12, α=0.9999)",0.4,1.0,154.0
+long stream,0.15,0.2,"current (noise-scaled, α=0.998)",0.0,1.0,136.0
+long stream,0.3,0.0,"previous (fixed λ=12, α=0.9999)",0.6166666666666667,,
+long stream,0.3,0.0,"current (noise-scaled, α=0.998)",0.0,,
+long stream,0.3,0.03,"previous (fixed λ=12, α=0.9999)",0.45,0.9,1465.5
+long stream,0.3,0.03,"current (noise-scaled, α=0.998)",0.0,0.31666666666666665,2133.0
+long stream,0.3,0.05,"previous (fixed λ=12, α=0.9999)",0.4166666666666667,0.9833333333333333,871.0
+long stream,0.3,0.05,"current (noise-scaled, α=0.998)",0.016666666666666666,0.7166666666666667,1095.0
+long stream,0.3,0.1,"previous (fixed λ=12, α=0.9999)",0.36666666666666664,1.0,390.5
+long stream,0.3,0.1,"current (noise-scaled, α=0.998)",0.0,1.0,484.0
+long stream,0.3,0.2,"previous (fixed λ=12, α=0.9999)",0.4666666666666667,1.0,226.0
+long stream,0.3,0.2,"current (noise-scaled, α=0.998)",0.0,1.0,171.0
+long stream,0.5,0.0,"previous (fixed λ=12, α=0.9999)",0.6333333333333333,,
+long stream,0.5,0.0,"current (noise-scaled, α=0.998)",0.0,,
+long stream,0.5,0.03,"previous (fixed λ=12, α=0.9999)",0.4666666666666667,0.9,1678.0
+long stream,0.5,0.03,"current (noise-scaled, α=0.998)",0.0,0.13333333333333333,1433.5
+long stream,0.5,0.05,"previous (fixed λ=12, α=0.9999)",0.4666666666666667,0.9833333333333333,784.0
+long stream,0.5,0.05,"current (noise-scaled, α=0.998)",0.0,0.5666666666666667,1489.0
+long stream,0.5,0.1,"previous (fixed λ=12, α=0.9999)",0.65,1.0,482.0
+long stream,0.5,0.1,"current (noise-scaled, α=0.998)",0.016666666666666666,1.0,523.5
+long stream,0.5,0.2,"previous (fixed λ=12, α=0.9999)",0.55,1.0,212.5
+long stream,0.5,0.2,"current (noise-scaled, α=0.998)",0.0,1.0,192.0
+synthetic stable,0.05,,"previous (fixed λ=12, α=0.9999)",0.01,,
+synthetic stable,0.05,,"current (noise-scaled, α=0.998)",0.0,,
+synthetic sudden,0.05,0.1,"previous (fixed λ=12, α=0.9999)",0.0,0.93,181.0
+synthetic sudden,0.05,0.1,"current (noise-scaled, α=0.998)",0.0,0.79,188.0
+synthetic sudden,0.05,0.2,"previous (fixed λ=12, α=0.9999)",0.0,1.0,75.0
+synthetic sudden,0.05,0.2,"current (noise-scaled, α=0.998)",0.0,1.0,84.0
+synthetic sudden,0.05,0.35,"previous (fixed λ=12, α=0.9999)",0.0,1.0,42.0
+synthetic sudden,0.05,0.35,"current (noise-scaled, α=0.998)",0.0,1.0,44.5
+synthetic gradual,0.05,0.1,"previous (fixed λ=12, α=0.9999)",0.0,0.95,217.0
+synthetic gradual,0.05,0.1,"current (noise-scaled, α=0.998)",0.0,0.88,239.0
+synthetic gradual,0.05,0.2,"previous (fixed λ=12, α=0.9999)",0.0,1.0,136.5
+synthetic gradual,0.05,0.2,"current (noise-scaled, α=0.998)",0.0,1.0,141.5
+synthetic gradual,0.05,0.35,"previous (fixed λ=12, α=0.9999)",0.0,1.0,105.0
+synthetic gradual,0.05,0.35,"current (noise-scaled, α=0.998)",0.0,1.0,110.0
+synthetic transient,0.05,0.1,"previous (fixed λ=12, α=0.9999)",0.08,,
+synthetic transient,0.05,0.1,"current (noise-scaled, α=0.998)",0.0,,
+synthetic transient,0.05,0.2,"previous (fixed λ=12, α=0.9999)",0.19,,
+synthetic transient,0.05,0.2,"current (noise-scaled, α=0.998)",0.11,,
+synthetic transient,0.05,0.35,"previous (fixed λ=12, α=0.9999)",0.67,,
+synthetic transient,0.05,0.35,"current (noise-scaled, α=0.998)",0.64,,
+LMSYS control,,0.0,"previous (fixed λ=12, α=0.9999)",0.03,,
+LMSYS sudden,,,"previous (fixed λ=12, α=0.9999)",0.09,1.0,174.0
+LMSYS gradual,,,"previous (fixed λ=12, α=0.9999)",0.05,1.0,770.5
+LMSYS control,,0.0,"current (noise-scaled, α=0.998)",0.02,,
+LMSYS sudden,,,"current (noise-scaled, α=0.998)",0.0,1.0,109.5
+LMSYS gradual,,,"current (noise-scaled, α=0.998)",0.01,1.0,701.0

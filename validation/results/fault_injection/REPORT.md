@@ -7,14 +7,14 @@
 
 | part   | stream   | expected     |   calls |   bad_rate_before |   bad_rate_after | verdict   | labels                                                                                                        |
 |:-------|:---------|:-------------|--------:|------------------:|-----------------:|:----------|:--------------------------------------------------------------------------------------------------------------|
-| format | fault    | format_drift |     240 |         0         |         0.375    | correct   | format_drift (sequential) at call 157; format_drift (pelt) at call 120; infra_change (sequential) at call 173 |
+| format | fault    | format_drift |     240 |         0         |         0.375    | correct   | format_drift (pelt) at call 120; format_drift (sequential) at call 160; infra_change (sequential) at call 183 |
 | format | control  | no label     |     240 |       nan         |       nan        | correct   | no label                                                                                                      |
-| infra  | fault    | infra_change |    1200 |         0.0716667 |         0.463333 | correct   | infra_change (pelt) at call 600; infra_change (sequential) at call 623                                        |
+| infra  | fault    | infra_change |    1200 |         0.0716667 |         0.463333 | correct   | infra_change (pelt) at call 600; infra_change (sequential) at call 626                                        |
 | infra  | control  | no label     |    1200 |       nan         |       nan        | correct   | no label                                                                                                      |
 
 ## Side effect seen in the format fault
 
-The format fault stream also got an **infra_change** early warning (live detector, call 173; not
+The format fault stream also got an **infra_change** early warning (live detector, call 183; not
 confirmed by PELT). It is real, not a false alarm: the plain-English requests produced much longer
 answers (median 937 characters and 338 tokens, against 74 characters and 100 tokens for JSON), so
 those calls were slower (median 1,125 ms against 688 ms; p95 2,172 ms against 1,237 ms). The

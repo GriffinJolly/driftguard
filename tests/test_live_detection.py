@@ -111,3 +111,22 @@ def test_detection_can_be_switched_off(tmp_path, fake_provider):
     for _ in range(4):
         runner.run_once("groq", "m", store=store, detect=False)
     assert _events(store).empty
+
+
+def test_live_matches_batch_when_the_baseline_window_spans_history_and_live(tmp_path):
+    s = pipeline.load_settings()
+    assert s.ph_noise_ref is not None and s.baseline_window > 40
+    rng = np.random.default_rng(3)
+    wrong = np.r_[rng.random(400) < 0.20, rng.random(400) < 0.60]
+    store = DriftStore(db_path=str(tmp_path / "t.db"))
+    for i in range(40):                                    # only part of the baseline is stored
+        store.write_log(_entry(i, wrong[i]))
+    monitor = LiveMonitor(store, "groq", "m")
+    for i in range(40, 800):
+        e = _entry(i, wrong[i])
+        monitor.observe(e)
+        store.write_log(e)
+    live = [a.event.changepoint_timestamp for a in monitor.alarms if a.signal == "accuracy_error"]
+    batch = pipeline.detect(pipeline.load_calls(store, "groq", "m"), "groq", "m")
+    assert live and live == [d.event.changepoint_timestamp for d in batch.events
+                             if d.signal == "accuracy_error" and d.event.detector == "sequential"]
