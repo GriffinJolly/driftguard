@@ -60,6 +60,246 @@
     "correct_index": 3
   },
   {
+    "task_id": "mmlu_high_school_mathematics_61",
+    "subject": "high_school_mathematics",
+    "question": "If x and y are directly proportional and x = 3 when y = 8, what is the value of x when y = 13?",
+    "choices": [
+      "0.615",
+      "4.875",
+      "15",
+      "34.667"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_121",
+    "subject": "high_school_mathematics",
+    "question": "Juan rolls a fair regular octahedral die marked with the numbers 1 through 8. Then Amal rolls a fair six-sided die. What is the probability that the product of the two rolls is a multiple of 3?",
+    "choices": [
+      "\\frac{1}{2}",
+      "\\frac{1}{4}",
+      "\\frac{1}{144}",
+      "\\frac{1}{288}"
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_200",
+    "subject": "high_school_mathematics",
+    "question": "Grady rides his bike $60\\%$ faster than his little brother Noah. If Grady rides $12$ miles further than Noah in two hours, how fast in miles per hour does Noah ride?",
+    "choices": [
+      "32",
+      "20",
+      "10",
+      "7.2"
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_9",
+    "subject": "high_school_mathematics",
+    "question": "How many arithmetic sequences of consecutive odd integers sum to 240?",
+    "choices": [
+      "8",
+      "12",
+      "10",
+      "4"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_104",
+    "subject": "high_school_mathematics",
+    "question": "Suppose 5 different integers are randomly chosen from between 20 and 69, inclusive. What is the probability that they each have a different tens digit?",
+    "choices": [
+      "\\frac{1}{4}",
+      "\\frac{1}{3}",
+      "\\frac{1000}{52969}",
+      "\\frac{2500}{52969}"
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_211",
+    "subject": "high_school_mathematics",
+    "question": "The amount of paint that David needs to cover a cube is directly proportional to the surface area. If David can completely cover a cube of side length 2 feet with exactly 16 quarts of paint, how big a cube (in terms of edge length in feet) can David cover with 169 quarts of paint?",
+    "choices": [
+      "\\frac{13}{4}",
+      "8",
+      "\\frac{13}{2}",
+      "13"
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_156",
+    "subject": "high_school_mathematics",
+    "question": "Six positive integers are written on the faces of a cube. Each vertex is labeled with the product of the three numbers on the faces adjacent to the vertex. If the sum of the numbers on the vertices is equal to $1001$, then what is the sum of the numbers written on the faces?",
+    "choices": [
+      "18",
+      "13",
+      "1001",
+      "31"
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_5",
+    "subject": "high_school_mathematics",
+    "question": "John divided his souvenir hat pins into two piles. The two piles had an equal number of pins. He gave his brother one-half of one-third of one pile. John had 66 pins left. How many pins did John originally have?",
+    "choices": [
+      "396",
+      "72",
+      "66",
+      "36"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_249",
+    "subject": "high_school_mathematics",
+    "question": "What interval consists of all $u$ such that neither $2u$ nor $-20u$ is in the interval $(-\\infty,-1)$ ?",
+    "choices": [
+      "[-\\frac{1}{2}, 0]",
+      "[-1,1]",
+      "[-\\frac{1}{2}, -\\frac{1}{20}]",
+      "[0,2]"
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_229",
+    "subject": "high_school_mathematics",
+    "question": "On her previous five attempts Sarah had achieved times, in seconds, of 86, 94, 97, 88 and 96, for swimming 50 meters. After her sixth try she brought her median time down to 92 seconds. What was her time, in seconds, for her sixth attempt?",
+    "choices": [
+      "92",
+      "90",
+      "87",
+      "10"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_153",
+    "subject": "high_school_mathematics",
+    "question": "Find the sum of the primes between 100 and 200, inclusive, that are 1 or 2 more than a perfect square.",
+    "choices": [
+      "102",
+      "298",
+      "256",
+      "300"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_226",
+    "subject": "high_school_mathematics",
+    "question": "A consumer report revealed the following information about three tubes of toothpaste. Bright is $60 \\%$ more expensive than Fresh and has $25\\%$ less volume than Glow. Glow is $25\\%$ less expensive than Bright and has $33\\frac{1}{3} \\%$ more volume than Fresh. Fresh costs $\\$1.00$ per unit of volume. What is the number of cents per unit of volume of Glow?",
+    "choices": [
+      "90",
+      "120",
+      "60",
+      "320"
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_95",
+    "subject": "high_school_mathematics",
+    "question": "The coefficient of the (x – 8)2 term in the Taylor polynomial for y = x2/3 around x = 8 is",
+    "choices": [
+      "-1/144",
+      "-1/72",
+      "1/144",
+      "1/6"
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_212",
+    "subject": "high_school_mathematics",
+    "question": "How many odd perfect squares are between 5 and 211?",
+    "choices": [
+      "2",
+      "25",
+      "6",
+      "75"
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_123",
+    "subject": "high_school_mathematics",
+    "question": "When $(x\\sqrt{x^3})^4$ is simplified, what is the exponent of $x$?",
+    "choices": [
+      "5",
+      "10",
+      "2",
+      "12"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_248",
+    "subject": "high_school_mathematics",
+    "question": "How many positive integers are factors of 120 and also factors of 40?",
+    "choices": [
+      "1",
+      "3",
+      "4",
+      "8"
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_203",
+    "subject": "high_school_mathematics",
+    "question": "What is the sum of all integer solutions to $|n| < |n-3| < 9$?",
+    "choices": [
+      "-9",
+      "-14",
+      "14",
+      "9"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_100",
+    "subject": "high_school_mathematics",
+    "question": "Simplify $(5x+3) - 2(2x-4)$.",
+    "choices": [
+      "10+x",
+      "x+11",
+      "5x+3",
+      "7+2x"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_267",
+    "subject": "high_school_mathematics",
+    "question": "If F(3) = 8 and F′(3) = -4 then F(3.02) is approximately",
+    "choices": [
+      "-8.08",
+      "7.92",
+      "7.98",
+      "8.02"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_high_school_mathematics_199",
+    "subject": "high_school_mathematics",
+    "question": "If g (x) = f (–x) for all real numbers x, and if (3, 2) is a point on the graph of g, which of the following points MUST be on the graph of f ?",
+    "choices": [
+      "(3, 2)",
+      "(3, –2)",
+      "(–3, 2)",
+      "(–3, –2)"
+    ],
+    "correct_index": 2
+  },
+  {
     "task_id": "mmlu_college_computer_science_44",
     "subject": "college_computer_science",
     "question": "For a connected, undirected graph G = (V, E), which of the following must be true?\nI. Σ_{v∈V} degree(v) is even.\nII. |E| ≥ |V| − 1\nIII. G has at least one vertex with degree 1.",
@@ -118,6 +358,246 @@
       "2048"
     ],
     "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_college_computer_science_74",
+    "subject": "college_computer_science",
+    "question": "Consider the following grammar.\nS → ( S )\nS → x\nWhich of the following statements is (are) true?\nI. The grammar is ambiguous.\nII. The grammar is suitable for top-down parsing.\nIII. The grammar is suitable for bottom-up parsing.",
+    "choices": [
+      "I only",
+      "II only",
+      "III only",
+      "II and III only"
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_college_computer_science_22",
+    "subject": "college_computer_science",
+    "question": "The IP protocol is primarily concerned with",
+    "choices": [
+      "Routing packets through the network",
+      "Reliable delivery of packets between directly connected machines",
+      "Reliable delivery of large (multi-packet) messages between machines that are not necessarily directly connected",
+      "Dealing with differences among operating system architectures"
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_college_computer_science_98",
+    "subject": "college_computer_science",
+    "question": "A microcomputer used for data acquisition and control is required to digitize and process four analog input signals and to output their average continually; i.e., in real time. The time for an external analog-to-digital converter (which is triggered by a CPU instruction) to digitize one input is 12 microseconds, and only one digitization occurs at a time. Five CPU instructions, including the triggering instruction, must be executed for each signal digitized. Ten CPU instructions are executed in order to average each set of four samples and output this value. The time to convert the output from digital to analog form is to be ignored. If it is assumed that suitable data buffering is employed, then the maximum average instruction execution time that allows the microcomputer to keep up with the input-output data rates, is",
+    "choices": [
+      "0.8 microseconds",
+      "1.2 microseconds",
+      "1.6 microseconds",
+      "2.4 microseconds"
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_college_computer_science_53",
+    "subject": "college_computer_science",
+    "question": "Which of the following sorting algorithms has average-case and worst-case running times of O(n log n)?",
+    "choices": [
+      "Bubble sort",
+      "Insertion sort",
+      "Merge sort",
+      "Quicksort"
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_college_computer_science_17",
+    "subject": "college_computer_science",
+    "question": "The language {ww | w in (0 + 1)*} is",
+    "choices": [
+      "not accepted by any Turing machine",
+      "accepted by some Turing machine, but by no pushdown automaton",
+      "accepted by some pushdown automaton, but not context-free",
+      "context-free, but not regular"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_college_computer_science_92",
+    "subject": "college_computer_science",
+    "question": "Let G = (V, E) be a connected, undirected graph, and let a and b be two distinct vertices in V. Let P_1 be the problem of finding a shortest simple path between a and b, and let P_2 be the problem of finding a longest simple path between a and b. Which of the following statements about P_1 and P_2 is true?",
+    "choices": [
+      "Both P_1 and P_2 can be solved in polynomial time.",
+      "P_1 can be solved in polynomial time but P_2 is not known to be solvable in polynomial time.",
+      "P_1 is not known to be solvable in polynomial time but P_2 can be solved in polynomial time.",
+      "It is not known whether either P_1 or P_2 can be solved in polynomial time."
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_college_computer_science_66",
+    "subject": "college_computer_science",
+    "question": "Which of the following problems is (are) decidable?\nI. Given a (finite) string w, is w a prefix of the decimal expansion of π?\nII. Given a program and an input, is the program’s output the decimal expansion of π?\nIII. Given a program that takes as input a prefix of the decimal expansion of π, is the program’s output always the same for every prefix?",
+    "choices": [
+      "I only",
+      "II only",
+      "III only",
+      "I and II only"
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_college_computer_science_35",
+    "subject": "college_computer_science",
+    "question": "Which of the following statements about a remote procedure call is true?",
+    "choices": [
+      "It is used to call procedures with addresses that are farther than 2^16 bytes away.",
+      "It cannot return a value.",
+      "It cannot pass parameters by reference.",
+      "It cannot call procedures implemented in a different language."
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_college_computer_science_93",
+    "subject": "college_computer_science",
+    "question": "A major advantage of direct mapping of a cache is its simplicity. The main disadvantage of this organization is that",
+    "choices": [
+      "it does not allow simultaneous access to the intended data and its tag",
+      "it is more expensive than other types of cache organizations",
+      "the cache hit ratio is degraded if two or more blocks used alternately map onto the same block frame in the cache",
+      "its access time is greater than that of other cache organizations"
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_college_computer_science_29",
+    "subject": "college_computer_science",
+    "question": "Which of the following is NOT a property of bitmap graphics?",
+    "choices": [
+      "Fast hardware exists to move blocks of pixels efficiently.",
+      "Realistic lighting and shading can be done.",
+      "All line segments can be displayed as straight.",
+      "Polygons can be filled with solid colors and textures."
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_college_computer_science_64",
+    "subject": "college_computer_science",
+    "question": "Which of the following is not a sentence that is generated by the grammar A -> BC, B -> x|Bx, C -> B|D, D -> y|Ey, E -> z?",
+    "choices": [
+      "xyz",
+      "xy",
+      "xxzy",
+      "xxxxy"
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_college_computer_science_42",
+    "subject": "college_computer_science",
+    "question": "Which of the following conditions can be expressed by a Boolean formula in the Boolean variables p_1, p_2, p_3, p_4 and the connectives ∧,∨ (without ¬)?\nI. At least three of p_1, p_2, p_3, p_4 are true.\nII. Exactly three of p_1, p_2, p_3, p_4 are true.\nIII. An even number of p_1, p_2, p_3, p_4 are true.",
+    "choices": [
+      "I only",
+      "II only",
+      "III only",
+      "I and III"
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_college_computer_science_57",
+    "subject": "college_computer_science",
+    "question": "Which of the following instruction-set features is NOT generally considered an obstacle to aggressive pipelining of an integer unit?",
+    "choices": [
+      "Condition codes set by every instruction",
+      "Variable-length encoding of instructions",
+      "Instructions requiring widely varying numbers of cycles to execute",
+      "Several different classes (sets) of registers"
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_college_computer_science_18",
+    "subject": "college_computer_science",
+    "question": "Which of the following statements about Ethernets is typically FALSE?",
+    "choices": [
+      "Ethernets use circuit switching to send messages.",
+      "Ethernets use buses with multiple masters.",
+      "Ethernet protocols use a collision-detection method to ensure that messages are transmitted properly.",
+      "Networks connected by Ethernets are limited in length to a few hundred meters."
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_college_computer_science_23",
+    "subject": "college_computer_science",
+    "question": "Of the following, which best approximates the ratio of the number of nonterminal nodes to the total number of nodes in a complete K-ary tree of depth N?",
+    "choices": [
+      "1/K",
+      "K-1/K",
+      "log_10 (1/N)",
+      "N-1/m"
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_college_computer_science_80",
+    "subject": "college_computer_science",
+    "question": "An Euler circuit of an undirected graph is a circuit in which each edge of the graph appears exactly once. Which of the following undirected graphs must have an Euler circuit?\nI. A complete graph with 12 vertices\nII. A complete graph with 13 vertices\nIII. A tree with 13 vertices",
+    "choices": [
+      "I only",
+      "II only",
+      "III only",
+      "I and II"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_college_computer_science_41",
+    "subject": "college_computer_science",
+    "question": "Which of the following sets of bit strings CANNOT be described with a regular expression?",
+    "choices": [
+      "All bit strings whose number of zeros is a multiple of five",
+      "All bit strings starting with a zero and ending with a one",
+      "All bit strings with an even number of zeros",
+      "All bit strings with more ones than zeros"
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_college_computer_science_63",
+    "subject": "college_computer_science",
+    "question": "Which of the following language features requires that stack-based storage allocation be used rather than static allocation?",
+    "choices": [
+      "Recursive procedures",
+      "Arbitrary goto's",
+      "Two-dimensional arrays",
+      "Integer-valued functions"
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_college_computer_science_14",
+    "subject": "college_computer_science",
+    "question": "Let A and B be two sets of words (strings) from Σ*, for some alphabet of symbols Σ. Suppose that B is a subset of A. Which of the following statements must always be true of A and B ?\nI. If A is finite, then B is finite.\nII. If A is regular, then B is regular.\nIII. If A is context-free, then B is context-free.",
+    "choices": [
+      "I only",
+      "II only",
+      "III only",
+      "I and II only"
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_college_computer_science_99",
+    "subject": "college_computer_science",
+    "question": "Suppose that a certain software product has a mean time between failures of 10,000 hours and has a mean time to repair of 20 hours. If the product is used by 100 customers, what is its availability?",
+    "choices": [
+      "80%",
+      "90%",
+      "98%",
+      "99.80%"
+    ],
+    "correct_index": 3
   },
   {
     "task_id": "mmlu_high_school_us_history_1",
@@ -180,6 +660,246 @@
     "correct_index": 2
   },
   {
+    "task_id": "mmlu_high_school_us_history_48",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\n\"One-half of the people of this nation to-day are utterly powerless to blot from the statute books an unjust law, or to write there a new and a just one. The women, dissatisfied as they are with this form of government, that enforces taxation without representation,—that compels them to obey laws to which they have never given their consent,—that imprisons and hangs them without a trial by a jury of their peers, that robs them, in marriage, of the custody of their own persons, wages and children,—are this half of the people left wholly at the mercy of the other half, in direct violation of the spirit and letter of the declarations of the framers of this government, every one of which was based on the immutable principle of equal rights to all.\"\n—Susan B. Anthony, \"I Stand Before You Under Indictment\" (speech), 1873\nWhich of the following was NOT designed to empower the government to regulate the increasing wealth and power of the industrialists in the late nineteenth and early twentieth centuries?",
+    "choices": [
+      "Sherman Anti-Trust Act (1890).",
+      "Interstate Commerce Act (1887).",
+      "Federal Trade Commission Act (1914).",
+      "Newlands Reclamation Act (1902)."
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_88",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\nAll this while the Indians came skulking about them, and would sometimes show themselves aloof off, but when any approached near them, they would run away; and once they stole away their tools where they had been at work and were gone to dinner. But about the 16th of March, a certain Indian came boldly amongst them and spoke to them in broken English, which they could well understand but marveled at it. At length they understood by discourse with him, that he was not of these parts, but belonged to the eastern parts where some English ships came to fish, with whom he was acquainted and could name sundry of them by their names, amongst whom he had got his language. He became profitable to them in acquainting them with many things concerning the state of the country in the east parts where he lived, which was afterwards profitable unto them; as also of the people here, of their names, number and strength, of their situation and distance from the place, and who was chief amongst them. His name was Samoset. He told them also of another Indian whose name was Squanto, a native of this place, who had been in England and could speak better English than himself.\n—William Bradford, History of Plymouth Plantation\nAs the passage above makes clear, the Pilgrims were not the only Europeans in what would become Massachusetts during the 1620s. The area was already becoming important because of its",
+    "choices": [
+      "fishing.",
+      "farming.",
+      "mining.",
+      "shipbuilding."
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_153",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\n\"When we were kids the United States was the wealthiest and strongest country in the world; the only one with the atom bomb, the least scarred by modern war, an initiator of the United Nations that we thought would distribute Western influence throughout the world. Freedom and equality for each individual, government of, by, and for the people—these American values we found good, principles by which we could live as men. Many of us began maturing in complacency.\n\"As we grew, however, our comfort was penetrated by events too troubling to dismiss. First, the permeating and victimizing fact of human degradation, symbolized by the Southern struggle against racial bigotry, compelled most of us from silence to activism. Second, the enclosing fact of the Cold War, symbolized by the presence of the Bomb, brought awareness that we ourselves, and our friends, and millions of abstract 'others' we knew more directly because of our common peril, might die at any time. . . .\"\n—Port Huron Statement, 1962\nThe Port Huron Statement, excerpted above, can most clearly be seen as an important document in which of the following movements?",
+    "choices": [
+      "The labor union movement.",
+      "The civil rights movement.",
+      "The New Right.",
+      "The New Left."
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_134",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\nThe 1980s have been born in turmoil, strife, and change. This is a time of challenge to our interests and our values and it's a time that tests our wisdom and skills.\nAt this time in Iran, 50 Americans are still held captive, innocent victims of terrorism and anarchy. Also at this moment, massive Soviet troops are attempting to subjugate the fiercely independent and deeply religious people of Afghanistan. These two acts—one of international terrorism and one of military aggression—present a serious challenge to the United States of America and indeed to all the nations of the world. Together we will meet these threats to peace.…\nThree basic developments have helped to shape our challenges: the steady growth and increased projection of Soviet military power beyond its own borders; the overwhelming dependence of the Western democracies on oil supplies from the Middle East; and the press of social and religious and economic and political change in the many nations of the developing world, exemplified by the revolution in Iran.\nEach of these factors is important in its own right. Each interacts with the others. All must be faced together, squarely and courageously. We will face these challenges, and we will meet them with the best that is in us. And we will not fail.\n—Jimmy Carter, State of the Union Address, January 23, 1980\nWhich of the following has some of its roots in the conditions discussed by Jimmy Carter in this passage?",
+    "choices": [
+      "The War on Terror",
+      "High unemployment",
+      "Tensions with China",
+      "High budget deficits"
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_47",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\n\"If you analyze it I believe the very heart and soul of conservatism is libertarianism. I think conservatism is really a misnomer just as liberalism is a misnomer for the liberals—if we were back in the days of the Revolution, so-called conservatives today would be the Liberals and the liberals would be the Tories. The basis of conservatism is a desire for less government interference or less centralized authority or more individual freedom and this is a pretty general description also of what libertarianism is. Now, I can't say that I will agree with all the things that the present group who call themselves Libertarians in the sense of a party say, because I think that like in any political movement there are shades, and there are libertarians who are almost over at the point of wanting no government at all or anarchy. I believe there are legitimate government functions. There is a legitimate need in an orderly society for some government to maintain freedom or we will have tyranny by individuals. The strongest man on the block will run the neighborhood. We have government to ensure that we don't each one of us have to carry a club to defend ourselves. But again, I stand on my statement that I think that libertarianism and conservatism are traveling the same path.\"\nRonald Reagan, Interview published in Reason magazine, 1975\nWhich of the following groups would be most opposed to the sentiments expressed in the excerpt above?",
+    "choices": [
+      "Neoconservatives",
+      "Reagan Democrats",
+      "Progressive Liberals",
+      "Populists"
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_159",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\n\"If it be conceded, as it must be by every one who is the least conversant with our institutions, that the sovereign powers delegated are divided between the General and State Governments, and that the latter hold their portion by the same tenure as the former, it would seem impossible to deny to the States the right of deciding on the infractions of their powers, and the proper remedy to be applied for their correction. The right of judging, in such cases, is an essential attribute of sovereignty, of which the States cannot be divested without losing their sovereignty itself, and being reduced to a subordinate corporate condition. In fact, to divide power, and to give to one of the parties the exclusive right of judging of the portion allotted to each, is, in reality, not to divide it at all; and to reserve such exclusive right to the General Government (it matters not by what department to be exercised), is to convert it, in fact, into a great consolidated government, with unlimited powers, and to divest the States, in reality, of all their rights, It is impossible to understand the force of terms, and to deny so plain a conclusion.\"\n—John C. Calhoun, \"South Carolina Exposition and Protest,\" 1828\nThe language of \"protest\" that Calhoun used in his \"Exposition and Protest\" was similar to the language of which of the following political positions?",
+    "choices": [
+      "The response of supporters of Andrew Jackson to the \"corrupt bargain\" of 1824.",
+      "The response of New England Federalists to the War of 1812.",
+      "The response of the Jefferson administration to the actions of the \"Barbary pirates.\"",
+      "The response of Daniel Shays to fiscal policies of the Massachusetts legislature in the 1780s."
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_17",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\n\"Americans have more freedom and broader rights than citizens of almost any other nation in the world, including the capacity to criticize their government and their elected officials. But we do not have the right to resort to violence—or the threat of violence—when we don't get our way. Our founders constructed a system of government so that reason could prevail over fear. Oklahoma City proved once again that without the law there is no freedom. Criticism is part of the lifeblood of democracy. No one is right all the time. But we should remember that there is a big difference between criticizing a policy or a politician and demonizing the government that guarantees our freedoms and the public servants who enforce our laws.\"\nPresident Bill Clinton, \"What We Learned in Oklahoma City,\" 2010\n(Written on the 15th anniversary of the Oklahoma City bombing)\n\"If there would not have been a Waco, I would have put down roots somewhere and not been so unsettled with the fact that my government…was a threat to me. Everything that Waco implies was on the forefront of my thoughts. That sort of guided my path for the next couple of years.\"\nTimothy McVeigh, Oklahoma City bomber, 2001\nU.S. Representative John Conyers, Events Surrounding the Branch Davidian Cult Standoff in Waco, Texas: Hearing Before the Committee on the Judiciary, House of Representatives, 1993\nIn the third excerpt, Representative Conyers refers to \"Wounded Knee\" as an example of",
+    "choices": [
+      "a violent cult",
+      "a federal misuse of power",
+      "the site of a bombing",
+      "a recent conflict between federal agents and Lakota Indians"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_30",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\nClearly, no longer can a dictator count on East–West confrontation to stymie concerted United Nations action against aggression. A new partnership of nations has begun. And we stand today at a unique and extraordinary moment. The crisis in the Persian Gulf, as grave as it is, also offers a rare opportunity to move toward an historic period of cooperation. Out of these troubled times, our fifth objective—a new world order—can emerge; a new era, freer from the threat of terror, stronger in the pursuit of justice, and more secure in the quest for peace. An era in which the nations of the world, east and west, north and south, can prosper and live in harmony.\n—President George Herbert Walker Bush, Speech to a Joint Session of Congress, September 11, 1990\nPresident Bush's \"new world order\" most directly resembles which of the following?",
+    "choices": [
+      "The Monroe Doctrine",
+      "Theodore Roosevelt's \"Big Stick\"",
+      "Woodrow Wilson's Fourteen Points",
+      "Containment policy toward the Soviet Union"
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_155",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\nOn Being Brought from Africa to America\n'Twas mercy brought me from my Pagan land,\nTaught my benighted soul to understand\nThat there's a God, that there's a Saviour too;\nOnce I redemption neither sought nor knew.\nSome view our sable race with scornful eye,\n\"Their colour is a diabolic die.\"\nRemember, Christians, Negroes, black as Cain,\nMay be refin'd, and join th' angelic train.\n—Phillis Wheatley, Poems on Various Subjects, Religious and Moral, 1773\nThe ideas expressed in Phillis Wheatley's poem most directly reveal the influence of which of the following?",
+    "choices": [
+      "The First Great Awakening",
+      "The natural rights theory of John Locke",
+      "British ideas about social hierarchy",
+      "Eighteenth century scientific racism"
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_156",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\n\"The question, therefore, should be quickly settled, whether free colored persons, born and naturalized in this country, are not American citizens, and justly entitled to all the rights, privileges and immunities of citizens of the several states; and whether the Constitution of the United States makes or authorizes any invidious distinction with regard to the color or condition of free inhabitants.\n\"For myself, I have not the shadow of doubt on the subject. I believe that the rights of the free colored persons need only to be vindicated before the U.S. Supreme Court, to be obtained; that no prejudice or sophistry . . . can prevent their acknowledgement . . . and that the present laws, affecting your condition, are clearly unconstitutional. The fact that you have been treated, by common consent and common usage, as aliens and brutes, is not proof that such treatment is legal, but only shows the strength, the bitterness, and the blindness of prejudice.\"\n—William Lloyd Garrison, \"To the Free People of Color of the United States,\" The Liberator, January 15, 1831\nThe argument put forth by William Lloyd Garrison in the passage was later contradicted in which of the following Supreme Court decisions?",
+    "choices": [
+      "Dred Scott v. Sanford (1857)",
+      "Ex parte Milligan (1866)",
+      "Plessy v. Ferguson (1896)",
+      "Brown v. Board of Education of Topeka (1954)"
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_89",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\nAll this while the Indians came skulking about them, and would sometimes show themselves aloof off, but when any approached near them, they would run away; and once they stole away their tools where they had been at work and were gone to dinner. But about the 16th of March, a certain Indian came boldly amongst them and spoke to them in broken English, which they could well understand but marveled at it. At length they understood by discourse with him, that he was not of these parts, but belonged to the eastern parts where some English ships came to fish, with whom he was acquainted and could name sundry of them by their names, amongst whom he had got his language. He became profitable to them in acquainting them with many things concerning the state of the country in the east parts where he lived, which was afterwards profitable unto them; as also of the people here, of their names, number and strength, of their situation and distance from the place, and who was chief amongst them. His name was Samoset. He told them also of another Indian whose name was Squanto, a native of this place, who had been in England and could speak better English than himself.\n—William Bradford, History of Plymouth Plantation\nThe Pilgrims traveled to America and settled at Plymouth because",
+    "choices": [
+      "they were hoping to escape crushing debts in England.",
+      "they hoped to find gold or establish a lucrative trade in furs.",
+      "they were religious Separatists looking for a place to freely practice their faith.",
+      "they were ordered to establish an outpost to watch the French in Canada."
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_7",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\nAt a meeting of working girls held at Hull House during a strike in a large shoe factory, the discussions made it clear that the strikers who had been most easily frightened, and therefore the first to capitulate, were naturally those girls who were paying board and were afraid of being put out if they fell too far behind. After a recital of a case of peculiar hardship one of them exclaimed: \"Wouldn't it be fine if we had a boarding club of our own, and then we could stand behind each other in a time like this?\" After that events moved quickly. We … discussed all the difficulties and fascinations of such an undertaking, and on the first of May, 1891, two comfortable apartments near Hull House were rented and furnished. The Settlement was responsible for the furniture and paid the first month's rent, but beyond that the members managed the club themselves.… At the end of the third year the club occupied all of the six apartments which the original building contained, and numbered fifty members.\n—Jane Addams, Twenty Years at Hull House, 1912\nA settlement house worker was most likely to be motivated by which of the following?",
+    "choices": [
+      "The Social Gospel",
+      "Social Darwinism",
+      "Communism",
+      "The support of an urban political machine"
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_146",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\nOn Being Brought from Africa to America\n'Twas mercy brought me from my Pagan land,\nTaught my benighted soul to understand\nThat there's a God, that there's a Saviour too;\nOnce I redemption neither sought nor knew.\nSome view our sable race with scornful eye,\n\"Their colour is a diabolic die.\"\nRemember, Christians, Negroes, black as Cain,\nMay be refin'd, and join th' angelic train.\n—Phillis Wheatley, Poems on Various Subjects, Religious and Moral, 1773\nThe sentiments expressed in Wheatley's poem most directly reflect which of the following continuities in U.S. history?",
+    "choices": [
+      "Debates over religious freedom",
+      "Debates over social justice",
+      "Debates over immigration",
+      "Debates over freedom of expression"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_147",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\n\"The question, therefore, should be quickly settled, whether free colored persons, born and naturalized in this country, are not American citizens, and justly entitled to all the rights, privileges and immunities of citizens of the several states; and whether the Constitution of the United States makes or authorizes any invidious distinction with regard to the color or condition of free inhabitants.\n\"For myself, I have not the shadow of doubt on the subject. I believe that the rights of the free colored persons need only to be vindicated before the U.S. Supreme Court, to be obtained; that no prejudice or sophistry . . . can prevent their acknowledgement . . . and that the present laws, affecting your condition, are clearly unconstitutional. The fact that you have been treated, by common consent and common usage, as aliens and brutes, is not proof that such treatment is legal, but only shows the strength, the bitterness, and the blindness of prejudice.\"\n—William Lloyd Garrison, \"To the Free People of Color of the United States,\" The Liberator, January 15, 1831\nThe reform that William Lloyd Garrison is advocating in the passage was later enacted as a result of the",
+    "choices": [
+      "issuing of the Emancipation Proclamation (1863).",
+      "passage of the Reconstruction Act of 1867.",
+      "ratification of the Fourteenth Amendment (1868).",
+      "passage of the Civil Rights Act of 1875."
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_198",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\n\"In one view the slaveholders have a decided advantage over all opposition. It is well to notice this advantage—the advantage of complete organization. They are organized; and yet were not at the pains of creating their organizations. The State governments, where the system of slavery exists, are complete slavery organizations. The church organizations in those States are equally at the service of slavery; while the Federal Government, with its army and navy, from the chief magistracy in Washington, to the Supreme Court, and thence to the chief marshalship at New York, is pledged to support, defend, and propagate the crying curse of human bondage. The pen, the purse, and the sword, are united against the simple truth, preached by humble men in obscure places.\"\nFrederick Douglass, 1857\nFrederick Douglass was most influenced by which of the following social movements?",
+    "choices": [
+      "First Great Awakening",
+      "Second Great Awakening",
+      "Manifest Destiny",
+      "Popular Sovereignty"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_157",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\n\"Your sentiments, that our affairs are drawing rapidly to a crisis, accord with my own. What the event will be is also beyond the reach of my foresight. We have errors to correct. We have probably had too good an opinion of human nature in forming our confederation. Experience has taught us that men will not adopt and carry into execution measures the best calculated for their own good without the intervention of a coercive power. I do not conceive that we can exist long as a nation without having lodged somewhere a power which will pervade the whole Union in as energetic a manner as the authority of the state governments extends over the several states. . . .\n\"What astonishing changes a few years are capable of producing. I am told that even respectable characters speak of a monarchical form of government without horror. . . . What a triumph for our enemies to verify their predictions! What a triumph for the advocates of despotism to find that we are incapable of governing ourselves, and that systems founded on the basis of equal liberty are merely ideal and fallacious. . . .\"\n—George Washington, letter to John Jay, August 1, 1786\nThe sentiments in the letter by George Washington, above, reflect which of the following continuities in American history?",
+    "choices": [
+      "Debates about the proper balance between liberty and order.",
+      "Debates about reconciling republicanism with the institution of slavery.",
+      "Debates about the relationship among the three branches of government.",
+      "Debates about the use of the military in subduing domestic disturbances."
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_176",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\nOf all the band of adventurous cavaliers, whom Spain, in the sixteenth century, sent forth on the career of discovery and conquest, there was none more deeply filled with the spirit of romantic enterprise than Hernando Cortes. Dangers and difficulties, instead of deterring, seemed to have a charm in his eyes.… He conceived, at the first moment of his landing in Mexico, the design of its conquest. When he saw the strength of its civilization, he was not turned from his purpose.… This spirit of knight-errantry might lead us to undervalue his talents as a general, and to regard him merely in the light of a lucky adventurer. But this would be doing him injustice; for Cortes was certainly a great general, if that man be one, who performs great achievements with the resources which his own genius has created. There is probably no instance in history, where so vast an enterprise has been achieved by means apparently so inadequate.… He brought together the most miscellaneous collection of mercenaries who ever fought under one standard: adventurers from Cuba and the Isles, craving for gold; hidalgos, who came from the old country to win laurels; … wild tribes of the natives from all parts of the country, who had been sworn enemies from their cradles, and who had met only to cut one another's throats, and to procure victims for sacrifice; men, in short, differing in race, in language, and in interests, with scarcely anything in common among them. Yet this motley congregation was assembled in one camp, compelled to bend to the will of one man, to consort together in harmony, to breathe, as it were, one spirit, and to move on a common principle of action!\n—William Hickling Prescott, History of the Conquest of Mexico, 1843\nAs Prescott makes clear in the passage above, an important reason for Cortes's military success was which of the following?",
+    "choices": [
+      "The advantage of superior numbers",
+      "The superior military skill of mercenaries",
+      "Taking advantage of divisions among the Indians",
+      "Effective use of European artillery"
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_59",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\n\"Those whose condition is such that their function is the use of their bodies and nothing better can be expected of them, those, I say, are slaves of nature. It is better for them to be ruled thus.\"\nJuan de Sepulveda, Politics, 1522\n\"When Latin American nations gained independence in the 19th century, those two strains converged, and merged with an older, more universalist, natural law tradition. The result was a distinctively Latin American form of rights discourse. Paolo Carozza traces the roots of that discourse to a distinctive application, and extension, of Thomistic moral philosophy to the injustices of Spanish conquests in the New World. The key figure in that development seems to have been Bartolomé de Las Casas, a 16th-century Spanish bishop who condemned slavery and championed the cause of Indians on the basis of a natural right to liberty grounded in their membership in a single common humanity. 'All the peoples of the world are humans,' Las Casas wrote, and 'all the races of humankind are one.' According to Brian Tierney, Las Casas and other Spanish Dominican philosophers laid the groundwork for a doctrine of natural rights that was independent of religious revelation 'by drawing on a juridical tradition that derived natural rights and natural law from human rationality and free will, and by appealing to Aristotelian philosophy.'\"\nMary Ann Glendon, \"The Forgotten Crucible: The Latin American Influence on the Universal Human Rights Idea,” 2003\nWhich one of the following statements about the Spanish conquest of the Americas is most accurate?",
+    "choices": [
+      "African slavery was a direct result of Spanish settlements in Florida.",
+      "Early native civilizations in Mexico introduced Spanish explorers to cattle ranching and wheat cultivation.",
+      "Christopher Columbus was not the first European to have explored North America.",
+      "Due to racial prejudice, Spanish explorers shunned intermarriage with native people."
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_142",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\n\"I come to present the strong claims of suffering humanity. I come to place before the Legislature of Massachusetts the condition of the miserable, the desolate, the outcast. I come as the advocate of helpless, forgotten, insane and idiotic men and women; of beings, sunk to a condition from which the most unconcerned would start with real horror; of beings wretched in our Prisons, and more wretched in our Alms-Houses. . . .\n\"If my pictures are displeasing, coarse, and severe, my subjects, it must be recollected, offer no tranquil, refined, or composing features. The condition of human beings, reduced to the extremest states of degradation and misery, cannot be exhibited in softened language, or adorn a polished page.\n\"I proceed, Gentlemen, briefly to call your attention to the present state of Insane Persons confined within this Commonwealth, in cages, closets, cellars, stalls, pens! Chained, naked, beaten with rods, and lashed into obedience!\"\n—Dorothea Dix, \"Memorial to the Massachusetts Legislature\" (1843)\nDorothea Dix's research and testimony is best understood in the context of",
+    "choices": [
+      "women gaining the right to vote in many states.",
+      "an economic downturn that was responsible for the closure of many state institutions.",
+      "an evolving relationship between the federal government and issues of health and poverty.",
+      "the rise of voluntary organizations to promote religious and secular reforms."
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_high_school_us_history_177",
+    "subject": "high_school_us_history",
+    "question": "This question refers to the following information.\n\"I observe the great and wonderful mistake, both our own and our fathers, as to the civil powers of this world, acting in spiritual matters. I have read…the last will and testament of the Lord Jesus over many times, and yet I cannot find by one tittle of that testament that if He had been pleased to have accepted of a temporal crown and government that ever He would have put forth the least finger of temporal or civil power in the matters of His spiritual affairs and Kingdom. Hence must it lamentably be against the testimony of Christ Jesus for the civil state to impose upon the souls of the people a religion, a worship, a ministry, oaths (in religious and civil affairs), tithes, times, days, marryings, and buryings in holy ground…\"\nRoger Williams, The Hireling Ministry None of Christ's, 1652\nConsistent with the excerpt above, Roger Williams was banished from Massachusetts Bay in 1636 for advocating",
+    "choices": [
+      "the separation of church and state",
+      "women's suffrage",
+      "bigamy",
+      "the export of tobacco"
+    ],
+    "correct_index": 0
+  },
+  {
     "task_id": "mmlu_philosophy_28",
     "subject": "philosophy",
     "question": "\"There is no rationale for myth because it is through myth that reason itself is defined.\"  This means that:",
@@ -236,6 +956,246 @@
       "all felt by a single person.",
       "all be caused by a single source.",
       "all of the above."
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_philosophy_224",
+    "subject": "philosophy",
+    "question": "According to Hobbes, without a common power to keep them in awe humans would exist in a state of:",
+    "choices": [
+      "peace and harmony.",
+      "mutual indifference.",
+      "cautious mistrust.",
+      "war of every man against every man."
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_philosophy_216",
+    "subject": "philosophy",
+    "question": "In Augustine’s view, lying is:",
+    "choices": [
+      "often permissible if done for the right reasons.",
+      "not evil in itself, although it can have bad consequences.",
+      "permissible only in very rare circumstances.",
+      "never permissible."
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_philosophy_291",
+    "subject": "philosophy",
+    "question": "According to Cicero, immorality is __________, and expediency is __________.",
+    "choices": [
+      "repugnant to Nature; repugnant to Nature.",
+      "repugnant to Nature; in accord with Nature.",
+      "in accord with Nature; repugnant to Nature.",
+      "in accord with Nature; in accord with Nature."
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_philosophy_245",
+    "subject": "philosophy",
+    "question": "Aristotle divides the virtues into:",
+    "choices": [
+      "natural virtues and artificial virtues.",
+      "moral virtues and intellectual virtues.",
+      "positive virtues and negative virtues.",
+      "human virtues and divine virtues."
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_philosophy_222",
+    "subject": "philosophy",
+    "question": "Which of the following is not one of Ross’s prima facie duties?",
+    "choices": [
+      "Fidelity",
+      "Beneficence",
+      "Non-maleficence",
+      "Legality"
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_philosophy_40",
+    "subject": "philosophy",
+    "question": "Mill defines “utility” as:",
+    "choices": [
+      "usefulness for some craft.",
+      "usefulness to society.",
+      "pleasure and the absence of pain.",
+      "it promotes the interests of all and does not harm anyone."
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_philosophy_145",
+    "subject": "philosophy",
+    "question": "According to Anscombe, “moral obligation” currently signifies:",
+    "choices": [
+      "the norms of a society.",
+      "the feelings of an individual.",
+      "the commands of God.",
+      "no real concept at all."
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_philosophy_160",
+    "subject": "philosophy",
+    "question": "According to Cicero, the most practical branch of philosophy deals with:",
+    "choices": [
+      "logic.",
+      "natural science.",
+      "moral duties.",
+      "expedience."
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_philosophy_274",
+    "subject": "philosophy",
+    "question": "In the moral life, feelings are _____.",
+    "choices": [
+      "essential and inevitable",
+      "essential to impartiality",
+      "an unerring guide",
+      "reason based"
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_philosophy_95",
+    "subject": "philosophy",
+    "question": "According to Hobbes, whenever and wherever men live without a common power to keep them all in awe, there is _____.",
+    "choices": [
+      "negotiation",
+      "war",
+      "democracy",
+      "freedom"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_philosophy_176",
+    "subject": "philosophy",
+    "question": "At first Descartes supposes that everything he sees is _____.",
+    "choices": [
+      "TRUE",
+      "FALSE",
+      "part of him",
+      "undeniable"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_philosophy_0",
+    "subject": "philosophy",
+    "question": "Aesthetics deals with objects that are_____.",
+    "choices": [
+      "essential to our existence",
+      "unimportant to most people",
+      "not essential to our existence",
+      "rarely viewed"
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_philosophy_49",
+    "subject": "philosophy",
+    "question": "According to Rawls, behind the veil of ignorance, the principles of justice are _____.",
+    "choices": [
+      "the result of coercion",
+      "impractical",
+      "chosen arbitrarily",
+      "the result of a fair agreement or bargain"
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_philosophy_240",
+    "subject": "philosophy",
+    "question": "According to Socrates, it is important that we discover what makes a particular action (e.g., a merciful or just act) the kind of action that it is, because without such knowledge:",
+    "choices": [
+      "no one in society will ever do any action that really is merciful or just, only those actions that they think are merciful or just.",
+      "the primary purpose of human existence--which is to think and to know--is replaced by a focus on morality (acting and doing).",
+      "we can refer only to how people characterize actions without knowing why such actions should be characterized that way.",
+      "there would be no way to distinguish one kind of action (e.g., a merciful action) from another kind of action (e.g., a just action)."
+    ],
+    "correct_index": 2
+  },
+  {
+    "task_id": "mmlu_philosophy_91",
+    "subject": "philosophy",
+    "question": " According to Socrates, the task of the wise and virtuous person is not simply to learn various examples of just or virtuous actions but to learn the essence of justice or virtue, because:",
+    "choices": [
+      "by knowing enough examples of justice or virtue, we will live a worthwhile life even if we do not know what makes them examples of justice or virtue.",
+      "knowledge of individual examples alone would not prepare someone for situations of justice or virtue to which the examples do not immediately apply.",
+      "what makes an action just or virtuous can be known only by asking people for their opinions and respecting each answer as equally valuable.",
+      "justice and virtue are universal goals of all human beings, even if people do not always agree on how to achieve those ends."
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_philosophy_36",
+    "subject": "philosophy",
+    "question": "According to Mill, to determine whether one pleasure is more valuable than another, we must _____.",
+    "choices": [
+      "determine which one is objectively most pleasurable",
+      "determine which pleasure most experienced people prefer",
+      "consult philosophers of the past",
+      "consult science"
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_philosophy_143",
+    "subject": "philosophy",
+    "question": "Parfit claims that the magnitude of pains:",
+    "choices": [
+      "can be precisely compared.",
+      "can be compared, but only roughly.",
+      "can be compared within individuals, but not between individuals.",
+      "cannot compared either within individuals or between individuals."
+    ],
+    "correct_index": 1
+  },
+  {
+    "task_id": "mmlu_philosophy_239",
+    "subject": "philosophy",
+    "question": "According to Hobbes, the right of nature is:",
+    "choices": [
+      "an entitlement to the fruits of one’s labors.",
+      "a claim not to be harmed by others.",
+      "the right of the king to rule his subjects.",
+      "the liberty to use one’s powers to preserve one’s life."
+    ],
+    "correct_index": 3
+  },
+  {
+    "task_id": "mmlu_philosophy_211",
+    "subject": "philosophy",
+    "question": "Descartes says that, for all he knows, he may be _____.",
+    "choices": [
+      "dreaming",
+      "a god",
+      "infallible",
+      "perfect"
+    ],
+    "correct_index": 0
+  },
+  {
+    "task_id": "mmlu_philosophy_9",
+    "subject": "philosophy",
+    "question": "According to Kant, morality requires us to:",
+    "choices": [
+      "perform the action that leads to the greatest total happiness.",
+      "act only on maxims that we can will to become universal laws.",
+      "behave only in such a way as a perfectly virtuous person would behave.",
+      "place the interests of others above the interests of ourselves."
     ],
     "correct_index": 1
   }

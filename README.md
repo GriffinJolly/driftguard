@@ -6,7 +6,7 @@ It tracks four signals:
 
 | Signal | Measured with | A drop or rise means |
 |---|---|---|
-| Accuracy | 20 frozen MMLU questions | Accuracy down: capability shift |
+| Accuracy | 100 frozen MMLU questions (25 per subject) | Accuracy down: capability shift |
 | Format adherence | 6 structured-output (JSON schema) tasks | Format down: format drift |
 | Refusal rate | 6 frozen XSTest prompts (5 safe, 1 unsafe) | Refusals of safe prompts up: safety shift |
 | Latency | p95 response time of every call | Latency up: infra change |
@@ -43,7 +43,7 @@ your app / eval suite
 
 ### Eval suite
 
-`evalsuite/runner.py` runs one pass of the suite against a provider and model: the MMLU questions (`tasks.py`), the format tasks (`format_check.py`) and the XSTest prompts (`refusal_probe.py`). The question sets are frozen in `configs/mmlu_frozen.json` and `configs/xstest_frozen.json`, so every run asks exactly the same things. Each call gets a 0/1 score: correct, passed the schema, or refused. `providers/clients.py` talks to Groq and OpenRouter through their OpenAI-compatible APIs, with a rate limiter set under each free tier's cap.
+`evalsuite/runner.py` runs one pass of the suite against a provider and model: the MMLU questions (`tasks.py`), the format tasks (`format_check.py`) and the XSTest prompts (`refusal_probe.py`). The question sets are frozen in `configs/mmlu_frozen.json` and `configs/xstest_frozen.json`, so every run asks exactly the same things. Each call gets a 0/1 score: correct, passed the schema, or refused. `providers/clients.py` talks to Groq, OpenRouter and NVIDIA's API catalog through their OpenAI-compatible APIs, with a rate limiter set under each free tier's cap.
 
 Refusal detection is a keyword heuristic ("I can't", "I'm sorry, but I", ...), not a classifier. It can miss or over-count individual refusals. That is acceptable for tracking change over time on the same model, but don't read it as an exact refusal rate.
 
@@ -112,6 +112,7 @@ Put your API keys in a `.env` file in the project root. It's in `.gitignore`.
 ```
 GROQ_API_KEY=your-groq-key
 OPENROUTER_API_KEY=your-openrouter-key
+NVIDIA_API_KEY=your-nvidia-key
 ```
 
 You only need the key for the provider you use.
@@ -128,13 +129,13 @@ Run the eval suite once:
 python -m driftguard.evalsuite.runner --provider groq --model openai/gpt-oss-120b
 ```
 
-Run it every hour until you stop it:
+A run is 112 calls (100 MMLU, 6 format, 6 refusal). Run it every 3 hours until you stop it; Groq's free tier allows about 1,000 calls a day:
 
 ```bash
-python -m driftguard.evalsuite.runner --provider groq --model openai/gpt-oss-120b --interval-seconds 3600
+python -m driftguard.evalsuite.runner --provider groq --model openai/gpt-oss-120b --interval-seconds 10800
 ```
 
-`run_cycle.py` does one round for each target in its `TARGETS` list (currently Groq `openai/gpt-oss-120b` and an OpenRouter model) and exits. Point cron or Task Scheduler at it. It writes a log to `logs/run_cycle.log` and only counts a run as a success if at least half its calls came back OK.
+`run_cycle.py` does one round for each target in its `TARGETS` list (currently Groq `openai/gpt-oss-120b` and NVIDIA `nvidia/nemotron-3-super-120b-a12b`) and exits. Point cron or Task Scheduler at it, every 3 hours. It writes a log to `logs/run_cycle.log` and only counts a run as a success if at least half its calls came back OK.
 
 Both use `driftguard.db` unless you pass `--db-path` (runner) or set `DRIFTGUARD_DB` (run_cycle).
 
@@ -235,7 +236,7 @@ Use `python -m pytest`, not plain `pytest`, so the tests can import the `driftgu
 |---|---|
 | `configs/detectors.yaml` | Page-Hinkley settings, PELT settings, significance level, permutation samples, calibration window |
 | `configs/detectors_calibrated.json` | Thresholds written by `detection/baseline.py` from a quiet window |
-| `configs/mmlu_frozen.json` | The 20 MMLU questions |
+| `configs/mmlu_frozen.json` | The 100 MMLU questions (the original 20 plus 20 more per subject, same seed) |
 | `configs/xstest_frozen.json` | The 6 XSTest prompts and whether each should be refused |
 | `configs/eval_suite.yaml` | Empty for now |
 
@@ -245,7 +246,7 @@ Use `python -m pytest`, not plain `pytest`, so the tests can import the `driftgu
 - `configs/detectors_calibrated.json` was built from only 5 runs. Format adherence and refusal rate never varied in those runs, so their noise units can't be computed yet. Recalibrate once there are at least 20 quiet runs.
 - Refusals written with curly apostrophes only count since the fix in #13. Data logged before it undercounts them, so re-score the stored refusal logs or recalibrate before trusting a safety shift around that date.
 - Live results so far come from a small number of trials. A live alert means "alarm at call X", not proof that the provider changed the model at X.
-- The only real provider change tested (WildChat) was located about a week late, and the 20-question MMLU set measures accuracy only in steps of 0.05.
+- The only real provider change tested (WildChat) was located about a week late. The MMLU set grew from 20 to 100 questions after the live trials reported in the paper were run, so those trials measure accuracy in steps of 0.05.
 - With its threshold scaled to signal noise, the live detector warns later on noisy signals, and shifts of 3 to 5 points on a signal that is wrong 15% to 50% of the time are below what either detector catches reliably.
 - `requirements.txt` pins no versions; use `requirements-lock.txt` for exact ones.
 
