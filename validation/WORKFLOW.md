@@ -81,7 +81,7 @@ Create a file named `.env` in the repo root (same folder as `requirements.txt`) 
 ```
 GROQ_API_KEY=your_key_here
 ```
-Get a free key at [console.groq.com](https://console.groq.com) if you don't have one — this is the same key `manual_test.py` already expects.
+Get a free key at [console.groq.com](https://console.groq.com) if you don't have one — this is the same key `scripts/manual_test.py` already expects.
 
 ## 2. Running each script
 

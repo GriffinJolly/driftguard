@@ -18,7 +18,7 @@ of spread across weeks of hourly runs.
 
 Requires:
   - A GROQ_API_KEY (or OPENROUTER_API_KEY) in a .env file at the repo root,
-    same as manual_test.py and the rest of the project already expect.
+    same as scripts/manual_test.py and the rest of the project already expect.
   - Being run from the repo root, so `driftguard` and `validation` both
     resolve as packages: `python -m validation.live_replay_groq`
 

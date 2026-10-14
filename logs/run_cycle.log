@@ -1,4 +1,0 @@
-2026-10-11 22:25:39,185 INFO ok groq openai/gpt-oss-120b in 100s
-2026-10-11 22:27:09,839 INFO ok openrouter openai/gpt-oss-120b:free in 81s
-2026-10-11 23:06:57,608 INFO ok groq openai/gpt-oss-120b in 97s
-2026-10-11 23:11:06,164 INFO ok openrouter nvidia/nemotron-3-super-120b-a12b:free in 239s
