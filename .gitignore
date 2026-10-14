@@ -3,7 +3,8 @@ __pycache__/
 *.pyc
 
 driftguard.db
-.venv-mac/
+.venv/
+.venv-*/
 venv/
 *.egg-info/
 build/
@@ -15,3 +16,11 @@ validation/data/*.db
 validation/data/*.parquet
 validation/data/*.ground_truth.json
 validation/data/lmsys-chat-1m/
+
+# run_cycle.py output, and generated or downloaded files
+logs/
+results_format.json
+validation/data/llmdrift_prime_full_eval.csv
+
+# local working folders
+Claude outputs/
