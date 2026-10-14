@@ -105,6 +105,13 @@ timing was actually trustworthy on both independent real benchmarks tested.** A 
 ranking that disagrees with real-data behavior should lose to the real-data result, not
 the other way around — that is the entire point of having done both.
 
+**Later change (noise scaling).** λ=12 was tuned on streams with a 5% error rate. On noisier
+signals (accuracy errors run 12-30%) the fixed threshold alarmed on 40-63% of stable
+10,000-call streams. The deployed detector now scales λ and δ to each signal's baseline
+noise and uses α=0.998; false alarms on those streams fell to 0-2%, at the cost of weaker
+live detection of 3-5 point shifts on noisy signals. See `validation/ph_noise_scaling.py`
+and `results/ph_noise_scaling/REPORT.md`. The comparison above (λ=12, fixed) is unchanged.
+
 This is also a genuine, reportable methodological finding in its own right, independent
 of which detector "wins": **tuning against a synthetic i.i.d. benchmark does not
 guarantee the tuned detector generalizes to real, non-stationary data** — it overfit two

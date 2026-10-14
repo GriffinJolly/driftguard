@@ -43,7 +43,8 @@ RECENT = 50   # calls that make up the "after" value of a live alarm (the window
 
 @dataclass
 class _SignalState:
-    detector: PageHinkleyDetector
+    detector: Optional[PageHinkleyDetector]   # None until the baseline window is complete
+    scale: float = 1.0
     values: list[float] = field(default_factory=list)
     latencies: list[Optional[float]] = field(default_factory=list)
 
@@ -79,20 +80,24 @@ class LiveMonitor:
         return self._update(outcome, entry.eval_task_type, entry.eval_task_id, entry.eval_score,
                             entry.latency_ms, entry.timestamp, live=True)
 
-    def _fresh(self) -> PageHinkleyDetector:
-        return PageHinkleyDetector("signal", lambda_=self.s.ph_lambda, delta=self.s.ph_delta,
-                                   alpha=self.s.ph_alpha, min_num_instances=self.s.ph_min_instances)
+    def _fresh(self, scale: float = 1.0) -> PageHinkleyDetector:
+        return pipeline.new_page_hinkley(self.s, scale)
 
     def _update(self, outcome, task_type, task_id, score, latency, timestamp, live: bool) -> list[LiveAlarm]:
         raised = []
         for key, value in pipeline.call_signals(outcome, task_type, task_id, score, latency,
                                                 self._should, self._slow_ms).items():
-            st = self._signals.setdefault(key, _SignalState(self._fresh()))
+            start = pipeline.ph_start(self.s)
+            st = self._signals.setdefault(key, _SignalState(None if start else self._fresh()))
             st.values.append(value)
             st.latencies.append(latency)
+            if st.detector is None:                          # still filling the baseline window
+                if len(st.values) == start:
+                    st.detector, st.scale = pipeline.warmed_page_hinkley(np.asarray(st.values, dtype=float), self.s)
+                continue
             if st.detector.update(value) is None:
                 continue
-            st.detector = self._fresh()                      # reset after each alarm, as in the batch path
+            st.detector = self._fresh(st.scale)              # reset after each alarm, as in the batch path
             if live:
                 raised.append(self._raise(key, st, timestamp))
         if raised:

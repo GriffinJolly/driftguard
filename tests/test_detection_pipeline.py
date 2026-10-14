@@ -90,3 +90,35 @@ def test_rerun_adds_nothing_twice(tmp_path):
     first = P.run_detection(store, "groq", "m")
     second = P.run_detection(store, "groq", "m")
     assert first.written > 0 and second.written == 0
+
+
+# --------------------------------------------------------------------------- noise-scaled Page-Hinkley
+
+def test_noise_scale_only_raises_the_threshold():
+    s = P.DetectionSettings(ph_noise_ref=0.05)
+    assert P.ph_noise_scale(np.zeros(100), s) == 1.0                 # quieter than the tuning stream
+    assert P.ph_noise_scale(np.r_[np.ones(5), np.zeros(95)], s) == pytest.approx(1.0)
+    noisy = P.ph_noise_scale(np.r_[np.ones(30), np.zeros(70)], s)     # 30% bad: ~2.1x the noise
+    assert noisy == pytest.approx(np.sqrt(0.3 * 0.7 / (0.05 * 0.95)))
+    assert P.ph_noise_scale(np.ones(100), P.DetectionSettings(ph_noise_ref=None)) == 1.0   # scaling off
+
+
+def test_scaled_page_hinkley_waits_for_the_baseline_window():
+    s = P.DetectionSettings(ph_noise_ref=0.05, baseline_window=100)
+    v = np.r_[np.zeros(150), np.ones(100)]                           # bad from call 150 onwards
+    alerts = P.page_hinkley_alerts(v, s)
+    assert alerts and min(alerts) >= 150
+    early = np.r_[np.zeros(40), np.ones(60)]                         # inside the baseline: no alarm
+    assert P.page_hinkley_alerts(early, s) == []
+
+
+def test_noise_scaling_stops_alarms_on_a_noisy_stable_signal():
+    rng = np.random.default_rng(1)
+    stable = (rng.random(10_000) < 0.30).astype(float)               # 30% wrong, never changes
+    tuned_only = P.DetectionSettings(ph_alpha=0.9999, ph_noise_ref=None)
+    scaled = P.DetectionSettings(ph_alpha=0.998, ph_noise_ref=0.05)
+    assert len(P.page_hinkley_alerts(stable, tuned_only)) > 0        # the old setting alarms on noise
+    assert P.page_hinkley_alerts(stable, scaled) == []
+    shifted = np.r_[stable[:5000], (rng.random(5000) < 0.45).astype(float)]
+    alerts = P.page_hinkley_alerts(shifted, scaled)
+    assert alerts and 5000 <= alerts[0] < 6500                       # a real 15-point rise is still caught

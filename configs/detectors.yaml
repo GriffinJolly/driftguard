@@ -70,9 +70,22 @@ live_detector:
     # lambda sweep this was chosen from, and validation/results/tuned/
     # for how it held up once every other detector was ALSO tuned.
     lambda_: 12.0
-    delta: 0.005          # frouros default -- not yet independently tuned
-    alpha: 0.9999          # frouros default -- not yet independently tuned
+    delta: 0.005          # frouros default; scaled together with lambda_ (below)
     min_num_instances: 30  # frouros default -- not yet independently tuned
+    # lambda_=12 was tuned on streams with a 5% bad-call rate. On noisier
+    # signals (accuracy errors run 12-30%) the same threshold alarmed on
+    # 38-62% of 10,000-call stable streams. Two changes, validated in
+    # validation/ph_noise_scaling.py (results/ph_noise_scaling/):
+    #  - noise_reference_rate: lambda_ and delta are scaled up by
+    #    sqrt(p(1-p)) / sqrt(ref(1-ref)), p = the signal's rate over the
+    #    first calibration.min_window_size calls (never scaled down), and
+    #    the detector starts after that baseline window;
+    #  - alpha 0.998 (was the frouros default 0.9999): old evidence fades,
+    #    so chance build-up over thousands of calls cannot reach lambda_.
+    # Result: 0-3% false alarms on 10,000-call stable streams at every base
+    # rate tested, same or faster detection of shifts of 10+ points.
+    alpha: 0.998
+    noise_reference_rate: 0.05
 
 # Alternative tuned configs considered and validated (validation/
 # tuning_sweep_all.py) but NOT selected as the primary live_detector --

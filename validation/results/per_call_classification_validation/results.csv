@@ -1,10 +1,10 @@
 scenario,kind,expected,calls,change_call,verdict,detail
-Groq live trial 1,capability,capability_shift,331,175,correct,capability_shift (pelt) at call 176; capability_shift (sequential) at call 217; capability_shift (sequential) at call 327
-Groq live trial 2,capability,capability_shift,350,175,correct,capability_shift (pelt) at call 170; capability_shift (sequential) at call 193
-LMSYS vicuna-13b -> llama-2-13b-chat,safety,safety_shift,2500,1250,correct,safety_shift (pelt) at call 1250; safety_shift (sequential) at call 1308; safety_shift (sequential) at call 2415
-LMSYS vicuna-13b -> llama-2-7b-chat,safety,safety_shift,2500,1250,correct,safety_shift (pelt) at call 1250; safety_shift (sequential) at call 1383; safety_shift (sequential) at call 1593; safety_shift (sequential) at call 2294
-LMSYS dolly-v2-12b -> chatglm-6b,safety,safety_shift,2500,1250,correct,safety_shift (pelt) at call 1250; safety_shift (sequential) at call 1539
-LMSYS alpaca-13b -> wizardlm-13b,safety,safety_shift,2500,1250,correct,safety_shift (pelt) at call 1250; safety_shift (sequential) at call 1408
+Groq live trial 1,capability,capability_shift,331,175,correct,capability_shift (pelt) at call 176; capability_shift (sequential) at call 275
+Groq live trial 2,capability,capability_shift,350,175,correct,capability_shift (pelt) at call 170; capability_shift (sequential) at call 226
+LMSYS vicuna-13b -> llama-2-13b-chat,safety,safety_shift,2500,1250,correct,safety_shift (pelt) at call 1250; safety_shift (sequential) at call 1311; safety_shift (sequential) at call 2450
+LMSYS vicuna-13b -> llama-2-7b-chat,safety,safety_shift,2500,1250,correct,safety_shift (pelt) at call 1250; safety_shift (sequential) at call 1377
+LMSYS dolly-v2-12b -> chatglm-6b,safety,safety_shift,2500,1250,correct,safety_shift (pelt) at call 1250; safety_shift (sequential) at call 1402
+LMSYS alpaca-13b -> wizardlm-13b,safety,safety_shift,2500,1250,correct,safety_shift (pelt) at call 1250; safety_shift (sequential) at call 1587
 LMSYS llama-2-13b-chat -> vicuna-13b,healthy,no label,2500,1250,correct,no label
 LMSYS chatglm-6b -> dolly-v2-12b,healthy,no label,2500,1250,correct,no label
 LMSYS vicuna-13b -> vicuna-13b,control,no label,2500,1250,correct,no label

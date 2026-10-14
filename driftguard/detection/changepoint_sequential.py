@@ -15,7 +15,9 @@ indicators (1 = this individual call was wrong, 0 = it was right), around
 a baseline error rate of ~5% (see detectors.yaml's
 calibration.baseline_error_rate_assumption and
 calibration.min_window_size, which is explicitly "samples (individual
-eval_score calls, not eval runs)").
+eval_score calls, not eval runs)"). For noisier signals, pipeline.py scales
+lambda_ and delta up by the signal's baseline noise (noise_reference_rate in
+detectors.yaml); see validation/ph_noise_scaling.py.
 
 This does NOT operate correctly on runner.py's aggregated per-run
 MetricPoint accuracy values (e.g. one 0.65/0.90/etc. per hourly eval
@@ -61,7 +63,7 @@ from frouros.detectors.concept_drift import PageHinkleyConfig as _FrourosPageHin
 # change without re-running that validation.
 DEFAULT_LAMBDA = 12.0
 DEFAULT_DELTA = 0.005   # frouros default -- not yet independently tuned per detectors.yaml
-DEFAULT_ALPHA = 0.9999  # frouros default -- not yet independently tuned per detectors.yaml
+DEFAULT_ALPHA = 0.9999  # frouros default; pipeline.py passes the tuned value (0.998) from detectors.yaml
 DEFAULT_MIN_NUM_INSTANCES = 30
 
 

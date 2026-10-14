@@ -16,6 +16,7 @@ companion to `validation/results/REPORT.md` (the findings) and
 | `tuning_sweep.py` | Is Page-Hinkley's default threshold actually right for DriftGuard's signal scale? | No | No | ~15s |
 | `tuning_sweep_all.py` | Same question, for the other 7 detectors -- is the "Page-Hinkley wins" comparison a fair fight? | No | No | ~3-4 min (150 trials) |
 | `run_validation.py --registry tuned` + `report.py --registry tuned` | With ALL 8 detectors tuned, who actually wins the synthetic benchmark? | No | No | ~40s |
+| `ph_noise_scaling.py` | Does the live threshold, tuned on a 5% error rate, false-alarm on noisier signals, and does scaling it to each signal's noise fix that? | No | No | ~10 min |
 | `live_replay.py --dataset phishing` | On **real** (not synthetic) data, do the detectors behave sanely — no excess false alarms? | No (bundled) | No | ~5s |
 | `live_replay.py --dataset elec2` / `insects` [`--registry tuned`] | On a **real, documented concept-drift benchmark**, do detectors actually catch real drift? | Only if `validation/data/*.csv.gz` isn't present (see §2.4) | No | Elec2 ~3-4 min, Insects ~4-5 min |
 | `real_data_summary.py [--results-dir validation/results/live_replay/tuned]` | Combines phishing/elec2/insects results into one cross-dataset comparison | No | No | <5s |

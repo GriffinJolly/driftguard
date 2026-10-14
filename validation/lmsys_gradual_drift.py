@@ -164,7 +164,7 @@ def main() -> None:
              f"controls are all A. {args.trials} trials each, fresh random conversations per trial "
              "(resamples of one dataset, not independent deployments).", "",
              f"Over-refusal: {pool_a.mean():.3f} ({MODEL_A}) → {pool_b.mean():.3f} ({MODEL_B}).", "",
-             "Both paths run per call through driftguard/detection/pipeline.py: Page-Hinkley (λ = 12, first",
+             "Both paths run per call through driftguard/detection/pipeline.py: Page-Hinkley (λ = 12 scaled to the signal's noise, α = 0.998, first",
              "alarm) and PELT → permutation test on adjacent segments → Benjamini-Hochberg, each confirmed",
              f"change labelled by classification/rules.py. A label counts as placed if it lies in the change",
              f"window (the ramp, or the step) ± {WINDOW_SLACK} calls.", "", summary.to_markdown(), "",
