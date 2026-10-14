@@ -40,3 +40,9 @@ driftguard-validate = "validation.run_validation:_main"
 
 [tool.setuptools.packages.find]
 include = ["driftguard*", "validation*"]
+
+[tool.pytest.ini_options]
+# Tests live in tests/; scripts/ holds runnable tools (some call live APIs) and is never collected.
+testpaths = ["tests"]
+# Import the driftguard package from the repo root without installing it.
+pythonpath = ["."]
