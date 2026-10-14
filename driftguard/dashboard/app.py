@@ -769,10 +769,12 @@ with tab_calls:
     rows = ev_sel.selection.rows if ev_sel and ev_sel.selection else []
     if rows:
         call = view.iloc[rows[0]]
+        # Built on its own line: nesting this f-string inside the one below only parses on Python 3.12+.
+        latency = "–" if pd.isna(call["latency_ms"]) else f"{call['latency_ms'] / 1000:.2f} s"
         with st.container(border=True):
             st.markdown(f'<div class="dg-sig-row"><span class="dg-sig-title">Call #{int(call["call_no"]):,}</span>'
                         f'<span class="dg-foot">{fmt_ts(call["timestamp"])} · {esc(call["outcome"])} · '
-                        f'{"–" if pd.isna(call["latency_ms"]) else f"{call["latency_ms"] / 1000:.2f} s"}</span></div>',
+                        f'{latency}</span></div>',
                         unsafe_allow_html=True)
             a, b = st.columns(2)
             with a:

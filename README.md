@@ -244,7 +244,7 @@ Use `python -m pytest`, not plain `pytest`, so the tests can import the `driftgu
 
 - Refusals are detected by keywords, not a classifier.
 - `configs/detectors_calibrated.json` was built from only 5 runs. Format adherence and refusal rate never varied in those runs, so their noise units can't be computed yet. Recalibrate once there are at least 20 quiet runs.
-- Refusals written with curly apostrophes only count since the fix in #13. Data logged before it undercounts them, so re-score the stored refusal logs or recalibrate before trusting a safety shift around that date.
+- Refusals written with curly apostrophes only count since the curly-apostrophe fix to the refusal detector. Data logged before it undercounts them, so re-score the stored refusal logs or recalibrate before trusting a safety shift around that date.
 - Live results so far come from a small number of trials. A live alert means "alarm at call X", not proof that the provider changed the model at X.
 - The only real provider change tested (WildChat) was located about a week late. The MMLU set grew from 20 to 100 questions after the live trials reported in the paper were run, so those trials measure accuracy in steps of 0.05.
 - With its threshold scaled to signal noise, the live detector warns later on noisy signals, and shifts of 3 to 5 points on a signal that is wrong 15% to 50% of the time are below what either detector catches reliably.
