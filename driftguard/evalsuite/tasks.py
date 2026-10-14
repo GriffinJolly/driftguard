@@ -32,16 +32,17 @@ FROZEN_PATH = Path(__file__).resolve().parent.parent.parent / "configs" / "mmlu_
 
 # Subjects chosen to mix STEM and humanities, so a subject-specific
 # capability regression doesn't get diluted into "overall accuracy looks
-# fine". 5 questions per subject, 4 subjects = 20 total -- sized to cut
-# down single-question noise while still comfortably fitting inside the
-# per-minute free-tier rate caps alongside the format/refusal tasks.
+# fine". 25 questions per subject, 4 subjects = 100 total, so accuracy moves
+# in steps of 0.01 rather than 0.05. The set started at 5 per subject; because
+# each subject's questions are shuffled once with SEED and the first N taken,
+# the original 20 are the first 5 of each subject and are kept unchanged.
 DEFAULT_SUBJECTS = [
     "high_school_mathematics",
     "college_computer_science",
     "high_school_us_history",
     "philosophy",
 ]
-QUESTIONS_PER_SUBJECT = 5
+QUESTIONS_PER_SUBJECT = 25
 SEED = 42  # fixed -- part of what makes the subset reproducible/versioned
 
 ANSWER_LETTERS = ["A", "B", "C", "D"]

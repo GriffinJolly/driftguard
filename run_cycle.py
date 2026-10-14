@@ -28,10 +28,14 @@ GAP_BETWEEN_TARGETS = 10       # seconds, eases free-tier rate limits
 MIN_OK_FRACTION = 0.5          # below this share of OK calls, the run counts as failed
 DB_PATH = os.environ.get("DRIFTGUARD_DB", str(ROOT / "driftguard.db"))
 
-# (provider, model_id): the cross-provider validation pair
+# (provider, model_id): the cross-provider validation pair.
+# A run is 112 calls (100 MMLU, 6 format, 6 refusal), about 8 min on Groq and
+# 15-20 min on NVIDIA. Groq's free tier allows ~1,000 calls/day, so schedule
+# this every 3 hours, not hourly. Nemotron moved from OpenRouter's free tier
+# (50 calls/day, too few for one run) to NVIDIA's API, which has no daily cap.
 TARGETS = [
     ("groq", "openai/gpt-oss-120b"),
-    ("openrouter", "nvidia/nemotron-3-super-120b-a12b:free"),
+    ("nvidia", "nvidia/nemotron-3-super-120b-a12b"),
 ]
 
 LOG_DIR.mkdir(exist_ok=True)

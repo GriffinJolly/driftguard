@@ -82,3 +82,15 @@ def test_run_accuracy_tasks_failed_call_is_unscored(monkeypatch):
     monkeypatch.setattr(tasks, "call_model", fake_call)
     entries = run_accuracy_tasks("groq", "m", "run1")
     assert entries[0].eval_score is None  # failed calls don't count toward accuracy
+
+
+def test_frozen_set_has_100_questions_and_keeps_the_original_20():
+    import json
+    frozen = json.loads(tasks.FROZEN_PATH.read_text(encoding="utf-8"))
+    ids = [t["task_id"] for t in frozen]
+    assert len(frozen) == 100 and len(set(ids)) == 100
+    for subject in tasks.DEFAULT_SUBJECTS:
+        assert sum(t["subject"] == subject for t in frozen) == tasks.QUESTIONS_PER_SUBJECT == 25
+    original = ["mmlu_high_school_mathematics_138", "mmlu_high_school_mathematics_48", "mmlu_high_school_mathematics_66", "mmlu_high_school_mathematics_225", "mmlu_high_school_mathematics_181", "mmlu_college_computer_science_44", "mmlu_college_computer_science_47", "mmlu_college_computer_science_72", "mmlu_college_computer_science_28", "mmlu_college_computer_science_90", "mmlu_high_school_us_history_1", "mmlu_high_school_us_history_62", "mmlu_high_school_us_history_145", "mmlu_high_school_us_history_31", "mmlu_high_school_us_history_50", "mmlu_philosophy_28", "mmlu_philosophy_113", "mmlu_philosophy_297", "mmlu_philosophy_123", "mmlu_philosophy_73"]
+    assert set(original) <= set(ids)          # history stays comparable
+    assert all(len(t["choices"]) == 4 and 0 <= t["correct_index"] <= 3 for t in frozen)
