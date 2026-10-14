@@ -1,0 +1,6 @@
+trial,kind,calls,error_before,error_after,confirmed_at,live_alarm_at,live_alarms_before_fault,verdict,other_labels,live_delay,confirm_offset
+1,gradual,350,0.137,0.394,238.0,305.0,0,correct,infra_change on slow_call,130.0,63.0
+2,sudden,350,0.16,0.446,238.0,295.0,0,"label, wrong place",infra_change on slow_call,120.0,63.0
+3,gradual,350,0.154,0.326,,,0,missed,infra_change on slow_call,,
+4,sudden,350,0.171,0.434,,292.0,0,missed,infra_change on slow_call,117.0,
+5,gradual,350,0.166,0.297,,,0,missed,infra_change on slow_call,,
