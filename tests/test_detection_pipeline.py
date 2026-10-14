@@ -100,7 +100,7 @@ def test_noise_scale_only_raises_the_threshold():
     assert P.ph_noise_scale(np.r_[np.ones(5), np.zeros(95)], s) == pytest.approx(1.0)
     noisy = P.ph_noise_scale(np.r_[np.ones(30), np.zeros(70)], s)     # 30% bad: ~2.1x the noise
     assert noisy == pytest.approx(np.sqrt(0.3 * 0.7 / (0.05 * 0.95)))
-    assert P.ph_noise_scale(np.ones(100), P.DetectionSettings()) == 1.0   # scaling off
+    assert P.ph_noise_scale(np.ones(100), P.DetectionSettings(ph_noise_ref=None)) == 1.0   # scaling off
 
 
 def test_scaled_page_hinkley_waits_for_the_baseline_window():
@@ -115,7 +115,7 @@ def test_scaled_page_hinkley_waits_for_the_baseline_window():
 def test_noise_scaling_stops_alarms_on_a_noisy_stable_signal():
     rng = np.random.default_rng(1)
     stable = (rng.random(10_000) < 0.30).astype(float)               # 30% wrong, never changes
-    tuned_only = P.DetectionSettings(ph_alpha=0.9999)
+    tuned_only = P.DetectionSettings(ph_alpha=0.9999, ph_noise_ref=None)
     scaled = P.DetectionSettings(ph_alpha=0.998, ph_noise_ref=0.05)
     assert len(P.page_hinkley_alerts(stable, tuned_only)) > 0        # the old setting alarms on noise
     assert P.page_hinkley_alerts(stable, scaled) == []

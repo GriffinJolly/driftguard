@@ -67,9 +67,9 @@ MIN_SIGNAL_CALLS = 60    # below this a signal is too short to test
 class DetectionSettings:
     ph_lambda: float = 12.0
     ph_delta: float = 0.005
-    ph_alpha: float = 0.9999
+    ph_alpha: float = 0.998
     ph_min_instances: int = 30
-    ph_noise_ref: Optional[float] = None   # bad-call rate lambda was tuned at; None = no noise scaling
+    ph_noise_ref: Optional[float] = 0.05   # bad-call rate lambda was tuned at; None = no noise scaling
     pelt: PeltConfig = field(default_factory=PeltConfig)
     significance: SignificanceConfig = field(default_factory=SignificanceConfig)
     baseline_window: int = 100   # calls used as the quiet baseline (calibration.min_window_size)
@@ -88,9 +88,9 @@ def load_settings(path: Path = DETECTORS_YAML) -> DetectionSettings:
     return DetectionSettings(
         ph_lambda=float(ph.get("lambda_", 12.0)),
         ph_delta=float(ph.get("delta", 0.005)),
-        ph_alpha=float(ph.get("alpha", 0.9999)),
+        ph_alpha=float(ph.get("alpha", 0.998)),
         ph_min_instances=int(ph.get("min_num_instances", 30)),
-        ph_noise_ref=(float(ph["noise_reference_rate"]) if ph.get("noise_reference_rate") is not None else None),
+        ph_noise_ref=(float(ph.get("noise_reference_rate", 0.05)) if ph.get("noise_reference_rate", 0.05) is not None else None),
         pelt=PeltConfig(
             cost_model=rp.get("cost_model", "l2"),
             penalty=rp.get("penalty"),
