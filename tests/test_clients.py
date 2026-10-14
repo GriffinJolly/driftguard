@@ -97,3 +97,13 @@ def test_rate_limiter_blocks_over_window():
     rl.wait()          # third must wait out the window
     elapsed = time.monotonic() - start
     assert elapsed >= 0.25
+
+
+def test_nvidia_provider_is_configured():
+    from driftguard.ingest import transport_hook
+    from driftguard.providers import clients
+    cfg = clients.PROVIDERS["nvidia"]
+    assert cfg.base_url == "https://integrate.api.nvidia.com/v1"
+    assert cfg.api_key_env == "NVIDIA_API_KEY"
+    assert "integrate.api.nvidia.com" in transport_hook.DEFAULT_PROVIDER_HOSTS
+    assert transport_hook._extract_provider("integrate.api.nvidia.com") == "nvidia"

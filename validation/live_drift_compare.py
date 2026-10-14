@@ -481,7 +481,7 @@ def self_test(args) -> None:
 
 def _main() -> None:
     p = argparse.ArgumentParser(description="Live, ground-truth drift-detector comparison on real LLM traffic")
-    p.add_argument("--provider", choices=["groq", "openrouter"], default="groq")
+    p.add_argument("--provider", choices=["groq", "openrouter", "nvidia"], default="groq")
     p.add_argument("--model", default=MODEL_DEFAULT,
                    help="the single model whose config is degraded mid-stream to induce drift")
     p.add_argument("--scenarios", default="sudden,gradual",

@@ -46,6 +46,7 @@ from driftguard.storage.store import DriftStore
 DEFAULT_PROVIDER_HOSTS = {
     "api.groq.com",
     "openrouter.ai",
+    "integrate.api.nvidia.com",
     "api.openai.com",
     "api.anthropic.com",
 }
@@ -81,6 +82,8 @@ def _extract_provider(host: str) -> str:
         return "groq"
     if "openrouter" in host:
         return "openrouter"
+    if "nvidia" in host:
+        return "nvidia"
     if "openai" in host:
         return "openai"
     if "anthropic" in host:

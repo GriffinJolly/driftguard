@@ -222,7 +222,7 @@ def run_forever(
 
 def _main() -> None:
     parser = argparse.ArgumentParser(description="DriftGuard eval suite runner")
-    parser.add_argument("--provider", required=True, choices=["groq", "openrouter"])
+    parser.add_argument("--provider", required=True, choices=["groq", "openrouter", "nvidia"])
     parser.add_argument("--model", required=True, help="Model ID as the provider names it")
     parser.add_argument("--db-path", default="driftguard.db")
     parser.add_argument(

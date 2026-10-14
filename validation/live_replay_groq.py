@@ -155,7 +155,7 @@ def run(provider: str, model_id: str, rounds: int, out_dir: Path, db_path: str, 
 
 def _main() -> None:
     parser = argparse.ArgumentParser(description="Live, real-time drift detector validation against a real LLM API")
-    parser.add_argument("--provider", choices=["groq", "openrouter"], default="groq")
+    parser.add_argument("--provider", choices=["groq", "openrouter", "nvidia"], default="groq")
     parser.add_argument("--model", type=str, default="openai/gpt-oss-120b")
     parser.add_argument("--rounds", type=int, default=10, help="Each round = 20 real API calls (the frozen MMLU subset)")
     parser.add_argument("--out", type=str, default="validation/results/live_replay_groq")

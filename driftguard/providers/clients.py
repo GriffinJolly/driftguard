@@ -90,6 +90,7 @@ class ProviderConfig:
     api_key_env: str
     rate_limiter: RateLimiter
     extra_headers: dict[str, str]
+    timeout_seconds: float = 30.0   # default read timeout for this provider
 
 
 PROVIDERS: dict[str, ProviderConfig] = {
@@ -110,6 +111,16 @@ PROVIDERS: dict[str, ProviderConfig] = {
             "HTTP-Referer": "https://github.com/GriffinJolly/driftguard",
             "X-Title": "DriftGuard",
         },
+    ),
+    # NVIDIA API catalog (build.nvidia.com), free trial key. About 40 RPM per account;
+    # gpt-oss-120b was retired there on 2026-09-03, gpt-oss-20b and Nemotron remain.
+    "nvidia": ProviderConfig(
+        name="nvidia",
+        base_url="https://integrate.api.nvidia.com/v1",
+        api_key_env="NVIDIA_API_KEY",
+        rate_limiter=RateLimiter(max_calls=35, period_seconds=60.0),  # margin under ~40 RPM
+        extra_headers={},
+        timeout_seconds=120.0,   # the free tier queues some requests for 30-60 s
     ),
 }
 
@@ -156,7 +167,7 @@ def call_model(
     eval_run_id: Optional[str] = None,
     eval_task_type: Optional[str] = None,
     eval_task_id: Optional[str] = None,
-    timeout_seconds: float = 30.0,
+    timeout_seconds: Optional[float] = None,
     client: Optional[httpx.Client] = None,
 ) -> DriftLogEntry:
     """
@@ -188,7 +199,8 @@ def call_model(
 
     owns_client = client is None
     if owns_client:
-        client = httpx.Client(base_url=config.base_url, timeout=timeout_seconds)
+        client = httpx.Client(base_url=config.base_url,
+                              timeout=timeout_seconds if timeout_seconds is not None else config.timeout_seconds)
 
     start = time.monotonic()
     try:
