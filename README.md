@@ -218,6 +218,7 @@ The detector benchmarks have their own guide in `validation/WORKFLOW.md`, and ea
 | Synthetic streams, 8 tuned detectors | Page-Hinkley: 97.7% / 97.0% detection (sudden / gradual), no false alarms |
 | Insects benchmark, batch path | Largest confirmed change at sample 14,350; documented onset 14,476 |
 | Live Groq trials (gpt-oss-120b, induced fault) | Change confirmed at the fault in both trials, labelled capability shift |
+| Live NVIDIA trials (gpt-oss-20b, 2 sudden + 3 gradual) | Fixed-threshold Page-Hinkley caught 5 / 5; the deployed pipeline confirmed 2 / 5 within 350 calls (`results/live_drift_compare_nvidia/PIPELINE_REPORT.md`) |
 | WildChat-1M, gpt-3.5-turbo 0301 → 0613 | Change confirmed about a week after the switch, once repeated prompts are removed |
 | LMSYS-Chat-1M rollouts and swaps (30 each, plus 30 controls) | Safety shift labelled in every rollout and swap, none on controls |
 | Classification on 13 real scenarios | 13 / 13 with per-call detection |
