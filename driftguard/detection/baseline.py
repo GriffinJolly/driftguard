@@ -40,9 +40,10 @@ from dataclasses import asdict, dataclass
 from pathlib import Path
 from typing import Literal, Optional
 
+from driftguard._paths import calibration_path
 from driftguard.storage.store import DriftStore, MetricSeriesRow
 
-DEFAULT_CALIBRATION_PATH = Path(__file__).resolve().parent.parent.parent / "configs" / "detectors_calibrated.json"
+DEFAULT_CALIBRATION_PATH = calibration_path()
 
 Direction = Literal["lower_is_bad", "upper_is_bad"]
 

@@ -25,10 +25,11 @@ import random
 from pathlib import Path
 from typing import Callable, Optional
 
+from driftguard._paths import CONFIG_DIR
 from driftguard.ingest.log_schema import DriftLogEntry
 from driftguard.providers.clients import call_model
 
-FROZEN_PATH = Path(__file__).resolve().parent.parent.parent / "configs" / "mmlu_frozen.json"
+FROZEN_PATH = CONFIG_DIR / "mmlu_frozen.json"
 
 # Subjects chosen to mix STEM and humanities, so a subject-specific
 # capability regression doesn't get diluted into "overall accuracy looks

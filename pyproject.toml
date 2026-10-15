@@ -1,12 +1,28 @@
 [build-system]
-requires = ["setuptools>=61", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "driftguard"
+name = "llm-driftguard"   # "driftguard" is taken on PyPI; the import and the command stay `driftguard`
 version = "0.1.0"
 description = "Detecting silent behavioral drift in deployed LLM APIs"
 readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+authors = [
+    { name = "Griffin Jolly" },
+    { name = "Siddharth Kumar" },
+    { name = "Srikumaran S" },
+]
+keywords = ["llm", "drift-detection", "monitoring", "change-point", "mlops"]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Intended Audience :: Developers",
+    "Topic :: Scientific/Engineering",
+]
 # frouros (and the pinned river) cap at <3.13; 3.10-3.12 are the supported range.
 requires-python = ">=3.10,<3.13"
 dependencies = [
@@ -15,31 +31,37 @@ dependencies = [
     "httpx",
     "python-dotenv",
     "jsonschema",
-    "datasets",
     "pyyaml",
-    # validation/ (drift-detector benchmarking)
     "frouros",
     "pandas",
     "numpy",
-    "matplotlib",
-    "tabulate",
-    "river",
     "ruptures",
 ]
 
 [project.optional-dependencies]
-dev = ["pytest"]
-proxy = ["fastapi"]
+proxy = ["fastapi", "uvicorn"]
 dashboard = ["streamlit>=1.45", "plotly"]
+# Only needed to rebuild the frozen MMLU/XSTest sets from Hugging Face.
+build-data = ["datasets"]
+# Only needed to re-run the validation/ experiments from a git checkout.
+validation = ["matplotlib", "tabulate", "river", "datasets"]
+dev = ["pytest", "fastapi", "uvicorn", "build", "twine"]
+all = ["llm-driftguard[proxy,dashboard]"]
+
+[project.urls]
+Homepage = "https://github.com/GriffinJolly/driftguard"
+Issues = "https://github.com/GriffinJolly/driftguard/issues"
 
 [project.scripts]
-# Run the hourly eval suite against a real provider/model.
+driftguard = "driftguard.cli:main"
+# Kept for existing instructions; `driftguard eval` does the same.
 driftguard-eval = "driftguard.evalsuite.runner:_main"
-# Reproduce the slide-12 detector comparison on synthetic ground truth.
-driftguard-validate = "validation.run_validation:_main"
 
 [tool.setuptools.packages.find]
-include = ["driftguard*", "validation*"]
+include = ["driftguard*"]
+
+[tool.setuptools.package-data]
+driftguard = ["configs/*.json", "configs/*.yaml"]
 
 [tool.pytest.ini_options]
 # Tests live in tests/; scripts/ holds runnable tools (some call live APIs) and is never collected.

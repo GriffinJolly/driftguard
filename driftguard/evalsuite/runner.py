@@ -40,6 +40,7 @@ import uuid
 from datetime import datetime, timezone
 from typing import Optional
 
+from driftguard._paths import default_db_path
 from driftguard.evalsuite.tasks import run_accuracy_tasks, accuracy_rate
 from driftguard.evalsuite.format_check import run_format_tasks, format_adherence_rate
 from driftguard.evalsuite.refusal_probe import run_refusal_tasks, refusal_rate
@@ -97,7 +98,7 @@ def run_once(
     provider: str,
     model_id: str,
     store: Optional[DriftStore] = None,
-    db_path: str = "driftguard.db",
+    db_path: Optional[str] = None,
     detect: bool = True,
 ) -> MetricPoint:
     """
@@ -187,7 +188,7 @@ def run_forever(
     provider: str,
     model_id: str,
     interval_seconds: int = 3600,
-    db_path: str = "driftguard.db",
+    db_path: Optional[str] = None,
 ) -> None:
     """
     Run the eval suite on a fixed interval, forever, until interrupted.
@@ -201,6 +202,7 @@ def run_forever(
     losing one hour of data is much better than losing the rest of the
     multi-week calibration run.
     """
+    db_path = db_path or default_db_path()
     store = DriftStore(db_path=db_path)
     logger.info(
         f"Starting continuous run loop: provider={provider} model={model_id} "
@@ -224,7 +226,7 @@ def _main() -> None:
     parser = argparse.ArgumentParser(description="DriftGuard eval suite runner")
     parser.add_argument("--provider", required=True, choices=["groq", "openrouter", "nvidia"])
     parser.add_argument("--model", required=True, help="Model ID as the provider names it")
-    parser.add_argument("--db-path", default="driftguard.db")
+    parser.add_argument("--db-path", default=default_db_path())
     parser.add_argument(
         "--interval-seconds",
         type=int,

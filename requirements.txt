@@ -18,6 +18,7 @@ tabulate
 river          # validation/live_replay.py -- real public-dataset validation
 
 fastapi        # driftguard/ingest/proxy.py (reverse-proxy mode) and tests/test_proxy.py
+uvicorn        # serves the proxy: python -m driftguard.ingest.proxy
 pytest         # running the tests: python -m pytest tests/
 
 # dashboard (driftguard/dashboard/app.py -- streamlit run driftguard/dashboard/app.py)

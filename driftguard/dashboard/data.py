@@ -31,6 +31,7 @@ from typing import Optional
 import numpy as np
 import pandas as pd
 
+from driftguard._paths import calibration_path, default_db_path
 from driftguard.classification import rules
 from driftguard.classification.incidents import DEFAULT_WINDOW, Incident, group_into_incidents
 from driftguard.detection import pipeline
@@ -46,9 +47,8 @@ from driftguard.detection.signals import SIGNALS
 from driftguard.remediation import mapper
 from driftguard.storage.store import ChangePointEventRow
 
-ROOT = Path(__file__).resolve().parent.parent.parent
-DEFAULT_DB = ROOT / "driftguard.db"
-CALIBRATION_JSON = ROOT / "configs" / "detectors_calibrated.json"
+DEFAULT_DB = Path(default_db_path())
+CALIBRATION_JSON = calibration_path()
 
 
 # --------------------------------------------------------------------------- loading

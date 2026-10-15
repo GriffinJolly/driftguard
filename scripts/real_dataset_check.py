@@ -2,7 +2,7 @@
 real_dataset_check.py
 
 Downloads the real LLMDrift dataset (Chen, Zaharia, Zou 2023) and runs it
-through the ACTUAL calibration.py + bootstrap.py modules to confirm the
+through the ACTUAL baseline.py + bootstrap.py modules to confirm the
 detection pipeline correctly identifies the real, documented GPT-4
 March-2023-vs-June-2023 capability regression on the "is this a prime
 number" task.
@@ -18,7 +18,9 @@ from pathlib import Path
 
 import pandas as pd
 
-from driftguard.detection import calibration as cal
+import numpy as np
+
+from driftguard.detection import baseline as cal
 from driftguard.detection import bootstrap as bs
 
 CSV_URL = "https://raw.githubusercontent.com/lchen001/LLMDrift/main/generation/PRIME_FULL_EVAL.csv"
@@ -101,7 +103,7 @@ def main():
     print(" independent re-grading of the raw released responses should be in the same ballpark.)")
 
     print("\n" + "=" * 70)
-    print("Running through calibration.py: noise profile from March batches")
+    print("Running through baseline.py: noise profile from March batches")
     print("=" * 70)
     profile = cal.compute_noise_profile("accuracy", march_batches)
     print(f"  median={profile.median:.4f}  mad_scaled={profile.mad_scaled:.4f}  "
@@ -110,12 +112,12 @@ def main():
     print("\n" + "=" * 70)
     print("Running through bootstrap.py: is March-vs-June a REAL, significant shift?")
     print("=" * 70)
-    observed_delta, p_value = bs.permutation_test(
-        pre_values=march_batches,
-        post_values=june_batches,
-        direction="lower_is_bad",
-        n_permutations=5000,
-    )
+    # One series, March batches then June batches; test the split between them.
+    series = np.array(march_batches + june_batches, dtype=float)
+    split = len(march_batches)
+    result = bs.changepoint_pvalue(series, split, 0, len(series), n_bootstrap=5000, window=None)
+    observed_delta = result["post_mean"] - result["pre_mean"]
+    p_value = result["p_value_raw"]
     print(f"  Observed delta (June - March): {observed_delta:.4f}")
     print(f"  p-value: {p_value:.5f}")
     print(f"  Significant at alpha=0.05: {p_value < 0.05}")

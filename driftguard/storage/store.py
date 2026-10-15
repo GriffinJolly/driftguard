@@ -22,6 +22,7 @@ from typing import Optional
 
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 
+from driftguard._paths import default_db_path
 from driftguard.ingest.log_schema import DriftLogEntry, MetricPoint
 
 
@@ -104,7 +105,8 @@ class ChangePointEventRow(SQLModel, table=True):
 class DriftStore:
     """Thin persistence facade. One instance per process is fine (SQLite)."""
 
-    def __init__(self, db_path: str = "driftguard.db", echo: bool = False):
+    def __init__(self, db_path: Optional[str] = None, echo: bool = False):
+        db_path = db_path or default_db_path()
         self.engine = create_engine(f"sqlite:///{db_path}", echo=echo)
         SQLModel.metadata.create_all(self.engine)
 

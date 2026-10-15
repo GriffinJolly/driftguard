@@ -8,6 +8,7 @@ import httpx
 from fastapi import FastAPI, Request
 from fastapi.responses import JSONResponse, Response
 
+from driftguard._paths import default_db_path
 from driftguard.ingest.log_schema import IntegrationPath
 from driftguard.ingest.transport_hook import AsyncDriftCaptureTransport
 from driftguard.storage.store import DriftStore
@@ -145,7 +146,7 @@ def _main() -> None:
     parser = argparse.ArgumentParser(description="Run the DriftGuard reverse proxy")
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8000)
-    parser.add_argument("--db-path", default="driftguard.db")
+    parser.add_argument("--db-path", default=default_db_path())
     args = parser.parse_args()
     uvicorn.run(
         create_proxy_app(store=DriftStore(db_path=args.db_path)),

@@ -43,7 +43,7 @@ your app / eval suite
 
 ### Eval suite
 
-`evalsuite/runner.py` runs one pass of the suite against a provider and model: the MMLU questions (`tasks.py`), the format tasks (`format_check.py`) and the XSTest prompts (`refusal_probe.py`). The question sets are frozen in `configs/mmlu_frozen.json` and `configs/xstest_frozen.json`, so every run asks exactly the same things. Each call gets a 0/1 score: correct, passed the schema, or refused. `providers/clients.py` talks to Groq, OpenRouter and NVIDIA's API catalog through their OpenAI-compatible APIs, with a rate limiter set under each free tier's cap.
+`evalsuite/runner.py` runs one pass of the suite against a provider and model: the MMLU questions (`tasks.py`), the format tasks (`format_check.py`) and the XSTest prompts (`refusal_probe.py`). The question sets are frozen in `driftguard/configs/mmlu_frozen.json` and `driftguard/configs/xstest_frozen.json`, so every run asks exactly the same things. Each call gets a 0/1 score: correct, passed the schema, or refused. `providers/clients.py` talks to Groq, OpenRouter and NVIDIA's API catalog through their OpenAI-compatible APIs, with a rate limiter set under each free tier's cap.
 
 Refusal detection is a keyword heuristic ("I can't", "I'm sorry, but I", ...), not a classifier. It can miss or over-count individual refusals. That is acceptable for tracking change over time on the same model, but don't read it as an exact refusal rate.
 
@@ -56,7 +56,7 @@ Detection runs on per-call 0/1 streams, because the tuned Page-Hinkley detector 
 1. Page-Hinkley (`changepoint_sequential.py`, wrapping frouros) updates on every call and raises a fast early warning. Its threshold is λ = 12 for a signal that is wrong 5% of the time and is scaled up for noisier signals, using the noise of each signal's first 100 calls; old evidence fades slowly (α = 0.998). It has no p-value; an alarm means the threshold was crossed. During an eval run, `detection/live.py` feeds it every scored call as it arrives, so an alarm is saved and classified before the run ends.
 2. PELT (`changepoint_pelt.py`, using ruptures) finds where a stored series changed. A permutation test (`bootstrap.py`) checks whether each candidate change could be chance, and Benjamini-Hochberg (`multiple_testing.py`) corrects for testing several signals at once.
 
-`detection/baseline.py` sets each signal's thresholds from a quiet window using the median and MAD. The settings live in `configs/detectors.yaml`. Page-Hinkley was picked over seven other detectors (DDM, EDDM, ADWIN, HDDM_A, HDDM_W, RDDM, ECDD) because of how it behaved on real data, not because of its synthetic score. Scaling its threshold to each signal's noise cut false alarms on stable 10,000-call streams from up to 63% to at most 2% (`validation/ph_noise_scaling.py`). See `validation/WORKFLOW.md` and `validation/results/`.
+`detection/baseline.py` sets each signal's thresholds from a quiet window using the median and MAD. The settings live in `driftguard/configs/detectors.yaml`. Page-Hinkley was picked over seven other detectors (DDM, EDDM, ADWIN, HDDM_A, HDDM_W, RDDM, ECDD) because of how it behaved on real data, not because of its synthetic score. Scaling its threshold to each signal's noise cut false alarms on stable 10,000-call streams from up to 63% to at most 2% (`validation/ph_noise_scaling.py`). See `validation/WORKFLOW.md` and `validation/results/`.
 
 ### Classification
 
@@ -75,39 +75,47 @@ Detection runs on per-call 0/1 streams, because the tuned Page-Hinkley detector 
 | Path | What's there |
 |---|---|
 | `driftguard/` | The package: ingest, storage, providers, evalsuite, detection, classification, remediation, dashboard |
-| `configs/` | Detector settings, calibration output, frozen MMLU and XSTest sets |
+| `driftguard/configs/` | Detector settings, calibration output, frozen MMLU and XSTest sets (shipped inside the package) |
 | `tests/` | pytest suite. `tests/fixtures/` has hand-written change-point events and helpers that write fake eval histories |
 | `validation/` | Detector benchmarks on synthetic, real (Elec2, Insects) and live data. Start with `validation/WORKFLOW.md` |
 | `scripts/` | Tools, run with `python -m scripts.<name>`: `integration_check` (whole chain once), `check_runs`, `token_usage`, `inspect_production_logs`, `export_results`, `real_dataset_check`, `demo_phase3`, and small provider probes. `scripts/archive/` keeps one-off helpers |
-| `run_cycle.py` | Collects one round of eval data per target; meant to run on a schedule |
+| `run_cycle.py` | Thin wrapper around `driftguard collect`, kept so existing scheduled tasks keep working |
 
-## Setup
+## Install
 
 You need Python 3.10, 3.11 or 3.12. frouros doesn't install on Python 3.13 yet.
 
-macOS or Linux:
+```bash
+pip install llm-driftguard                   # core: eval suite, detection, classification, wrapper
+pip install "llm-driftguard[dashboard]"      # adds the dashboard (streamlit, plotly)
+pip install "llm-driftguard[proxy]"          # adds the reverse proxy (fastapi, uvicorn)
+pip install "llm-driftguard[all]"            # both
+```
+
+Quickstart:
+
+```bash
+driftguard init                                                   # writes a .env template, add your key
+driftguard eval --provider groq --model openai/gpt-oss-120b       # one eval run, saved to ./driftguard.db
+driftguard detect --provider groq --model openai/gpt-oss-120b     # detect and classify on what's stored
+driftguard dashboard                                              # open the dashboard
+```
+
+`driftguard --help` lists every command: `init`, `eval`, `collect`, `proxy`, `detect`, `dashboard`. The database is `driftguard.db` in the current directory unless you set `DRIFTGUARD_DB`.
+
+### From a git checkout (development)
 
 ```bash
 git clone https://github.com/GriffinJolly/driftguard.git
 cd driftguard
-python3.12 -m venv .venv
-source .venv/bin/activate
-pip install -r requirements.txt
+python -m venv .venv                     # use a Python 3.10-3.12 interpreter
+source .venv/bin/activate                # Windows PowerShell: .venv\Scripts\Activate.ps1
+pip install -e ".[dev,all,validation]"
 ```
 
-Windows (PowerShell):
+`pip install -r requirements-lock.txt` installs the exact versions that passed the test suite. `.venv/`, `.venv-*/` and `venv/` are ignored by git.
 
-```powershell
-git clone https://github.com/GriffinJolly/driftguard.git
-cd driftguard
-py -3.12 -m venv .venv
-.venv\Scripts\Activate.ps1
-pip install -r requirements.txt
-```
-
-`requirements.txt` includes the dashboard (streamlit, plotly), the proxy (fastapi) and pytest. `pip install -r requirements-lock.txt` installs the exact versions that passed the test suite. `.venv/`, `.venv-*/` and `venv/` are ignored by git.
-
-Put your API keys in a `.env` file in the project root. It's in `.gitignore`.
+Put your API keys in a `.env` file in the directory you run driftguard from (`driftguard init` creates the template). It's in `.gitignore`.
 
 ```
 GROQ_API_KEY=your-groq-key
@@ -119,25 +127,25 @@ You only need the key for the provider you use.
 
 ## Running it
 
-Every command below runs from the project root with the virtual environment active.
+The `driftguard ...` commands work from any directory once the package is installed. Commands that start with `python -m scripts...` or `python -m validation...` need a git checkout and run from its root.
 
 ### Collect data
 
 Run the eval suite once:
 
 ```bash
-python -m driftguard.evalsuite.runner --provider groq --model openai/gpt-oss-120b
+driftguard eval --provider groq --model openai/gpt-oss-120b
 ```
 
 A run is 112 calls (100 MMLU, 6 format, 6 refusal). Run it every 3 hours until you stop it; Groq's free tier allows about 1,000 calls a day:
 
 ```bash
-python -m driftguard.evalsuite.runner --provider groq --model openai/gpt-oss-120b --interval-seconds 10800
+driftguard eval --provider groq --model openai/gpt-oss-120b --interval-seconds 10800
 ```
 
-`run_cycle.py` does one round for each target in its `TARGETS` list (currently Groq `openai/gpt-oss-120b` and NVIDIA `nvidia/nemotron-3-super-120b-a12b`) and exits. Point cron or Task Scheduler at it, every 3 hours. It writes a log to `logs/run_cycle.log` and only counts a run as a success if at least half its calls came back OK.
+`driftguard collect` does one round for each target and exits. With no arguments it uses the built-in pair (Groq `openai/gpt-oss-120b` and NVIDIA `nvidia/nemotron-3-super-120b-a12b`); pass `--target provider:model` (repeatable) to choose your own. `python run_cycle.py` still works and does the same thing. Point cron or Task Scheduler at it, every 3 hours. It writes a log to `logs/run_cycle.log` and only counts a run as a success if at least half its calls came back OK.
 
-Both use `driftguard.db` unless you pass `--db-path` (runner) or set `DRIFTGUARD_DB` (run_cycle).
+Both use `driftguard.db` unless you pass `--db-path` or set `DRIFTGUARD_DB`; `collect` keeps its `logs/` folder in the current directory, or in `DRIFTGUARD_HOME` if set.
 
 ### Capture your own app's traffic
 
@@ -159,7 +167,7 @@ resp = client.post(
 With the proxy:
 
 ```bash
-python -m driftguard.ingest.proxy --port 8000
+driftguard proxy --port 8000
 ```
 
 Then point your app at the proxy instead of the provider. The first part of the path picks the provider and the rest is passed on unchanged, so a Groq chat request goes to `http://127.0.0.1:8000/groq/openai/v1/chat/completions` and an OpenRouter one to `http://127.0.0.1:8000/openrouter/api/v1/chat/completions`. Traffic logged this way is tagged `wrapper` or `proxy`, so you can tell it apart from eval-suite calls.
@@ -187,7 +195,7 @@ New events are saved to `changepoint_events` with their label and one-line plan.
 ### Dashboard
 
 ```bash
-streamlit run driftguard/dashboard/app.py
+driftguard dashboard
 ```
 
 It reads `driftguard.db` by default. Set `DRIFTGUARD_DB` to open a different file. With an empty database it just says there are no logged calls yet. It opens on the most recent run that has at least 150 scored calls.
@@ -235,17 +243,16 @@ Use `python -m pytest`, not plain `pytest`, so the tests can import the `driftgu
 
 | File | What it controls |
 |---|---|
-| `configs/detectors.yaml` | Page-Hinkley settings, PELT settings, significance level, permutation samples, calibration window |
-| `configs/detectors_calibrated.json` | Thresholds written by `detection/baseline.py` from a quiet window |
-| `configs/mmlu_frozen.json` | The 100 MMLU questions (the original 20 plus 20 more per subject, same seed) |
-| `configs/xstest_frozen.json` | The 6 XSTest prompts and whether each should be refused |
-| `configs/eval_suite.yaml` | Empty for now |
+| `driftguard/configs/detectors.yaml` | Page-Hinkley settings, PELT settings, significance level, permutation samples, calibration window |
+| `driftguard/configs/detectors_calibrated.json` | Thresholds written by `detection/baseline.py` from a quiet window |
+| `driftguard/configs/mmlu_frozen.json` | The 100 MMLU questions (the original 20 plus 20 more per subject, same seed) |
+| `driftguard/configs/xstest_frozen.json` | The 6 XSTest prompts and whether each should be refused |
 
 ## Known limitations
 
 - Refusals are detected by keywords, not a classifier.
-- `configs/detectors_calibrated.json` was built from only 5 runs. Format adherence and refusal rate never varied in those runs, so their noise units can't be computed yet. Recalibrate once there are at least 20 quiet runs.
-- Refusals written with curly apostrophes only count since the fix in #13. Data logged before it undercounts them, so re-score the stored refusal logs or recalibrate before trusting a safety shift around that date.
+- `driftguard/configs/detectors_calibrated.json` was built from only 5 runs. Format adherence and refusal rate never varied in those runs, so their noise units can't be computed yet. Recalibrate once there are at least 20 quiet runs.
+- Refusals written with curly apostrophes only count since the curly-apostrophe fix to the refusal detector. Data logged before it undercounts them, so re-score the stored refusal logs or recalibrate before trusting a safety shift around that date.
 - Live results so far come from a small number of trials. A live alert means "alarm at call X", not proof that the provider changed the model at X.
 - The only real provider change tested (WildChat) was located about a week late. The MMLU set grew from 20 to 100 questions after the live trials reported in the paper were run, so those trials measure accuracy in steps of 0.05.
 - With its threshold scaled to signal noise, the live detector warns later on noisy signals, and shifts of 3 to 5 points on a signal that is wrong 15% to 50% of the time are below what either detector catches reliably.
