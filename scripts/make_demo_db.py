@@ -58,7 +58,7 @@ PASSES = 28                          # 28 passes x 32 tasks = 896 calls
 ONSET_PASS = 14                      # the "model update" happens at call 448
 
 # Which frozen tasks break at the onset (chosen by position, so they are stable).
-BROKEN_MMLU = {1, 4, 7, 11, 15, 18}
+BROKEN_MMLU = set(range(1, 100, 3))   # every 3rd question, about a third of the 100-question suite
 BROKEN_FORMAT = {"format_nested_object", "format_array_of_objects"}
 
 REFUSAL_TEXT = "I’m sorry, but I can’t help with that."
