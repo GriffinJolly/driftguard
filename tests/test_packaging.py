@@ -40,3 +40,9 @@ def test_cli_lists_all_commands():
 
 def test_version_is_set():
     assert __version__
+
+
+def test_dashboard_forces_light_theme():
+    from driftguard.cli import THEME_FLAGS
+    i = THEME_FLAGS.index("--theme.base")
+    assert THEME_FLAGS[i + 1] == "light"

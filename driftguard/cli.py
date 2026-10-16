@@ -10,6 +10,19 @@ from pathlib import Path
 from driftguard import __version__
 from driftguard._paths import PACKAGE_DIR, default_db_path
 
+# The dashboard's CSS is written for a light page. Streamlit only reads .streamlit/config.toml from the
+# current directory, so without these flags a dark-mode browser makes the headings unreadable.
+# Keep in sync with .streamlit/config.toml in the repo root.
+THEME_FLAGS = [
+    "--theme.base", "light",
+    "--theme.primaryColor", "#2a78d6",
+    "--theme.backgroundColor", "#f4f4f1",
+    "--theme.secondaryBackgroundColor", "#ffffff",
+    "--theme.textColor", "#0b0b0b",
+    "--client.toolbarMode", "minimal",
+    "--browser.gatherUsageStats", "false",
+]
+
 ENV_TEMPLATE = """\
 # driftguard API keys: fill in the providers you use.
 GROQ_API_KEY=
@@ -45,7 +58,7 @@ def _cmd_dashboard(args: argparse.Namespace) -> int:
         return 1
     env = dict(os.environ, DRIFTGUARD_DB=str(args.db_path))
     cmd = [sys.executable, "-m", "streamlit", "run", str(PACKAGE_DIR / "dashboard" / "app.py"),
-           "--server.port", str(args.port)]
+           "--server.port", str(args.port), *THEME_FLAGS]
     return subprocess.call(cmd, env=env)
 
 
