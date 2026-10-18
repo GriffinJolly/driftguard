@@ -93,3 +93,20 @@ def test_get_exemplars_respects_window_and_limit(store):
     assert len(window) == 3  # minutes 1, 2, 3
 
     assert len(store.get_exemplars("groq", "m1", base, base + timedelta(minutes=10), limit=2)) == 2
+
+
+def test_purge_logs_removes_old_app_traffic_but_keeps_eval_calls(tmp_path):
+    from sqlmodel import Session, select
+    from driftguard.ingest.log_schema import CallOutcome
+    from driftguard.storage.store import LogRow
+    store = DriftStore(db_path=str(tmp_path / "purge.db"))
+    old = datetime.now(timezone.utc) - timedelta(days=40)
+    new = datetime.now(timezone.utc)
+    for path, ts in ((IntegrationPath.WRAPPER, old), (IntegrationPath.PROXY, old), (IntegrationPath.WRAPPER, new),
+                     (IntegrationPath.EVAL_SUITE, old)):
+        store.write_log(DriftLogEntry(integration_path=path, provider="groq", model_id="m", prompt="p",
+                                      response_text="r", outcome=CallOutcome.OK, latency_ms=1.0, timestamp=ts))
+    assert store.purge_logs(timedelta(days=30)) == 2
+    with Session(store.engine) as s:
+        left = s.exec(select(LogRow)).all()
+    assert sorted(str(getattr(r.integration_path, "value", r.integration_path)) for r in left) ==         sorted([IntegrationPath.WRAPPER.value, IntegrationPath.EVAL_SUITE.value])

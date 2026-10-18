@@ -51,6 +51,7 @@ def create_proxy_app(
     provider_base_urls: Optional[Mapping[str, str]] = None,
     upstream_transports: Optional[Mapping[str, httpx.AsyncBaseTransport]] = None,
     timeout: float = 120.0,
+    text_policy: str = "full",
 ) -> FastAPI:
     """Create a standalone reverse proxy at ``/{provider}/{path}``."""
     if timeout <= 0:
@@ -75,6 +76,7 @@ def create_proxy_app(
                 wrapped=wrapped,
                 provider_hosts={httpx.URL(base_url).host or ""},
                 integration_path=IntegrationPath.PROXY,
+                text_policy=text_policy,
             )
             clients[provider] = httpx.AsyncClient(
                 transport=transport,
@@ -147,9 +149,11 @@ def _main() -> None:
     parser.add_argument("--host", default="127.0.0.1")
     parser.add_argument("--port", type=int, default=8000)
     parser.add_argument("--db-path", default=default_db_path())
+    parser.add_argument("--text-policy", choices=["full", "redact", "hash", "none"], default="full",
+                        help="what to keep of prompt and reply text (see driftguard/ingest/privacy.py)")
     args = parser.parse_args()
     uvicorn.run(
-        create_proxy_app(store=DriftStore(db_path=args.db_path)),
+        create_proxy_app(store=DriftStore(db_path=args.db_path), text_policy=args.text_policy),
         host=args.host,
         port=args.port,
     )

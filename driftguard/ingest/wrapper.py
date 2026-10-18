@@ -35,6 +35,7 @@ class DriftGuardClient:
         base_url: Optional[str] = None,
         provider_hosts: Optional[set[str]] = None,
         integration_path: IntegrationPath = IntegrationPath.WRAPPER,
+        text_policy: str = "full",
         **client_kwargs: Any,
     ) -> None:
         self.provider = provider.strip().lower()
@@ -50,6 +51,7 @@ class DriftGuardClient:
             store=self.store,
             provider_hosts=provider_hosts,
             integration_path=integration_path,
+            text_policy=text_policy,
             base_url=self.base_url,
             **client_kwargs,
         )
@@ -92,6 +94,7 @@ def make_wrapped_client(
     base_url: Optional[str] = None,
     provider_hosts: Optional[set[str]] = None,
     integration_path: IntegrationPath = IntegrationPath.WRAPPER,
+    text_policy: str = "full",
     **client_kwargs: Any,
 ) -> httpx.Client:
     """Factory returning a pre-configured httpx client with DriftGuard capture enabled."""
@@ -101,6 +104,7 @@ def make_wrapped_client(
         base_url=base_url,
         provider_hosts=provider_hosts,
         integration_path=integration_path,
+        text_policy=text_policy,
         **client_kwargs,
     )
     return client.client

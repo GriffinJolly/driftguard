@@ -17,13 +17,13 @@ modules -- it is a pure persistence layer they write to and read from.
 from __future__ import annotations
 
 import json
-from datetime import datetime
+from datetime import datetime, timedelta
 from typing import Optional
 
 from sqlmodel import Field, Session, SQLModel, create_engine, select
 
 from driftguard._paths import default_db_path
-from driftguard.ingest.log_schema import DriftLogEntry, MetricPoint
+from driftguard.ingest.log_schema import DriftLogEntry, IntegrationPath, MetricPoint
 
 
 # ---------------------------------------------------------------------------
@@ -135,6 +135,22 @@ class DriftStore:
         with Session(self.engine) as session:
             session.add(row)
             session.commit()
+
+    def purge_logs(self, older_than: timedelta, integration_paths: Optional[list[IntegrationPath]] = None) -> int:
+        """Delete logged calls older than `older_than`, for a retention policy. By default only
+        captured application traffic (wrapper and proxy) is purged; eval-suite calls hold the
+        frozen public questions and are kept, since detection and flip-set evidence need them.
+        Returns the number of rows deleted."""
+        from datetime import datetime, timezone
+        from sqlmodel import delete
+
+        paths = [getattr(x, "value", x) for x in (integration_paths or [IntegrationPath.WRAPPER, IntegrationPath.PROXY])]
+        cutoff = datetime.now(timezone.utc) - older_than
+        with Session(self.engine) as session:
+            result = session.exec(delete(LogRow).where(LogRow.timestamp < cutoff)
+                                  .where(LogRow.integration_path.in_(paths)))
+            session.commit()
+            return result.rowcount or 0
 
     def write_metric_point(self, point: MetricPoint) -> None:
         row = MetricSeriesRow(**point.model_dump())

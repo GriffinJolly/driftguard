@@ -38,6 +38,7 @@ from typing import Any, Callable, Optional
 import httpx
 
 from driftguard.ingest.log_schema import CallOutcome, DriftLogEntry, IntegrationPath
+from driftguard.ingest.privacy import TEXT_POLICIES, apply_text_policy
 from driftguard.storage.store import DriftStore
 
 
@@ -204,11 +205,15 @@ class DriftCaptureTransport(httpx.BaseTransport):
         provider_hosts: Optional[set[str]] = None,
         integration_path: IntegrationPath = IntegrationPath.WRAPPER,
         on_capture_error: Optional[Callable[[Exception], None]] = None,
+        text_policy: str = "full",
     ):
         self._store = store
         self._wrapped = wrapped or httpx.HTTPTransport()
         self._provider_hosts = provider_hosts or DEFAULT_PROVIDER_HOSTS
         self._integration_path = integration_path
+        if text_policy not in TEXT_POLICIES:
+            raise ValueError(f"text_policy must be one of {TEXT_POLICIES}")
+        self._text_policy = text_policy  # what is kept of prompt and reply text (driftguard/ingest/privacy.py)
         self._on_capture_error = on_capture_error or _default_error_handler
 
     def handle_request(self, request: httpx.Request) -> httpx.Response:
@@ -301,6 +306,12 @@ class DriftCaptureTransport(httpx.BaseTransport):
             error_message=error_message,
             latency_ms=latency_ms,
         )
+        if self._text_policy != "full":
+            entry = entry.model_copy(update={
+                "prompt": apply_text_policy(entry.prompt, self._text_policy) or "",
+                "response_text": apply_text_policy(entry.response_text, self._text_policy),
+                "error_message": apply_text_policy(entry.error_message, "redact"),
+            })
         self._store.write_log(entry)
 
     def close(self) -> None:
@@ -317,11 +328,15 @@ class AsyncDriftCaptureTransport(httpx.AsyncBaseTransport):
         provider_hosts: Optional[set[str]] = None,
         integration_path: IntegrationPath = IntegrationPath.WRAPPER,
         on_capture_error: Optional[Callable[[Exception], None]] = None,
+        text_policy: str = "full",
     ):
         self._store = store
         self._wrapped = wrapped or httpx.AsyncHTTPTransport()
         self._provider_hosts = provider_hosts or DEFAULT_PROVIDER_HOSTS
         self._integration_path = integration_path
+        if text_policy not in TEXT_POLICIES:
+            raise ValueError(f"text_policy must be one of {TEXT_POLICIES}")
+        self._text_policy = text_policy  # what is kept of prompt and reply text (driftguard/ingest/privacy.py)
         self._on_capture_error = on_capture_error or _default_error_handler
 
     async def handle_async_request(self, request: httpx.Request) -> httpx.Response:
@@ -409,6 +424,12 @@ class AsyncDriftCaptureTransport(httpx.AsyncBaseTransport):
             error_message=error_message,
             latency_ms=latency_ms,
         )
+        if self._text_policy != "full":
+            entry = entry.model_copy(update={
+                "prompt": apply_text_policy(entry.prompt, self._text_policy) or "",
+                "response_text": apply_text_policy(entry.response_text, self._text_policy),
+                "error_message": apply_text_policy(entry.error_message, "redact"),
+            })
         self._store.write_log(entry)
 
     async def aclose(self) -> None:
@@ -419,11 +440,12 @@ def make_capturing_client(
     store: DriftStore,
     provider_hosts: Optional[set[str]] = None,
     integration_path: IntegrationPath = IntegrationPath.WRAPPER,
+    text_policy: str = "full",
     **client_kwargs: Any,
 ) -> httpx.Client:
     """Convenience factory: httpx.Client pre-wired with capture."""
     transport = DriftCaptureTransport(
-        store=store, provider_hosts=provider_hosts, integration_path=integration_path
+        store=store, provider_hosts=provider_hosts, integration_path=integration_path, text_policy=text_policy
     )
     return httpx.Client(transport=transport, **client_kwargs)
 
@@ -432,10 +454,11 @@ def make_capturing_async_client(
     store: DriftStore,
     provider_hosts: Optional[set[str]] = None,
     integration_path: IntegrationPath = IntegrationPath.WRAPPER,
+    text_policy: str = "full",
     **client_kwargs: Any,
 ) -> httpx.AsyncClient:
     """Convenience factory: httpx.AsyncClient pre-wired with capture."""
     transport = AsyncDriftCaptureTransport(
-        store=store, provider_hosts=provider_hosts, integration_path=integration_path
+        store=store, provider_hosts=provider_hosts, integration_path=integration_path, text_policy=text_policy
     )
     return httpx.AsyncClient(transport=transport, **client_kwargs)
