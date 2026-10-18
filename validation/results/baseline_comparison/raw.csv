@@ -1,0 +1,1386 @@
+group,method,n,false_alarm,detected,delay
+LMSYS gradual,Static threshold,6000,False,True,469.0
+LMSYS gradual,Periodic re-eval,6000,True,False,
+LMSYS gradual,"Periodic, corrected",6000,False,True,1199.0
+LMSYS gradual,DriftGuard live,6000,False,True,758.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,900.0
+LMSYS gradual,Static threshold,6000,False,True,752.0
+LMSYS gradual,Periodic re-eval,6000,False,True,799.0
+LMSYS gradual,"Periodic, corrected",6000,False,True,1799.0
+LMSYS gradual,DriftGuard live,6000,False,True,524.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,675.0
+LMSYS gradual,Static threshold,6000,False,True,357.0
+LMSYS gradual,Periodic re-eval,6000,True,False,
+LMSYS gradual,"Periodic, corrected",6000,False,True,399.0
+LMSYS gradual,DriftGuard live,6000,False,True,640.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,625.0
+LMSYS gradual,Static threshold,6000,False,True,847.0
+LMSYS gradual,Periodic re-eval,6000,True,False,
+LMSYS gradual,"Periodic, corrected",6000,False,True,1399.0
+LMSYS gradual,DriftGuard live,6000,False,True,769.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,675.0
+LMSYS gradual,Static threshold,6000,False,True,737.0
+LMSYS gradual,Periodic re-eval,6000,True,False,
+LMSYS gradual,"Periodic, corrected",6000,False,True,1199.0
+LMSYS gradual,DriftGuard live,6000,False,True,755.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,850.0
+LMSYS gradual,Static threshold,6000,False,True,785.0
+LMSYS gradual,Periodic re-eval,6000,False,True,799.0
+LMSYS gradual,"Periodic, corrected",6000,False,True,1899.0
+LMSYS gradual,DriftGuard live,6000,False,True,785.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,675.0
+LMSYS gradual,Static threshold,6000,False,True,1017.0
+LMSYS gradual,Periodic re-eval,6000,False,True,799.0
+LMSYS gradual,"Periodic, corrected",6000,False,True,1799.0
+LMSYS gradual,DriftGuard live,6000,False,True,775.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,925.0
+LMSYS gradual,Static threshold,6000,True,False,
+LMSYS gradual,Periodic re-eval,6000,True,False,
+LMSYS gradual,"Periodic, corrected",6000,False,True,999.0
+LMSYS gradual,DriftGuard live,6000,False,True,671.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,875.0
+LMSYS gradual,Static threshold,6000,False,True,683.0
+LMSYS gradual,Periodic re-eval,6000,False,True,699.0
+LMSYS gradual,"Periodic, corrected",6000,False,True,999.0
+LMSYS gradual,DriftGuard live,6000,False,True,734.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,825.0
+LMSYS gradual,Static threshold,6000,False,True,146.0
+LMSYS gradual,Periodic re-eval,6000,True,False,
+LMSYS gradual,"Periodic, corrected",6000,False,True,1099.0
+LMSYS gradual,DriftGuard live,6000,False,True,371.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,925.0
+LMSYS gradual,Static threshold,6000,False,True,678.0
+LMSYS gradual,Periodic re-eval,6000,True,False,
+LMSYS gradual,"Periodic, corrected",6000,False,True,699.0
+LMSYS gradual,DriftGuard live,6000,False,True,678.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,650.0
+LMSYS gradual,Static threshold,6000,False,True,843.0
+LMSYS gradual,Periodic re-eval,6000,False,True,699.0
+LMSYS gradual,"Periodic, corrected",6000,False,True,1099.0
+LMSYS gradual,DriftGuard live,6000,False,True,839.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,825.0
+LMSYS gradual,Static threshold,6000,False,True,681.0
+LMSYS gradual,Periodic re-eval,6000,True,False,
+LMSYS gradual,"Periodic, corrected",6000,False,True,899.0
+LMSYS gradual,DriftGuard live,6000,False,True,681.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,1000.0
+LMSYS gradual,Static threshold,6000,False,True,1531.0
+LMSYS gradual,Periodic re-eval,6000,False,True,1199.0
+LMSYS gradual,"Periodic, corrected",6000,False,False,
+LMSYS gradual,DriftGuard live,6000,False,True,726.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,650.0
+LMSYS gradual,Static threshold,6000,False,True,236.0
+LMSYS gradual,Periodic re-eval,6000,True,False,
+LMSYS gradual,"Periodic, corrected",6000,False,True,799.0
+LMSYS gradual,DriftGuard live,6000,False,True,667.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,600.0
+LMSYS gradual,Static threshold,6000,False,True,945.0
+LMSYS gradual,Periodic re-eval,6000,False,True,999.0
+LMSYS gradual,"Periodic, corrected",6000,False,True,1099.0
+LMSYS gradual,DriftGuard live,6000,False,True,856.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,825.0
+LMSYS gradual,Static threshold,6000,False,True,716.0
+LMSYS gradual,Periodic re-eval,6000,False,True,699.0
+LMSYS gradual,"Periodic, corrected",6000,False,True,799.0
+LMSYS gradual,DriftGuard live,6000,False,True,648.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,625.0
+LMSYS gradual,Static threshold,6000,False,True,940.0
+LMSYS gradual,Periodic re-eval,6000,False,True,999.0
+LMSYS gradual,"Periodic, corrected",6000,False,True,1499.0
+LMSYS gradual,DriftGuard live,6000,False,True,936.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,900.0
+LMSYS gradual,Static threshold,6000,False,True,1224.0
+LMSYS gradual,Periodic re-eval,6000,False,True,1099.0
+LMSYS gradual,"Periodic, corrected",6000,False,True,1899.0
+LMSYS gradual,DriftGuard live,6000,False,True,778.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,1125.0
+LMSYS gradual,Static threshold,6000,False,True,552.0
+LMSYS gradual,Periodic re-eval,6000,True,False,
+LMSYS gradual,"Periodic, corrected",6000,False,True,1099.0
+LMSYS gradual,DriftGuard live,6000,False,True,627.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,850.0
+LMSYS gradual,Static threshold,6000,False,True,474.0
+LMSYS gradual,Periodic re-eval,6000,False,True,499.0
+LMSYS gradual,"Periodic, corrected",6000,False,True,1499.0
+LMSYS gradual,DriftGuard live,6000,False,True,482.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,425.0
+LMSYS gradual,Static threshold,6000,False,True,387.0
+LMSYS gradual,Periodic re-eval,6000,False,True,399.0
+LMSYS gradual,"Periodic, corrected",6000,False,True,1399.0
+LMSYS gradual,DriftGuard live,6000,False,True,435.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,300.0
+LMSYS gradual,Static threshold,6000,False,True,625.0
+LMSYS gradual,Periodic re-eval,6000,False,True,999.0
+LMSYS gradual,"Periodic, corrected",6000,False,True,999.0
+LMSYS gradual,DriftGuard live,6000,False,True,761.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,825.0
+LMSYS gradual,Static threshold,6000,False,True,797.0
+LMSYS gradual,Periodic re-eval,6000,False,True,799.0
+LMSYS gradual,"Periodic, corrected",6000,False,True,1499.0
+LMSYS gradual,DriftGuard live,6000,False,True,860.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,725.0
+LMSYS gradual,Static threshold,6000,False,True,796.0
+LMSYS gradual,Periodic re-eval,6000,False,True,599.0
+LMSYS gradual,"Periodic, corrected",6000,False,True,1299.0
+LMSYS gradual,DriftGuard live,6000,False,True,553.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,750.0
+LMSYS gradual,Static threshold,6000,False,True,882.0
+LMSYS gradual,Periodic re-eval,6000,False,True,899.0
+LMSYS gradual,"Periodic, corrected",6000,False,True,1099.0
+LMSYS gradual,DriftGuard live,6000,False,True,875.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,775.0
+LMSYS gradual,Static threshold,6000,False,True,1159.0
+LMSYS gradual,Periodic re-eval,6000,False,True,1199.0
+LMSYS gradual,"Periodic, corrected",6000,False,False,
+LMSYS gradual,DriftGuard live,6000,False,True,779.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,725.0
+LMSYS gradual,Static threshold,6000,False,True,503.0
+LMSYS gradual,Periodic re-eval,6000,True,False,
+LMSYS gradual,"Periodic, corrected",6000,False,True,1199.0
+LMSYS gradual,DriftGuard live,6000,False,True,582.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,1050.0
+LMSYS gradual,Static threshold,6000,False,True,607.0
+LMSYS gradual,Periodic re-eval,6000,False,True,599.0
+LMSYS gradual,"Periodic, corrected",6000,False,True,899.0
+LMSYS gradual,DriftGuard live,6000,False,True,586.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,525.0
+LMSYS gradual,Static threshold,6000,False,True,732.0
+LMSYS gradual,Periodic re-eval,6000,True,False,
+LMSYS gradual,"Periodic, corrected",6000,False,True,799.0
+LMSYS gradual,DriftGuard live,6000,False,True,770.0
+LMSYS gradual,DriftGuard confirmed,6000,False,True,675.0
+LMSYS sudden,Static threshold,6000,False,True,75.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,99.0
+LMSYS sudden,DriftGuard live,6000,False,True,125.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,49.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,99.0
+LMSYS sudden,DriftGuard live,6000,False,True,101.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,True,False,
+LMSYS sudden,Periodic re-eval,6000,True,False,
+LMSYS sudden,"Periodic, corrected",6000,False,True,99.0
+LMSYS sudden,DriftGuard live,6000,False,True,66.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,70.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,99.0
+LMSYS sudden,DriftGuard live,6000,False,True,79.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,91.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,299.0
+LMSYS sudden,DriftGuard live,6000,False,True,98.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,108.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,1499.0
+LMSYS sudden,DriftGuard live,6000,False,True,293.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,58.0
+LMSYS sudden,Periodic re-eval,6000,True,False,
+LMSYS sudden,"Periodic, corrected",6000,False,True,199.0
+LMSYS sudden,DriftGuard live,6000,False,True,66.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,74.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,99.0
+LMSYS sudden,DriftGuard live,6000,False,True,95.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,25.0
+LMSYS sudden,Static threshold,6000,False,True,94.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,499.0
+LMSYS sudden,DriftGuard live,6000,False,True,142.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,81.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,399.0
+LMSYS sudden,DriftGuard live,6000,False,True,216.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,99.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,399.0
+LMSYS sudden,DriftGuard live,6000,False,True,153.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,73.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,99.0
+LMSYS sudden,DriftGuard live,6000,False,True,99.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,60.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,99.0
+LMSYS sudden,DriftGuard live,6000,False,True,150.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,94.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,399.0
+LMSYS sudden,DriftGuard live,6000,False,True,122.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,55.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,199.0
+LMSYS sudden,DriftGuard live,6000,False,True,106.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,25.0
+LMSYS sudden,Static threshold,6000,False,True,90.0
+LMSYS sudden,Periodic re-eval,6000,True,False,
+LMSYS sudden,"Periodic, corrected",6000,False,True,599.0
+LMSYS sudden,DriftGuard live,6000,False,True,173.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,75.0
+LMSYS sudden,Static threshold,6000,True,False,
+LMSYS sudden,Periodic re-eval,6000,True,False,
+LMSYS sudden,"Periodic, corrected",6000,False,True,199.0
+LMSYS sudden,DriftGuard live,6000,False,True,92.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,74.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,99.0
+LMSYS sudden,DriftGuard live,6000,False,True,97.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,25.0
+LMSYS sudden,Static threshold,6000,False,True,69.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,99.0
+LMSYS sudden,DriftGuard live,6000,False,True,75.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,79.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,299.0
+LMSYS sudden,DriftGuard live,6000,False,True,155.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,73.0
+LMSYS sudden,Periodic re-eval,6000,True,False,
+LMSYS sudden,"Periodic, corrected",6000,False,True,99.0
+LMSYS sudden,DriftGuard live,6000,False,True,144.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,52.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,99.0
+LMSYS sudden,DriftGuard live,6000,False,True,70.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,44.0
+LMSYS sudden,Periodic re-eval,6000,True,False,
+LMSYS sudden,"Periodic, corrected",6000,False,True,99.0
+LMSYS sudden,DriftGuard live,6000,False,True,92.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,41.0
+LMSYS sudden,Periodic re-eval,6000,True,False,
+LMSYS sudden,"Periodic, corrected",6000,False,True,99.0
+LMSYS sudden,DriftGuard live,6000,False,True,119.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,89.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,199.0
+LMSYS sudden,DriftGuard live,6000,False,True,172.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,25.0
+LMSYS sudden,Static threshold,6000,False,True,90.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,199.0
+LMSYS sudden,DriftGuard live,6000,False,True,131.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,53.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,99.0
+LMSYS sudden,DriftGuard live,6000,False,True,62.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS sudden,Static threshold,6000,False,True,314.0
+LMSYS sudden,Periodic re-eval,6000,False,True,399.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,599.0
+LMSYS sudden,DriftGuard live,6000,False,True,255.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,25.0
+LMSYS sudden,Static threshold,6000,False,True,228.0
+LMSYS sudden,Periodic re-eval,6000,False,True,99.0
+LMSYS sudden,"Periodic, corrected",6000,False,True,799.0
+LMSYS sudden,DriftGuard live,6000,False,True,199.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,50.0
+LMSYS sudden,Static threshold,6000,True,False,
+LMSYS sudden,Periodic re-eval,6000,True,False,
+LMSYS sudden,"Periodic, corrected",6000,False,True,199.0
+LMSYS sudden,DriftGuard live,6000,True,True,186.0
+LMSYS sudden,DriftGuard confirmed,6000,False,True,0.0
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,False,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,False,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,False,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,True,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,True,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,True,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,True,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,True,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,True,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,False,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,False,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,False,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,False,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,True,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,False,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,False,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,False,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,False,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,False,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+LMSYS control,Static threshold,6000,False,,
+LMSYS control,Periodic re-eval,6000,True,,
+LMSYS control,"Periodic, corrected",6000,False,,
+LMSYS control,DriftGuard live,6000,False,,
+LMSYS control,DriftGuard confirmed,6000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,False,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,False,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,False,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,True,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,False,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,True,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,False,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,True,,
+Synthetic 5% stable,Periodic re-eval,10000,True,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,False,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,True,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,True,,
+Synthetic 5% stable,Periodic re-eval,10000,True,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,False,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,False,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,True,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,False,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,True,,
+Synthetic 5% stable,Periodic re-eval,10000,True,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,True,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,False,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,True,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,False,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,False,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,False,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,False,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,True,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,True,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,False,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,True,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,False,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,True,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% stable,Static threshold,10000,False,,
+Synthetic 5% stable,Periodic re-eval,10000,True,,
+Synthetic 5% stable,"Periodic, corrected",10000,False,,
+Synthetic 5% stable,DriftGuard live,10000,False,,
+Synthetic 5% stable,DriftGuard confirmed,10000,False,,
+Synthetic 5% +10 pts,Static threshold,10000,False,True,315.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,False,True,99.0
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,222.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,233.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,False,True,99.0
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,293.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,410.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,False,True,399.0
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,375.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,50.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,198.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,False,True,199.0
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,168.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,59.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,99.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,103.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 5% +10 pts,Static threshold,10000,True,False,
+Synthetic 5% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 5% +10 pts,"Periodic, corrected",10000,True,False,
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,119.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 5% +10 pts,Static threshold,10000,True,False,
+Synthetic 5% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,199.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,154.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,121.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,599.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,190.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,83.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,599.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,96.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,203.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,False,True,99.0
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,201.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,257.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,False,True,299.0
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,202.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 5% +10 pts,Static threshold,10000,True,False,
+Synthetic 5% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,299.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,245.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,103.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,False,True,99.0
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,1599.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,151.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,124.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,199.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,111.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,269.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,1499.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,295.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,86.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,False,True,99.0
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,799.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,200.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,121.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,False,True,99.0
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,899.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,195.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,97.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,False,True,99.0
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,199.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,137.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,98.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,False,True,99.0
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,1199.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,192.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,370.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,False,True,99.0
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,1799.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,236.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,30.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,99.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,62.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,50.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,412.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,False,True,399.0
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,3799.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,360.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 5% +10 pts,Static threshold,10000,True,False,
+Synthetic 5% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,99.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,227.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,67.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,99.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,123.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,83.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,99.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,139.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,82.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,399.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,263.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 5% +10 pts,Static threshold,10000,True,False,
+Synthetic 5% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,99.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,140.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,60.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,99.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,89.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,141.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,False,True,199.0
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,152.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,50.0
+Synthetic 5% +10 pts,Static threshold,10000,False,True,84.0
+Synthetic 5% +10 pts,Periodic re-eval,10000,False,True,99.0
+Synthetic 5% +10 pts,"Periodic, corrected",10000,False,True,799.0
+Synthetic 5% +10 pts,DriftGuard live,10000,False,True,281.0
+Synthetic 5% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,True,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,False,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,True,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,True,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,True,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,False,,
+Synthetic 15% stable,Periodic re-eval,10000,False,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,False,,
+Synthetic 15% stable,Periodic re-eval,10000,False,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,True,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,False,,
+Synthetic 15% stable,Periodic re-eval,10000,False,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,False,,
+Synthetic 15% stable,Periodic re-eval,10000,False,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,False,,
+Synthetic 15% stable,Periodic re-eval,10000,False,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,False,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,True,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,True,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,False,,
+Synthetic 15% stable,Periodic re-eval,10000,False,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,True,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,False,,
+Synthetic 15% stable,Periodic re-eval,10000,False,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,True,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,True,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,True,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,False,,
+Synthetic 15% stable,Periodic re-eval,10000,False,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,True,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,True,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,True,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,True,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,True,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,False,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,False,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,False,,
+Synthetic 15% stable,Periodic re-eval,10000,False,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,False,,
+Synthetic 15% stable,Periodic re-eval,10000,False,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% stable,Static threshold,10000,True,,
+Synthetic 15% stable,Periodic re-eval,10000,True,,
+Synthetic 15% stable,"Periodic, corrected",10000,False,,
+Synthetic 15% stable,DriftGuard live,10000,False,,
+Synthetic 15% stable,DriftGuard confirmed,10000,False,,
+Synthetic 15% +10 pts,Static threshold,10000,True,False,
+Synthetic 15% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,True,599.0
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,326.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 15% +10 pts,Static threshold,10000,True,False,
+Synthetic 15% +10 pts,Periodic re-eval,10000,False,True,99.0
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,408.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,50.0
+Synthetic 15% +10 pts,Static threshold,10000,True,False,
+Synthetic 15% +10 pts,Periodic re-eval,10000,False,True,399.0
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,432.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,75.0
+Synthetic 15% +10 pts,Static threshold,10000,True,False,
+Synthetic 15% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,258.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 15% +10 pts,Static threshold,10000,True,False,
+Synthetic 15% +10 pts,Periodic re-eval,10000,False,True,199.0
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,362.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 15% +10 pts,Static threshold,10000,False,True,1005.0
+Synthetic 15% +10 pts,Periodic re-eval,10000,False,True,2299.0
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,673.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,75.0
+Synthetic 15% +10 pts,Static threshold,10000,True,False,
+Synthetic 15% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,True,1699.0
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,292.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 15% +10 pts,Static threshold,10000,False,True,197.0
+Synthetic 15% +10 pts,Periodic re-eval,10000,False,True,199.0
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,333.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 15% +10 pts,Static threshold,10000,False,True,71.0
+Synthetic 15% +10 pts,Periodic re-eval,10000,False,True,99.0
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,653.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 15% +10 pts,Static threshold,10000,False,True,554.0
+Synthetic 15% +10 pts,Periodic re-eval,10000,False,True,2299.0
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,415.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 15% +10 pts,Static threshold,10000,True,False,
+Synthetic 15% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 15% +10 pts,"Periodic, corrected",10000,True,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,True,True,148.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,200.0
+Synthetic 15% +10 pts,Static threshold,10000,False,True,1125.0
+Synthetic 15% +10 pts,Periodic re-eval,10000,False,True,4399.0
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,506.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 15% +10 pts,Static threshold,10000,False,True,193.0
+Synthetic 15% +10 pts,Periodic re-eval,10000,False,True,199.0
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,300.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 15% +10 pts,Static threshold,10000,True,False,
+Synthetic 15% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,True,299.0
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,292.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,75.0
+Synthetic 15% +10 pts,Static threshold,10000,False,True,321.0
+Synthetic 15% +10 pts,Periodic re-eval,10000,False,True,899.0
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,335.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,50.0
+Synthetic 15% +10 pts,Static threshold,10000,False,True,561.0
+Synthetic 15% +10 pts,Periodic re-eval,10000,False,True,799.0
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,True,3299.0
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,548.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,50.0
+Synthetic 15% +10 pts,Static threshold,10000,True,False,
+Synthetic 15% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,True,99.0
+Synthetic 15% +10 pts,DriftGuard live,10000,True,True,202.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 15% +10 pts,Static threshold,10000,False,True,546.0
+Synthetic 15% +10 pts,Periodic re-eval,10000,False,False,
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,504.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 15% +10 pts,Static threshold,10000,False,True,142.0
+Synthetic 15% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,464.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,75.0
+Synthetic 15% +10 pts,Static threshold,10000,True,False,
+Synthetic 15% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,True,699.0
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,91.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,100.0
+Synthetic 15% +10 pts,Static threshold,10000,True,False,
+Synthetic 15% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,True,199.0
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,130.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 15% +10 pts,Static threshold,10000,True,False,
+Synthetic 15% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,True,999.0
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,416.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 15% +10 pts,Static threshold,10000,False,True,138.0
+Synthetic 15% +10 pts,Periodic re-eval,10000,False,True,599.0
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,413.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,50.0
+Synthetic 15% +10 pts,Static threshold,10000,True,False,
+Synthetic 15% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,True,199.0
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,132.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 15% +10 pts,Static threshold,10000,True,False,
+Synthetic 15% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,True,599.0
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,164.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,50.0
+Synthetic 15% +10 pts,Static threshold,10000,False,True,42.0
+Synthetic 15% +10 pts,Periodic re-eval,10000,False,True,99.0
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,236.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 15% +10 pts,Static threshold,10000,False,True,60.0
+Synthetic 15% +10 pts,Periodic re-eval,10000,False,True,99.0
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,170.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 15% +10 pts,Static threshold,10000,True,False,
+Synthetic 15% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,507.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 15% +10 pts,Static threshold,10000,True,False,
+Synthetic 15% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,True,299.0
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,226.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 15% +10 pts,Static threshold,10000,False,True,305.0
+Synthetic 15% +10 pts,Periodic re-eval,10000,False,True,3499.0
+Synthetic 15% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 15% +10 pts,DriftGuard live,10000,False,True,428.0
+Synthetic 15% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,False,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,False,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,True,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,False,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,False,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,False,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,False,,
+Synthetic 30% stable,Periodic re-eval,10000,False,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,False,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,True,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,True,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,False,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,False,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,False,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,True,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,True,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,True,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,False,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,False,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,True,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,True,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,False,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,True,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,True,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,True,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,True,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,True,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,True,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,True,,
+Synthetic 30% stable,"Periodic, corrected",10000,True,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,True,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% stable,Static threshold,10000,True,,
+Synthetic 30% stable,Periodic re-eval,10000,True,,
+Synthetic 30% stable,"Periodic, corrected",10000,False,,
+Synthetic 30% stable,DriftGuard live,10000,False,,
+Synthetic 30% stable,DriftGuard confirmed,10000,False,,
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,True,299.0
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,183.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,True,False,
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,True,99.0
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,True,2299.0
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,534.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 30% +10 pts,Static threshold,10000,False,True,280.0
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,True,299.0
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,450.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,True,599.0
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,537.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,True,899.0
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,440.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,125.0
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,True,299.0
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,264.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 30% +10 pts,Static threshold,10000,False,True,631.0
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,False,
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,551.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,100.0
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,True,1899.0
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,768.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,150.0
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,186.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,175.0
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,True,4299.0
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,321.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,100.0
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,394.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 30% +10 pts,Static threshold,10000,False,True,144.0
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,True,3199.0
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,688.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,True,99.0
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,188.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 30% +10 pts,Static threshold,10000,False,True,154.0
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,True,199.0
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,420.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,True,899.0
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,744.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,275.0
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,True,999.0
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,390.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 30% +10 pts,Static threshold,10000,False,True,1605.0
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,False,
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,513.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,125.0
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,True,799.0
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,796.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,700.0
+Synthetic 30% +10 pts,Static threshold,10000,False,True,191.0
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,True,999.0
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,920.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,True,99.0
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,524.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 30% +10 pts,Static threshold,10000,False,True,203.0
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,True,3899.0
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,446.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 30% +10 pts,Static threshold,10000,False,True,243.0
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,True,399.0
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,381.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,25.0
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,365.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,75.0
+Synthetic 30% +10 pts,Static threshold,10000,False,True,196.0
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,False,
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,546.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,75.0
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,True,2599.0
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,410.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,50.0
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,True,299.0
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,True,2399.0
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,705.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,50.0
+Synthetic 30% +10 pts,Static threshold,10000,False,True,47.0
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,True,999.0
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,135.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,100.0
+Synthetic 30% +10 pts,Static threshold,10000,False,True,75.0
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,True,99.0
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,578.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,0.0
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,False,True,299.0
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,408.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,75.0
+Synthetic 30% +10 pts,Static threshold,10000,True,False,
+Synthetic 30% +10 pts,Periodic re-eval,10000,True,False,
+Synthetic 30% +10 pts,"Periodic, corrected",10000,False,False,
+Synthetic 30% +10 pts,DriftGuard live,10000,False,True,622.0
+Synthetic 30% +10 pts,DriftGuard confirmed,10000,False,True,100.0
+Live Groq,Static threshold,331,False,True,36.0
+Live Groq,Periodic re-eval,331,False,True,124.0
+Live Groq,"Periodic, corrected",331,False,True,124.0
+Live Groq,DriftGuard live,331,False,True,100.0
+Live Groq,DriftGuard confirmed,331,False,True,1.0
+Live Groq,Static threshold,350,False,True,10.0
+Live Groq,Periodic re-eval,350,False,True,24.0
+Live Groq,"Periodic, corrected",350,False,True,24.0
+Live Groq,DriftGuard live,350,False,True,51.0
+Live Groq,DriftGuard confirmed,350,False,True,5.0
+Live NVIDIA,Static threshold,350,False,True,78.0
+Live NVIDIA,Periodic re-eval,350,False,True,124.0
+Live NVIDIA,"Periodic, corrected",350,False,True,124.0
+Live NVIDIA,DriftGuard live,350,False,True,130.0
+Live NVIDIA,DriftGuard confirmed,350,False,True,63.0
+Live NVIDIA,Static threshold,350,False,True,103.0
+Live NVIDIA,Periodic re-eval,350,False,True,124.0
+Live NVIDIA,"Periodic, corrected",350,False,True,124.0
+Live NVIDIA,DriftGuard live,350,False,False,
+Live NVIDIA,DriftGuard confirmed,350,False,False,
+Live NVIDIA,Static threshold,350,False,True,118.0
+Live NVIDIA,Periodic re-eval,350,False,True,124.0
+Live NVIDIA,"Periodic, corrected",350,False,True,124.0
+Live NVIDIA,DriftGuard live,350,False,False,
+Live NVIDIA,DriftGuard confirmed,350,False,False,
+Live NVIDIA,Static threshold,350,False,True,74.0
+Live NVIDIA,Periodic re-eval,350,False,True,124.0
+Live NVIDIA,"Periodic, corrected",350,False,True,124.0
+Live NVIDIA,DriftGuard live,350,False,True,120.0
+Live NVIDIA,DriftGuard confirmed,350,False,True,63.0
+Live NVIDIA,Static threshold,350,False,True,35.0
+Live NVIDIA,Periodic re-eval,350,False,True,124.0
+Live NVIDIA,"Periodic, corrected",350,False,True,124.0
+Live NVIDIA,DriftGuard live,350,False,True,117.0
+Live NVIDIA,DriftGuard confirmed,350,False,False,

@@ -1,0 +1,56 @@
+group,method,streams,false_alarm,detected,median_delay
+LMSYS gradual,Static threshold,30,0.03333333333333333,0.9666666666666667,732.0
+LMSYS gradual,Periodic re-eval,30,0.4,0.6,799.0
+LMSYS gradual,"Periodic, corrected",30,0.0,0.9333333333333333,1099.0
+LMSYS gradual,DriftGuard live,30,0.0,1.0,730.0
+LMSYS gradual,DriftGuard confirmed,30,0.0,1.0,762.5
+LMSYS sudden,Static threshold,30,0.1,0.9,74.0
+LMSYS sudden,Periodic re-eval,30,0.26666666666666666,0.7333333333333333,99.0
+LMSYS sudden,"Periodic, corrected",30,0.0,1.0,199.0
+LMSYS sudden,DriftGuard live,30,0.03333333333333333,1.0,120.5
+LMSYS sudden,DriftGuard confirmed,30,0.0,1.0,0.0
+LMSYS control,Static threshold,30,0.16666666666666666,,
+LMSYS control,Periodic re-eval,30,0.6,,
+LMSYS control,"Periodic, corrected",30,0.06666666666666667,,
+LMSYS control,DriftGuard live,30,0.0,,
+LMSYS control,DriftGuard confirmed,30,0.0,,
+Synthetic 5% stable,Static threshold,30,0.1,,
+Synthetic 5% stable,Periodic re-eval,30,0.4666666666666667,,
+Synthetic 5% stable,"Periodic, corrected",30,0.0,,
+Synthetic 5% stable,DriftGuard live,30,0.0,,
+Synthetic 5% stable,DriftGuard confirmed,30,0.0,,
+Synthetic 5% +10 pts,Static threshold,30,0.16666666666666666,0.8333333333333334,121.0
+Synthetic 5% +10 pts,Periodic re-eval,30,0.5,0.5,99.0
+Synthetic 5% +10 pts,"Periodic, corrected",30,0.03333333333333333,0.7333333333333333,349.0
+Synthetic 5% +10 pts,DriftGuard live,30,0.0,1.0,191.0
+Synthetic 5% +10 pts,DriftGuard confirmed,30,0.0,1.0,0.0
+Synthetic 15% stable,Static threshold,30,0.6666666666666666,,
+Synthetic 15% stable,Periodic re-eval,30,0.5333333333333333,,
+Synthetic 15% stable,"Periodic, corrected",30,0.0,,
+Synthetic 15% stable,DriftGuard live,30,0.03333333333333333,,
+Synthetic 15% stable,DriftGuard confirmed,30,0.0,,
+Synthetic 15% +10 pts,Static threshold,30,0.5333333333333333,0.4666666666666667,251.0
+Synthetic 15% +10 pts,Periodic re-eval,30,0.4666666666666667,0.5,399.0
+Synthetic 15% +10 pts,"Periodic, corrected",30,0.03333333333333333,0.36666666666666664,599.0
+Synthetic 15% +10 pts,DriftGuard live,30,0.06666666666666667,1.0,334.0
+Synthetic 15% +10 pts,DriftGuard confirmed,30,0.0,1.0,25.0
+Synthetic 30% stable,Static threshold,30,0.9666666666666667,,
+Synthetic 30% stable,Periodic re-eval,30,0.5666666666666667,,
+Synthetic 30% stable,"Periodic, corrected",30,0.03333333333333333,,
+Synthetic 30% stable,DriftGuard live,30,0.0,,
+Synthetic 30% stable,DriftGuard confirmed,30,0.0,,
+Synthetic 30% +10 pts,Static threshold,30,0.6333333333333333,0.36666666666666664,196.0
+Synthetic 30% +10 pts,Periodic re-eval,30,0.36666666666666664,0.5333333333333333,499.0
+Synthetic 30% +10 pts,"Periodic, corrected",30,0.0,0.3,999.0
+Synthetic 30% +10 pts,DriftGuard live,30,0.0,1.0,448.0
+Synthetic 30% +10 pts,DriftGuard confirmed,30,0.03333333333333333,0.9666666666666667,50.0
+Live Groq,Static threshold,2,0.0,1.0,23.0
+Live Groq,Periodic re-eval,2,0.0,1.0,74.0
+Live Groq,"Periodic, corrected",2,0.0,1.0,74.0
+Live Groq,DriftGuard live,2,0.0,1.0,75.5
+Live Groq,DriftGuard confirmed,2,0.0,1.0,3.0
+Live NVIDIA,Static threshold,5,0.0,1.0,78.0
+Live NVIDIA,Periodic re-eval,5,0.0,1.0,124.0
+Live NVIDIA,"Periodic, corrected",5,0.0,1.0,124.0
+Live NVIDIA,DriftGuard live,5,0.0,0.6,120.0
+Live NVIDIA,DriftGuard confirmed,5,0.0,0.4,63.0
