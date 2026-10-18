@@ -1,0 +1,13 @@
+group,permutation,confirmed
+LMSYS gradual,i.i.d.,30/30
+LMSYS gradual,blocks of 20,30/30
+LMSYS gradual,blocks of 50,30/30
+LMSYS sudden,i.i.d.,30/30
+LMSYS sudden,blocks of 20,30/30
+LMSYS sudden,blocks of 50,30/30
+Live Groq,i.i.d.,2/2
+Live Groq,blocks of 20,2/2
+Live Groq,blocks of 50,2/2
+Live NVIDIA,i.i.d.,2/5
+Live NVIDIA,blocks of 20,2/5
+Live NVIDIA,blocks of 50,2/5

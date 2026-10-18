@@ -1,0 +1,8 @@
+trial,calls_before,questions,repeats_per_question,error_rate,lag1_autocorr,icc_by_question,design_effect,effective_n
+NVIDIA trial 1,175,20,8.8,0.137,-0.015,0.744,6.77,25.8
+NVIDIA trial 2,175,20,8.8,0.16,0.064,0.888,7.88,22.2
+NVIDIA trial 3,175,20,8.8,0.154,-0.096,0.875,7.78,22.5
+NVIDIA trial 4,175,20,8.8,0.171,0.0,0.788,7.11,24.6
+NVIDIA trial 5,175,20,8.8,0.166,-0.112,0.882,7.83,22.3
+Groq trial 1,175,20,8.8,0.126,-0.041,0.875,7.78,22.5
+Groq trial 2,175,20,8.8,0.131,0.098,0.807,7.26,24.1

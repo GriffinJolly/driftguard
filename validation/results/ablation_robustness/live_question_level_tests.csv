@@ -1,0 +1,8 @@
+trial,error_before,error_after,p_call_level,p_within_question,questions_up_down,p_sign_test
+NVIDIA trial 1,0.137,0.394,0.0005,0.0005,17 / 0,0.0
+NVIDIA trial 2,0.16,0.446,0.0005,0.0005,16 / 2,0.0007
+NVIDIA trial 3,0.154,0.326,0.0005,0.0005,15 / 1,0.0003
+NVIDIA trial 4,0.171,0.434,0.0005,0.0005,17 / 2,0.0004
+NVIDIA trial 5,0.166,0.297,0.0035,0.0005,15 / 3,0.0038
+Groq trial 1,0.126,0.506,0.0005,0.0005,17 / 0,0.0
+Groq trial 2,0.131,0.44,0.0005,0.0005,18 / 0,0.0
