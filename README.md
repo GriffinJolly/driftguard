@@ -215,6 +215,7 @@ The detector benchmarks have their own guide in `validation/WORKFLOW.md`, and ea
 | LMSYS-Chat-1M rollouts and swaps (30 each, plus 30 controls) | Safety shift labelled in every rollout and swap, none on controls |
 | Classification on 13 real scenarios | 13 / 13 with per-call detection |
 | Controlled format and latency faults | 4 / 4 correct, including controls |
+| Against practical baselines (270 streams with a known answer) | Static threshold and periodic re-evaluation alarm on about half of stable streams; DriftGuard on at most 1 in 120, finding 98–99% of real changes (`results/baseline_comparison/`) |
 
 The quickest benchmarks need no internet and no API key:
 
