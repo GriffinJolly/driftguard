@@ -52,6 +52,8 @@ jobs:
           cd /tmp
           /tmp/clean/bin/driftguard --version
           /tmp/clean/bin/driftguard eval --help
+          /tmp/clean/bin/driftguard demo-data --out /tmp/ci_demo.db
+          /tmp/clean/bin/driftguard live --help
           /tmp/clean/bin/python -c "
           from driftguard.detection import pipeline
           from driftguard.evalsuite import tasks, refusal_probe

@@ -34,7 +34,7 @@ def test_db_and_calibration_env_overrides(monkeypatch, tmp_path):
 def test_cli_lists_all_commands():
     parser = build_parser()
     needs_args = {"detect": ["--provider", "p", "--model", "m"]}
-    for cmd in ("init", "eval", "collect", "proxy", "detect", "dashboard"):
+    for cmd in ("init", "eval", "collect", "proxy", "demo-data", "live", "detect", "dashboard"):
         assert parser.parse_known_args([cmd, *needs_args.get(cmd, [])])[0].command == cmd
 
 
@@ -62,3 +62,63 @@ def test_dotenv_in_current_folder_is_found(tmp_path):
     env["PYTHONPATH"] = repo_root
     out = subprocess.run([sys.executable, str(probe)], cwd=tmp_path, env=env, capture_output=True, text=True)
     assert out.stdout.strip() == "from_dotenv_file", out.stderr
+
+
+def test_demo_data_command_builds_the_simulated_database(tmp_path):
+    """`driftguard demo-data` must work from the installed package alone (no repo checkout)."""
+    import sqlite3
+
+    from driftguard.cli import main
+    from driftguard.demo import make_demo_db
+
+    out = tmp_path / "t_demo.db"
+    assert main(["demo-data", "--out", str(out)]) == 0
+    con = sqlite3.connect(out)
+    try:
+        n = con.execute("SELECT COUNT(*) FROM log_rows").fetchone()[0]
+        models = {r[0] for r in con.execute("SELECT DISTINCT model_id FROM log_rows")}
+    finally:
+        con.close()
+    assert n == make_demo_db.PASSES * len(make_demo_db._tasks())
+    assert models == {make_demo_db.MODEL_ID}
+
+
+def test_demo_data_refuses_to_overwrite_a_non_demo_file(tmp_path):
+    import pytest
+
+    from driftguard.cli import main
+
+    real = tmp_path / "driftguard.db"
+    real.write_text("do not touch")
+    with pytest.raises(SystemExit):
+        main(["demo-data", "--out", str(real)])
+    assert real.read_text() == "do not touch"
+
+
+def test_live_command_opens_the_packaged_page_with_the_light_theme(monkeypatch):
+    import pytest
+
+    pytest.importorskip("streamlit")
+    from driftguard import cli
+
+    seen = {}
+    monkeypatch.setattr(cli.subprocess, "call", lambda cmd, env=None: seen.update(cmd=cmd) or 0)
+    assert cli.main(["live", "--port", "8599"]) == 0
+    cmd = seen["cmd"]
+    assert cmd[-len(cli.THEME_FLAGS):] == cli.THEME_FLAGS
+    assert "8599" in cmd
+    page = next(c for c in cmd if c.endswith("live_page.py"))
+    assert page.replace("\\", "/").endswith("driftguard/demo/live_page.py")
+
+
+def test_old_script_paths_still_work():
+    """The README and DEMO.md used scripts/ and examples/ before the tools moved into the package."""
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    root = Path(__file__).resolve().parent.parent
+    env = dict(__import__("os").environ, PYTHONPATH=str(root))
+    out = subprocess.run([sys.executable, str(root / "scripts" / "make_demo_db.py"), "--help"],
+                         env=env, capture_output=True, text=True)
+    assert out.returncode == 0 and "--out" in out.stdout, out.stderr

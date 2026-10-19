@@ -50,16 +50,29 @@ def _cmd_detect(args: argparse.Namespace) -> int:
     return 0
 
 
-def _cmd_dashboard(args: argparse.Namespace) -> int:
+def _run_streamlit(script: Path, port: int, extra_env: dict | None = None) -> int:
+    """Open a Streamlit page that ships inside the package, with the light theme forced."""
     try:
         import streamlit  # noqa: F401
     except ImportError:
-        print('The dashboard needs extra packages: pip install "llm-driftguard[dashboard]"', file=sys.stderr)
+        print('This needs extra packages: pip install "llm-driftguard[dashboard]"', file=sys.stderr)
         return 1
-    env = dict(os.environ, DRIFTGUARD_DB=str(args.db_path))
-    cmd = [sys.executable, "-m", "streamlit", "run", str(PACKAGE_DIR / "dashboard" / "app.py"),
-           "--server.port", str(args.port), *THEME_FLAGS]
-    return subprocess.call(cmd, env=env)
+    cmd = [sys.executable, "-m", "streamlit", "run", str(script), "--server.port", str(port), *THEME_FLAGS]
+    return subprocess.call(cmd, env=dict(os.environ, **(extra_env or {})))
+
+
+def _cmd_dashboard(args: argparse.Namespace) -> int:
+    return _run_streamlit(PACKAGE_DIR / "dashboard" / "app.py", args.port, {"DRIFTGUARD_DB": str(args.db_path)})
+
+
+def _cmd_live(args: argparse.Namespace) -> int:
+    return _run_streamlit(PACKAGE_DIR / "demo" / "live_page.py", args.port)
+
+
+def _cmd_demo_data(rest: list[str]) -> int:
+    from driftguard.demo.make_demo_db import main
+    main(rest)
+    return 0
 
 
 def _cmd_eval(rest: list[str]) -> int:
@@ -82,7 +95,7 @@ def _cmd_proxy(rest: list[str]) -> int:
 
 
 # Commands that hand their remaining arguments to an existing module's own argparse.
-PASSTHROUGH = {"eval": _cmd_eval, "collect": _cmd_collect, "proxy": _cmd_proxy}
+PASSTHROUGH = {"eval": _cmd_eval, "collect": _cmd_collect, "proxy": _cmd_proxy, "demo-data": _cmd_demo_data}
 
 
 def build_parser() -> argparse.ArgumentParser:
@@ -95,12 +108,17 @@ def build_parser() -> argparse.ArgumentParser:
     sub.add_parser("eval", help="run the eval suite once, or on an interval (--provider, --model, ...)", add_help=False)
     sub.add_parser("collect", help="single-shot collector for a scheduler (--target provider:model ...)", add_help=False)
     sub.add_parser("proxy", help="run the reverse proxy that logs your app's LLM traffic (--port, ...)", add_help=False)
+    sub.add_parser("demo-data", help="build a SIMULATED database to try the dashboard (--out FILE_demo.db)", add_help=False)
 
     de = sub.add_parser("detect", help="run detection and classification on stored calls")
     de.add_argument("--provider", required=True)
     de.add_argument("--model", required=True)
     de.add_argument("--db-path", default=default_db_path())
     de.set_defaults(func=_cmd_detect)
+
+    lv = sub.add_parser("live", help="open the live demo page: your prompts, a real API, DriftGuard's detectors")
+    lv.add_argument("--port", type=int, default=8501)
+    lv.set_defaults(func=_cmd_live)
 
     da = sub.add_parser("dashboard", help="open the dashboard")
     da.add_argument("--db-path", default=default_db_path())
