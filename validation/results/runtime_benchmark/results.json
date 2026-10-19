@@ -1,0 +1,45 @@
+{
+  "machine": "AMD64 Family 25 Model 116 Stepping 1, AuthenticAMD, Python 3.12.10, Windows 11",
+  "capture": {
+    "calls": 1000,
+    "median_plain_ms": 0.42064999797730707,
+    "median_hooked_ms": 12.776499999745283,
+    "median_overhead_ms": 12.355850001767976,
+    "p95_overhead_ms": 14.853334993676981,
+    "median_overhead_redact_ms": 12.795650000043679,
+    "fresh_db_bytes_per_call": 3084.9873170731707
+  },
+  "storage": {
+    "project_db_calls": 3895,
+    "project_db_bytes_per_call": 1638.4,
+    "avg_prompt_plus_reply_chars": 771.6639281129653
+  },
+  "detection": [
+    {
+      "calls_in_history": 1000,
+      "live_us_per_call": 4.153099995164666,
+      "batch_seconds": 0.29542879999644356,
+      "batch_peak_mb": 1.847407341003418,
+      "change_points_tested": 1
+    },
+    {
+      "calls_in_history": 10000,
+      "live_us_per_call": 3.474909999931697,
+      "batch_seconds": 5.961769699999422,
+      "batch_peak_mb": 0.21229171752929688,
+      "change_points_tested": 1
+    },
+    {
+      "calls_in_history": 100000,
+      "live_us_per_call": 3.571723999993992,
+      "batch_seconds": 787.5112568999975,
+      "batch_peak_mb": 2.1060829162597656,
+      "change_points_tested": 1
+    }
+  ],
+  "live_monitor": {
+    "history_calls": 5000,
+    "startup_replay_seconds": 0.18236040000192588,
+    "observe_median_ms": 0.022400003217626363
+  }
+}

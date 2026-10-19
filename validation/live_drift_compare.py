@@ -136,6 +136,9 @@ def _registry():
 # (--degrade-mode temperature instead spikes sampling temperature). The calls are
 # still real and live; only the CAUSE of the errors is engineered, and its
 # magnitude is tunable via `degrade_frac`.
+SWAP_MODEL: str | None = None   # --degrade-mode swap: the model that silently takes over after the onset
+
+
 def _schedule(
     scenario: str, i: int, onset: int, ramp_len: int, model: str,
     base_temp: float, base_max_tokens: int,
@@ -161,6 +164,8 @@ def _schedule(
     if rng.random() < p:  # this call is degraded
         if degrade_mode == "temperature":
             return model, degrade_temp, base_max_tokens
+        if degrade_mode == "swap":                         # a different model answers, same settings
+            return SWAP_MODEL, base_temp, base_max_tokens
         return model, base_temp, degrade_max_tokens        # default: truncate -> wrong/no answer
     return baseline
 
@@ -173,14 +178,14 @@ def _collect_stream(
     onset: int, post: int, ramp_len: int, base_temp: float, base_max_tokens: int,
     degrade_frac: float, degrade_temp: float, degrade_max_tokens: int, degrade_mode: str,
     store: DriftStore, trial_id: str, attempts_left: list[int], rng: random.Random,
-    t_start: float, min_interval: float,
+    t_start: float, min_interval: float, initial: list[int] | None = None,
 ) -> np.ndarray:
     """Make real calls following the drift schedule until `onset+post` successful
     calls are collected (or the shared daily attempt budget runs out). Returns the
     0/1 error stream. Every call (success or failure) is logged to driftguard.db."""
     tasks = _ensure_frozen_subset()
     target = onset + post
-    errors: list[int] = []
+    errors: list[int] = list(initial or [])   # a resumed trial continues from its stored calls
     cycle: list[dict] = []
     next_call_at = time.monotonic()
 
@@ -208,6 +213,12 @@ def _collect_stream(
             eval_run_id=f"live_drift_compare_{trial_id}",
             eval_task_type="accuracy", eval_task_id=task["task_id"],
         )
+
+        if model_id != model:
+            # a silent swap: the log keeps the name the caller asked for, as it would see it;
+            # which model really answered is recorded after the call, never sent to the API
+            entry.request_params = {**entry.request_params, "served_by": model_id}
+            entry.model_id = model
 
         if entry.outcome == "ok":
             letter = _extract_answer_letter(entry.response_text)
@@ -267,6 +278,21 @@ def _realized_rates(stream: np.ndarray, onset: int) -> tuple[float, float]:
 # ---------------------------------------------------------------------------
 # One invocation = one trial of each requested scenario, appended to the raw CSV
 # ---------------------------------------------------------------------------
+def _stored_stream(db_path: str, scenario: str) -> tuple[str, list[int]]:
+    """For --resume: the trial id and 0/1 error stream already stored for `scenario` in
+    `db_path`. Only valid once the schedule no longer depends on the call index (after the
+    gradual ramp), since the schedule is then the same fixed share for every later call."""
+    import sqlite3
+    con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+    rows = con.execute("SELECT eval_run_id, eval_score FROM log_rows WHERE outcome = 'ok' "
+                       "AND eval_score IS NOT NULL AND eval_run_id LIKE ? ORDER BY timestamp",
+                       (f"live_drift_compare_{scenario}_%",)).fetchall()
+    con.close()
+    if not rows or len({r[0] for r in rows}) != 1:
+        raise SystemExit(f"--resume needs exactly one stored {scenario} trial in {db_path}")
+    return rows[0][0].removeprefix("live_drift_compare_"), [0 if r[1] >= 1.0 else 1 for r in rows]
+
+
 def run_once(args) -> None:
     out_dir = Path(args.out)
     (out_dir / "streams").mkdir(parents=True, exist_ok=True)
@@ -279,7 +305,12 @@ def run_once(args) -> None:
     raw_path = out_dir / f"{args.provider}_raw_results.csv"
     all_rows: list[dict] = []
 
+    global SWAP_MODEL
+    SWAP_MODEL = args.swap_model
+    if args.degrade_mode == "swap" and not SWAP_MODEL:
+        raise SystemExit("--degrade-mode swap needs --swap-model")
     degrade_desc = (f"{args.model}#degraded(temp={args.degrade_temp})" if args.degrade_mode == "temperature"
+                    else f"silent swap to {SWAP_MODEL}" if args.degrade_mode == "swap"
                     else f"{args.model}#degraded(max_tokens={args.degrade_max_tokens})")
     print(f"Live drift comparison -- provider={args.provider}  model={args.model}\n"
           f"drift: {args.degrade_mode} degradation, degrade_frac={args.degrade_frac}  ({degrade_desc})\n"
@@ -293,12 +324,16 @@ def run_once(args) -> None:
                 print(f"Daily attempt budget exhausted before {scenario} -- stopping.")
                 break
             trial_id = f"{scenario}_{stamp}"
+            initial = None
+            if args.resume:
+                trial_id, initial = _stored_stream(args.db_path, scenario)
+                print(f"  resuming {trial_id} with {len(initial)} stored successful calls")
             rng = random.Random(stamp ^ hash(scenario) & 0xFFFFFFFF)
             stream = _collect_stream(
                 scenario, args.provider, args.model,
                 args.onset, args.post, args.ramp_len, args.temperature, args.max_tokens,
                 args.degrade_frac, args.degrade_temp, args.degrade_max_tokens, args.degrade_mode,
-                store, trial_id, attempts_left, rng, t_start, 60.0 / max(1, args.rpm),
+                store, trial_id, attempts_left, rng, t_start, 60.0 / max(1, args.rpm), initial,
             )
             if len(stream) < args.onset + 5:
                 print(f"  {scenario}: only {len(stream)} successful calls -- too few to score, skipping.")
@@ -486,7 +521,7 @@ def _main() -> None:
                    help="the single model whose config is degraded mid-stream to induce drift")
     p.add_argument("--scenarios", default="sudden,gradual",
                    help="comma-separated subset of: sudden,gradual,stable")
-    p.add_argument("--degrade-mode", dest="degrade_mode", choices=["truncate", "temperature"], default="truncate",
+    p.add_argument("--degrade-mode", dest="degrade_mode", choices=["truncate", "temperature", "swap"], default="truncate",
                    help="how post-onset calls are degraded: 'truncate' = tiny max_tokens so the model is cut "
                         "off before the answer letter (reliable, err~1.0); 'temperature' = spike sampling temp.")
     p.add_argument("--degrade-frac", dest="degrade_frac", type=float, default=DEGRADE_FRAC_DEFAULT,
@@ -496,6 +531,8 @@ def _main() -> None:
                    help="max_tokens for a degraded (truncate-mode) call")
     p.add_argument("--degrade-temp", dest="degrade_temp", type=float, default=DEGRADE_TEMP_DEFAULT,
                    help="temperature for a degraded (temperature-mode) call")
+    p.add_argument("--swap-model", dest="swap_model", default=None,
+                   help="swap mode: the model that answers degraded calls; the log keeps --model's name")
     p.add_argument("--onset", type=int, default=ONSET_DEFAULT)
     p.add_argument("--post", type=int, default=POST_DEFAULT)
     p.add_argument("--ramp-len", dest="ramp_len", type=int, default=GRADUAL_RAMP_DEFAULT)
@@ -513,6 +550,8 @@ def _main() -> None:
     p.add_argument("--daily-attempt-budget", dest="daily_attempt_budget", type=int, default=DAILY_ATTEMPT_BUDGET)
     p.add_argument("--out", default=OUT_DIR_DEFAULT)
     p.add_argument("--db-path", dest="db_path", default="driftguard.db")
+    p.add_argument("--resume", action="store_true",
+                   help="continue the trial stored in --db-path (once past the onset and any ramp)")
     p.add_argument("--aggregate", action="store_true", help="aggregate accumulated trials into a ranking (no calls)")
     p.add_argument("--self-test", dest="self_test", action="store_true", help="validate the pipeline with zero API calls")
     args = p.parse_args()

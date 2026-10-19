@@ -172,6 +172,16 @@ driftguard proxy --port 8000
 
 Then point your app at the proxy instead of the provider. The first part of the path picks the provider and the rest is passed on unchanged, so a Groq chat request goes to `http://127.0.0.1:8000/groq/openai/v1/chat/completions` and an OpenRouter one to `http://127.0.0.1:8000/openrouter/api/v1/chat/completions`. Traffic logged this way is tagged `wrapper` or `proxy`, so you can tell it apart from eval-suite calls.
 
+#### Privacy: what is stored
+
+By default the capture layer stores the full prompt and reply of every captured call, which can include personal data from your users. Detection only needs the outcome, timing and score of each call, so you can keep less:
+
+```python
+client = DriftGuardClient(provider="groq", text_policy="redact")   # or "hash" or "none"
+```
+
+`redact` replaces e-mail addresses, phone numbers, card-like numbers, IP addresses and API keys with placeholders; `hash` keeps only a SHA-256 digest; `none` keeps no text. The proxy takes the same choice as `--text-policy`. Redaction is pattern-based and does not remove names or other free-text details, so use `hash` or `none` when prompts may be sensitive. To apply a retention period, delete old captured traffic with `DriftStore().purge_logs(timedelta(days=30))`; eval-suite calls, which hold only the frozen public questions, are kept.
+
 ### Detect and classify
 
 `scripts/integration_check.py` runs the whole chain once: imports, one real eval run, calibration, the detection pipeline over the stored per-call scores, and the classification layer.
@@ -211,7 +221,7 @@ python -m scripts.token_usage
 
 ### Validation
 
-The detector benchmarks have their own guide in `validation/WORKFLOW.md`, and each result folder under `validation/results/` has its own `REPORT.md`. In short:
+To reproduce every table and figure in the paper, follow [`REPRODUCE.md`](../REPRODUCE.md). The detector benchmarks also have their own guide in `validation/WORKFLOW.md`, and each result folder under `validation/results/` has its own `REPORT.md`. In short:
 
 | Check | Result |
 |---|---|
@@ -223,6 +233,7 @@ The detector benchmarks have their own guide in `validation/WORKFLOW.md`, and ea
 | LMSYS-Chat-1M rollouts and swaps (30 each, plus 30 controls) | Safety shift labelled in every rollout and swap, none on controls |
 | Classification on 13 real scenarios | 13 / 13 with per-call detection |
 | Controlled format and latency faults | 4 / 4 correct, including controls |
+| Against practical baselines (270 streams with a known answer) | Static threshold and periodic re-evaluation alarm on about half of stable streams; DriftGuard on at most 1 in 120, finding 98–99% of real changes (`results/baseline_comparison/`) |
 
 The quickest benchmarks need no internet and no API key:
 

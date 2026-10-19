@@ -1,0 +1,811 @@
+group,variant,false_alarm,found
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS gradual,PELT alone (x1),False,True
+LMSYS gradual,PELT + perm (x1),False,True
+LMSYS gradual,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS sudden,PELT alone (x1),False,True
+LMSYS sudden,PELT + perm (x1),False,True
+LMSYS sudden,PELT + perm + BH (x1),False,True
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),True,
+LMSYS control,PELT + perm (x1),True,
+LMSYS control,PELT + perm + BH (x1),True,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),True,
+LMSYS control,PELT + perm (x1),True,
+LMSYS control,PELT + perm + BH (x1),True,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+LMSYS control,PELT alone (x1),True,
+LMSYS control,PELT + perm (x1),True,
+LMSYS control,PELT + perm + BH (x1),True,
+LMSYS control,PELT alone (x1),False,
+LMSYS control,PELT + perm (x1),False,
+LMSYS control,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% stable,PELT alone (x1),False,
+Synthetic 5% stable,PELT + perm (x1),False,
+Synthetic 5% stable,PELT + perm + BH (x1),False,
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 5% +10 pts,PELT alone (x1),False,True
+Synthetic 5% +10 pts,PELT + perm (x1),False,True
+Synthetic 5% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),True,
+Synthetic 15% stable,PELT + perm (x1),True,
+Synthetic 15% stable,PELT + perm + BH (x1),True,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),True,
+Synthetic 15% stable,PELT + perm (x1),True,
+Synthetic 15% stable,PELT + perm + BH (x1),True,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% stable,PELT alone (x1),False,
+Synthetic 15% stable,PELT + perm (x1),False,
+Synthetic 15% stable,PELT + perm + BH (x1),False,
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),True,False
+Synthetic 15% +10 pts,PELT + perm (x1),True,False
+Synthetic 15% +10 pts,PELT + perm + BH (x1),True,False
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),True,False
+Synthetic 15% +10 pts,PELT + perm (x1),True,False
+Synthetic 15% +10 pts,PELT + perm + BH (x1),True,False
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 15% +10 pts,PELT alone (x1),False,True
+Synthetic 15% +10 pts,PELT + perm (x1),False,True
+Synthetic 15% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% stable,PELT alone (x1),False,
+Synthetic 30% stable,PELT + perm (x1),False,
+Synthetic 30% stable,PELT + perm + BH (x1),False,
+Synthetic 30% +10 pts,PELT alone (x1),True,False
+Synthetic 30% +10 pts,PELT + perm (x1),True,False
+Synthetic 30% +10 pts,PELT + perm + BH (x1),True,False
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True
+Synthetic 30% +10 pts,PELT alone (x1),False,True
+Synthetic 30% +10 pts,PELT + perm (x1),False,True
+Synthetic 30% +10 pts,PELT + perm + BH (x1),False,True

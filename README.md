@@ -15,6 +15,7 @@ It tracks four signals:
 
 - **Run it on a new machine:** the guide below.
 - **How it works, repository layout, validation results and known limitations:** [docs/PROJECT.md](docs/PROJECT.md).
+- **Reproducing the paper's results:** [REPRODUCE.md](REPRODUCE.md).
 - **Presenting the demo and carrying it to another machine:** [DEMO.md](DEMO.md).
 
 ---
