@@ -203,6 +203,10 @@ def live_trials() -> list[tuple[str, pd.DataFrame]]:
                for n in range(1, 6)]
     sources += [(DATA_ROOT / "driftguard.db", f"Groq trial {k}", "openai/gpt-oss-120b", rid)
                 for k, rid in ((1, "live_drift_compare_sudden_1789368091"), (2, "live_drift_compare_sudden_1789444819"))]
+    # round two: Nemotron-3-super-120b on the 100-question suite (live_trials_v2_pipeline.py)
+    sources += [(DATA_ROOT / f"validation/data/nvidia_{kind}_{n}.db", f"Round 2 {kind} {n}",
+                 "nvidia/nemotron-3-super-120b-a12b", None)
+                for kind, n in (("long", 1), ("long", 2), ("long", 3), ("swap", 1), ("swap", 2))]
     out = []
     for db, name, model, rid in sources:
         if not Path(db).exists():

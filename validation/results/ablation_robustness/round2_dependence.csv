@@ -1,0 +1,6 @@
+trial,calls_before,questions,repeats_per_question,error_rate,lag1_autocorr,icc_by_question,design_effect,effective_n
+Round 2 long 1,175,100,1.8,0.103,-0.115,0.714,1.54,114.0
+Round 2 long 2,175,100,1.8,0.086,-0.021,0.916,1.69,103.7
+Round 2 long 3,175,100,1.8,0.091,0.036,0.761,1.57,111.4
+Round 2 swap 1,175,100,1.8,0.08,-0.088,0.821,1.62,108.3
+Round 2 swap 2,175,99,1.8,0.091,-0.032,0.843,1.65,106.2

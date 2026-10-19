@@ -1,0 +1,6 @@
+trial,error_before,error_after,p_call_level,p_within_question,questions_up_down,p_sign_test
+Round 2 long 1,0.103,0.23,0.0005,0.0005,67 / 4,0.0
+Round 2 long 2,0.086,0.219,0.0005,0.0005,58 / 3,0.0
+Round 2 long 3,0.091,0.204,0.0005,0.0005,58 / 7,0.0
+Round 2 swap 1,0.08,0.107,0.1799,0.019,17 / 4,0.0036
+Round 2 swap 2,0.091,0.109,0.3058,0.1049,17 / 4,0.0036

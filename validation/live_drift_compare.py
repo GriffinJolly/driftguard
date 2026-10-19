@@ -178,14 +178,14 @@ def _collect_stream(
     onset: int, post: int, ramp_len: int, base_temp: float, base_max_tokens: int,
     degrade_frac: float, degrade_temp: float, degrade_max_tokens: int, degrade_mode: str,
     store: DriftStore, trial_id: str, attempts_left: list[int], rng: random.Random,
-    t_start: float, min_interval: float,
+    t_start: float, min_interval: float, initial: list[int] | None = None,
 ) -> np.ndarray:
     """Make real calls following the drift schedule until `onset+post` successful
     calls are collected (or the shared daily attempt budget runs out). Returns the
     0/1 error stream. Every call (success or failure) is logged to driftguard.db."""
     tasks = _ensure_frozen_subset()
     target = onset + post
-    errors: list[int] = []
+    errors: list[int] = list(initial or [])   # a resumed trial continues from its stored calls
     cycle: list[dict] = []
     next_call_at = time.monotonic()
 
@@ -278,6 +278,21 @@ def _realized_rates(stream: np.ndarray, onset: int) -> tuple[float, float]:
 # ---------------------------------------------------------------------------
 # One invocation = one trial of each requested scenario, appended to the raw CSV
 # ---------------------------------------------------------------------------
+def _stored_stream(db_path: str, scenario: str) -> tuple[str, list[int]]:
+    """For --resume: the trial id and 0/1 error stream already stored for `scenario` in
+    `db_path`. Only valid once the schedule no longer depends on the call index (after the
+    gradual ramp), since the schedule is then the same fixed share for every later call."""
+    import sqlite3
+    con = sqlite3.connect(f"file:{db_path}?mode=ro", uri=True)
+    rows = con.execute("SELECT eval_run_id, eval_score FROM log_rows WHERE outcome = 'ok' "
+                       "AND eval_score IS NOT NULL AND eval_run_id LIKE ? ORDER BY timestamp",
+                       (f"live_drift_compare_{scenario}_%",)).fetchall()
+    con.close()
+    if not rows or len({r[0] for r in rows}) != 1:
+        raise SystemExit(f"--resume needs exactly one stored {scenario} trial in {db_path}")
+    return rows[0][0].removeprefix("live_drift_compare_"), [0 if r[1] >= 1.0 else 1 for r in rows]
+
+
 def run_once(args) -> None:
     out_dir = Path(args.out)
     (out_dir / "streams").mkdir(parents=True, exist_ok=True)
@@ -309,12 +324,16 @@ def run_once(args) -> None:
                 print(f"Daily attempt budget exhausted before {scenario} -- stopping.")
                 break
             trial_id = f"{scenario}_{stamp}"
+            initial = None
+            if args.resume:
+                trial_id, initial = _stored_stream(args.db_path, scenario)
+                print(f"  resuming {trial_id} with {len(initial)} stored successful calls")
             rng = random.Random(stamp ^ hash(scenario) & 0xFFFFFFFF)
             stream = _collect_stream(
                 scenario, args.provider, args.model,
                 args.onset, args.post, args.ramp_len, args.temperature, args.max_tokens,
                 args.degrade_frac, args.degrade_temp, args.degrade_max_tokens, args.degrade_mode,
-                store, trial_id, attempts_left, rng, t_start, 60.0 / max(1, args.rpm),
+                store, trial_id, attempts_left, rng, t_start, 60.0 / max(1, args.rpm), initial,
             )
             if len(stream) < args.onset + 5:
                 print(f"  {scenario}: only {len(stream)} successful calls -- too few to score, skipping.")
@@ -531,6 +550,8 @@ def _main() -> None:
     p.add_argument("--daily-attempt-budget", dest="daily_attempt_budget", type=int, default=DAILY_ATTEMPT_BUDGET)
     p.add_argument("--out", default=OUT_DIR_DEFAULT)
     p.add_argument("--db-path", dest="db_path", default="driftguard.db")
+    p.add_argument("--resume", action="store_true",
+                   help="continue the trial stored in --db-path (once past the onset and any ramp)")
     p.add_argument("--aggregate", action="store_true", help="aggregate accumulated trials into a ranking (no calls)")
     p.add_argument("--self-test", dest="self_test", action="store_true", help="validate the pipeline with zero API calls")
     args = p.parse_args()
