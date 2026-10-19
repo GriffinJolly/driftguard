@@ -24,3 +24,8 @@ validation/data/llmdrift_prime_full_eval.csv
 
 # local working folders
 Claude outputs/
+
+# generated demo data, Docker data folder and exported image
+*_demo.db
+demo-data/
+*.tar
