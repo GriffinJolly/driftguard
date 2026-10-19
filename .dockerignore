@@ -1,0 +1,13 @@
+# Allow-list: send only what the image needs to the Docker build.
+*
+!pyproject.toml
+!README.md
+!LICENSE
+!driftguard
+!examples
+!scripts
+
+# ...and never databases, caches or compiled files, even inside the folders above.
+**/__pycache__
+**/*.pyc
+**/*.db
