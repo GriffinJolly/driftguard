@@ -148,7 +148,7 @@ def main() -> None:
     print("  SIMULATED DATA: never report anything from it as a result.")
     print()
     print("Open the dashboard on it with:")
-    print(f'  DRIFTGUARD_DB="{path}" streamlit run driftguard/dashboard/app.py')
+    print(f"  driftguard dashboard --db-path {path}")
 
 
 if __name__ == "__main__":

@@ -46,3 +46,19 @@ def test_dashboard_forces_light_theme():
     from driftguard.cli import THEME_FLAGS
     i = THEME_FLAGS.index("--theme.base")
     assert THEME_FLAGS[i + 1] == "light"
+
+
+def test_dotenv_in_current_folder_is_found(tmp_path):
+    """`driftguard init` writes .env in the current folder; the CLI must read it from there."""
+    import subprocess
+    import sys
+    from pathlib import Path
+
+    (tmp_path / ".env").write_text("GROQ_API_KEY=from_dotenv_file\n", encoding="utf-8")
+    probe = tmp_path / "probe.py"
+    probe.write_text("import os\nfrom driftguard.providers import clients\nprint(os.getenv('GROQ_API_KEY'))\n")
+    repo_root = str(Path(__file__).resolve().parent.parent)
+    env = {k: v for k, v in __import__("os").environ.items() if k != "GROQ_API_KEY"}
+    env["PYTHONPATH"] = repo_root
+    out = subprocess.run([sys.executable, str(probe)], cwd=tmp_path, env=env, capture_output=True, text=True)
+    assert out.stdout.strip() == "from_dotenv_file", out.stderr

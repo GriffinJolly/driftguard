@@ -37,11 +37,13 @@ from dataclasses import dataclass
 from typing import Any, Optional
 
 import httpx
-from dotenv import load_dotenv
+from dotenv import find_dotenv, load_dotenv
 
 from driftguard.ingest.log_schema import CallOutcome, DriftLogEntry, IntegrationPath
 
-load_dotenv()
+# Look for .env from the folder you run driftguard in (and its parents), not from where the package is
+# installed. Without usecwd=True a pip-installed driftguard never finds the .env that `driftguard init` writes.
+load_dotenv(find_dotenv(usecwd=True))
 
 
 # ---------------------------------------------------------------------------
