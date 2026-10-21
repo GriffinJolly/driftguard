@@ -105,6 +105,7 @@ def test_live_command_opens_the_packaged_page_with_the_light_theme(monkeypatch):
     monkeypatch.setattr(cli.subprocess, "call", lambda cmd, env=None: seen.update(cmd=cmd) or 0)
     assert cli.main(["live", "--port", "8599"]) == 0
     cmd = seen["cmd"]
+    assert cmd[:2] == cli.ISOLATED_PYTHON, "Streamlit must start in isolated mode"
     assert cmd[-len(cli.THEME_FLAGS):] == cli.THEME_FLAGS
     assert "8599" in cmd
     page = next(c for c in cmd if c.endswith("live_page.py"))
@@ -122,3 +123,26 @@ def test_old_script_paths_still_work():
     out = subprocess.run([sys.executable, str(root / "scripts" / "make_demo_db.py"), "--help"],
                          env=env, capture_output=True, text=True)
     assert out.returncode == 0 and "--out" in out.stdout, out.stderr
+
+
+def test_a_local_driftguard_folder_cannot_shadow_the_installed_package(tmp_path):
+    """Running `driftguard live` in a folder that has its own driftguard/ directory (an old clone, a
+    half-finished merge) must still use the installed package."""
+    import importlib.metadata
+    import subprocess
+
+    import pytest
+
+    from driftguard import cli
+
+    try:
+        importlib.metadata.version("llm-driftguard")
+    except importlib.metadata.PackageNotFoundError:
+        pytest.skip("needs the package installed (pip install -e .)")
+    fake = tmp_path / "driftguard"
+    fake.mkdir()
+    (fake / "__init__.py").write_text("raise RuntimeError('the local folder shadowed the installed package')\n")
+    out = subprocess.run([*cli.ISOLATED_PYTHON, "-c", "import driftguard; print(driftguard.__file__)"],
+                         cwd=tmp_path, capture_output=True, text=True)
+    assert out.returncode == 0, out.stderr
+    assert str(tmp_path) not in out.stdout
