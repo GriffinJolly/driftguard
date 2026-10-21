@@ -50,6 +50,13 @@ def _cmd_detect(args: argparse.Namespace) -> int:
     return 0
 
 
+# Streamlit pages are started with Python's isolated flag (-I). Without it, `python -m streamlit` puts the
+# folder you run the command in first on the import path, so a folder that contains its own driftguard/
+# directory (an old clone, a half-finished merge) would be imported instead of the installed package.
+# -I keeps that folder off the path; your .env and databases are still read from it.
+ISOLATED_PYTHON = [sys.executable, "-I"]
+
+
 def _run_streamlit(script: Path, port: int, extra_env: dict | None = None) -> int:
     """Open a Streamlit page that ships inside the package, with the light theme forced."""
     try:
@@ -57,7 +64,7 @@ def _run_streamlit(script: Path, port: int, extra_env: dict | None = None) -> in
     except ImportError:
         print('This needs extra packages: pip install "llm-driftguard[dashboard]"', file=sys.stderr)
         return 1
-    cmd = [sys.executable, "-m", "streamlit", "run", str(script), "--server.port", str(port), *THEME_FLAGS]
+    cmd = [*ISOLATED_PYTHON, "-m", "streamlit", "run", str(script), "--server.port", str(port), *THEME_FLAGS]
     return subprocess.call(cmd, env=dict(os.environ, **(extra_env or {})))
 
 
